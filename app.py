@@ -50,7 +50,7 @@ def ask_ai_tutor(query, dataset):
     # Context building from dataset rows
     context_text = "\n".join(
         [
-            f"Q: {row['question_']}\nA: {row['answer_text']}"
+            f"Q: {row['question_text']}\nA: {row['answer_text']}"
             for _, row in dataset.head(15).iterrows()
         ]
     )
