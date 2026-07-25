@@ -11,7 +11,7 @@ with col1:
 
 with col2:
   # Replace "your_image.png" with your actual image filename or URL
-  st.image("your_image.png", width=100)
+  st.image("ONORE_AKORTIA_1.jpg", width=100)
 
 
 # Initialize Groq client using Streamlit Secrets
