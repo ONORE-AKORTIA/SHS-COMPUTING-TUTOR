@@ -1,8 +1,14 @@
+import base64
 import os
 import pandas as pd
 from groq import Groq
 import streamlit as st
-import base64
+
+# Set page configuration
+st.set_page_config(
+    page_title="SHS Computing AI Tutor", page_icon="💻", layout="centered"
+)
+
 
 # Function to load local image for HTML display
 def img_to_base64(image_path):
@@ -11,10 +17,11 @@ def img_to_base64(image_path):
       return base64.b64encode(img_file.read()).decode()
   return ""
 
+
 # Convert your picture to base64
 img_base64 = img_to_base64("ONORE_AKORTIA_1.jpg")
 
-# Single inline header layout
+# Single inline header layout (Displays Laptop, Title, and Picture perfectly together)
 st.markdown(
     f"""
     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
@@ -67,8 +74,8 @@ def ask_ai_tutor(query, dataset, student_name):
     Use the following official curriculum context to answer the student's question accurately. 
     If the answer isn't directly in the context, use your knowledge aligned with WAEC standards.
     Keep your tone encouraging, clear, and educational.
-    Your name is Sir O.K. You are created by Mr. ONORE AKORTIA, a teacher from OLA SHS,HO .
-    After each reponse, ask the leaner if he or she would like to have further explanations based on suggested themes deduced from the response.
+    Your name is Sir O.K. You are created by Mr. ONORE AKORTIA, a teacher from OLA SHS, HO.
+    After each response, ask the learner if he or she would like to have further explanations based on suggested themes deduced from the response.
 
     Context:
     {context_text}
@@ -99,10 +106,6 @@ if "user_name" not in st.session_state:
 if "messages" not in st.session_state:
   st.session_state.messages = []
 
-# --- App UI Layout ---
-st.title("💻 SHS Computing AI Tutor")
-st.markdown("Your personal WAEC & NaCCA curriculum study assistant.")
-
 # Step 1: Capture Student Name if not already provided
 if not st.session_state.user_name:
   st.subheader("Welcome! Let's get started.")
@@ -115,8 +118,9 @@ if not st.session_state.user_name:
         st.session_state.user_name = name_input.strip()
         # Initial greeting message stored once in session history
         initial_welcome = (
-            f"Hello {st.session_state.user_name}! I am your SHS Computing"
-            " tutor, here to help you master your computing topics and ace your"
+            f"Hello {st.session_state.user_name}! I am Sir O.K., your SHS"
+            " Computing tutor created by Mr. Onore Akortia from OLA SHS, Ho."
+            " I'm here to help you master your computing topics and ace your"
             " exams. What would you like to study today?"
         )
         st.session_state.messages.append(
@@ -148,9 +152,7 @@ else:
     # Generate and display assistant response
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
-        answer = ask_ai_tutor(
-            user_query, df, st.session_state.user_name
-        )
+        answer = ask_ai_tutor(user_query, df, st.session_state.user_name)
         st.markdown(answer)
         st.session_state.messages.append(
             {"role": "assistant", "content": answer}
