@@ -103,5 +103,5 @@ if user_query := st.chat_input("What is a data type?"):
             answer = ask_ai_tutor(user_query, df)
             st.markdown(answer)
             st.session_state.messages.append(
-                {"role": "assistant", "content": answer}
+                { "content": answer}
             )
