@@ -3,17 +3,15 @@ import pandas as pd
 from groq import Groq
 import streamlit as st
 # --- App UI Layout ---
-col1, col2 = st.columns([4, 1])
+col1, col2 = st.columns([4, 1], vertical_alignment="center")
 
 with col1:
   st.title("💻 SHS Computing AI Tutor")
   st.markdown("Your personal WAEC & NaCCA curriculum study assistant.")
 
 with col2:
-  # Replace "your_image.png" with your actual image filename or URL
   st.image("ONORE_AKORTIA_1.jpg", width=100)
-
-
+  
 # Initialize Groq client using Streamlit Secrets
 try:
   api_key = st.secrets["GROQ_API_KEY"]
