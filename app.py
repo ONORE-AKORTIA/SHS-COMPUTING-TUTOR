@@ -2,16 +2,33 @@ import os
 import pandas as pd
 from groq import Groq
 import streamlit as st
+import base64
+
+# Function to load local image for HTML display
+def img_to_base64(image_path):
+  if os.path.exists(image_path):
+    with open(image_path, "rb") as img_file:
+      return base64.b64encode(img_file.read()).decode()
+  return ""
+
+# Convert your picture to base64
+img_base64 = img_to_base64("ONORE_AKORTIA_1.jpg")
+
+# Single inline header layout
 st.markdown(
-    '<div style="display: flex; align-items: center; gap: 15px;"><span'
-    ' style="font-size: 2.2em;">💻</span><div><h1 style="margin: 0; font-size:'
-    ' 1.8em;">SHS Computing AI Tutor</h1><p style="margin: 0; color:'
-    ' gray;">Your personal WAEC & NaCCA curriculum study'
-    ' assistant.</p></div><img src="ONORE_AKORTIA_1.jpg" width="70"'
-    ' style="border-radius: 8px; margin-left: auto;"></div>',
+    f"""
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <span style="font-size: 2.5em;">💻</span>
+        <div style="flex-grow: 1;">
+            <h1 style="margin: 0; font-size: 1.8em; line-height: 1.2;">SHS Computing AI Tutor</h1>
+            <p style="margin: 0; color: #666; font-size: 0.95em;">Your personal WAEC & NaCCA curriculum study assistant.</p>
+        </div>
+        <img src="data:image/jpeg;base64,{img_base64}" width="75" style="border-radius: 8px; object-fit: cover;">
+    </div>
+    """,
     unsafe_allow_html=True,
 )
-  
+
 # Initialize Groq client using Streamlit Secrets
 try:
   api_key = st.secrets["GROQ_API_KEY"]
