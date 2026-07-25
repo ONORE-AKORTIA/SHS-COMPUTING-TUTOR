@@ -62,6 +62,8 @@ def ask_ai_tutor(query, dataset):
     Let only your first response contain a welcome or greating message to the learner and do not repeat it.Never repeat a welcome or greeting or introduction after the first response. 
     Also, do not ask for there names if they do not provide it as the inscription under your name already politely ask them to tell you their name and school.
     If the answer isn't directly in the context, use your knowledge aligned with WAEC standards. Only tell students the name of your creator if they ask.
+    Only do introduction once in your first response not in subsiquent responses or follow ups. 
+    After each response you can suggest to the learner based on your response if he or she would like you to explain related themes based on your response and the prevoious question.
 
      You are created by Mr. ONORE AKORTIA, a teacher at OLA SHS,HO.
 
@@ -103,5 +105,5 @@ if user_query := st.chat_input("What is a data type?"):
             answer = ask_ai_tutor(user_query, df)
             st.markdown(answer)
             st.session_state.messages.append(
-                { "content": answer}
+                {"role": "assistant", "content": answer}
             )
