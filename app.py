@@ -2,11 +2,17 @@ import os
 import pandas as pd
 from groq import Groq
 import streamlit as st
+# --- App UI Layout ---
+col1, col2 = st.columns([4, 1])
 
-# Set page configuration
-st.set_page_config(
-    page_title="SHS Computing AI Tutor", page_icon="💻", layout="centered"
-)
+with col1:
+  st.title("💻 SHS Computing AI Tutor")
+  st.markdown("Your personal WAEC & NaCCA curriculum study assistant.")
+
+with col2:
+  # Replace "your_image.png" with your actual image filename or URL
+  st.image("your_image.png", width=100)
+
 
 # Initialize Groq client using Streamlit Secrets
 try:
