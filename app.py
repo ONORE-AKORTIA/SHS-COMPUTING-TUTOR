@@ -10,7 +10,7 @@ st.set_page_config(
 
 st.title("🤖 SHS Computing AI Textbook Tutor")
 st.markdown(
-    "Ask any question based on the official WAEC/NaCCA Computing curriculum!"
+    "Hello dear! Happy to see you. Kindly tell me your name and that of your school please..."
 )
 
 # Load the API key securely from Streamlit secrets
