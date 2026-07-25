@@ -3,6 +3,16 @@ import pandas as pd
 from groq import Groq
 import streamlit as st
 
+# Initialize session state variables if they don't exist yet
+if "user_name" not in st.session_state:
+  st.session_state.user_name = None
+
+if "welcomed" not in st.session_state:
+  st.session_state.welcomed = False
+
+if "messages" not in st.session_state:
+  st.session_state.messages = []
+
 # Page Configuration
 st.set_page_config(
     page_title="SHS Computing AI Tutor", page_icon="🤖", layout="centered"
