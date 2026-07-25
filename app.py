@@ -2,15 +2,15 @@ import os
 import pandas as pd
 from groq import Groq
 import streamlit as st
-# --- App UI Layout ---
-col1, col2 = st.columns([4, 1], vertical_alignment="center")
-
-with col1:
-  st.title("💻 SHS Computing AI Tutor")
-  st.markdown("Your personal WAEC & NaCCA curriculum study assistant.")
-
-with col2:
-  st.image("ONORE_AKORTIA_1.jpg", width=100)
+st.markdown(
+    '<div style="display: flex; align-items: center; gap: 15px;"><span'
+    ' style="font-size: 2.2em;">💻</span><div><h1 style="margin: 0; font-size:'
+    ' 1.8em;">SHS Computing AI Tutor</h1><p style="margin: 0; color:'
+    ' gray;">Your personal WAEC & NaCCA curriculum study'
+    ' assistant.</p></div><img src="ONORE_AKORTIA_1.jpg" width="70"'
+    ' style="border-radius: 8px; margin-left: auto;"></div>',
+    unsafe_allow_html=True,
+)
   
 # Initialize Groq client using Streamlit Secrets
 try:
