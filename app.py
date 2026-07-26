@@ -1,3 +1,4 @@
+import base64
 import os
 import pandas as pd
 import streamlit as st
@@ -51,27 +52,76 @@ def load_dataset(filenames):
   return pd.DataFrame(columns=["question_text", "answer_text"])
 
 
-# Sidebar setup
-st.sidebar.title("Navigation")
+# Helper function to convert local image to base64
+def get_image_base64(path):
+  if os.path.exists(path):
+    with open(path, "rb") as f:
+      data = f.read()
+    return base64.b64encode(data).decode()
+  return None
+
+
+# Sidebar setup for Subject Selection and Student Registration
+st.sidebar.title("Navigation & Profile")
 subjects = get_available_subjects()
 selected_subject = st.sidebar.selectbox(
     "Select Subject", list(subjects.keys())
 )
 
+st.sidebar.markdown("---")
+st.sidebar.subheader("Student Details")
+student_name = st.sidebar.text_input("Full Name", value="")
+student_school = st.sidebar.text_input("School Name", value="")
+
 # Load data for selected subject
 dataset_files = subjects[selected_subject]
 df_dataset = load_dataset(dataset_files)
 
-# Main UI Header
-st.title("SHS Computing AI Tutor")
+# Single uniform column header layout: Laptop image -> Title -> User's uploaded picture
+laptop_img_base64 = get_image_base64("laptop.png")
+user_img_base64 = get_image_base64("user.png")
+
+col_header = st.container()
+with col_header:
+  if laptop_img_base64:
+    st.markdown(
+        f"<div style='text-align: center;'><img"
+        f" src='data:image/png;base64,{laptop_img_base64}' width='80'></div>",
+        unsafe_allow_html=True,
+    )
+  st.markdown(
+      "<h1 style='text-align: center;'>SHS Computing AI Tutor</h1>",
+      unsafe_allow_html=True,
+  )
+  if user_img_base64:
+    st.markdown(
+        f"<div style='text-align: center;'><img"
+        f" src='data:image/png;base64,{user_img_base64}' width='80'"
+        " style='border-radius: 50%; object-fit: cover;'></div>",
+        unsafe_allow_html=True,
+    )
+
 st.write(
     f"Your intelligent companion for **{selected_subject}**. Ask questions"
     " below!"
 )
 
-# Initialize chat history in session state
+# Initialize chat history and greeting state
 if "messages" not in st.session_state:
   st.session_state.messages = []
+if "greeted" not in st.session_state:
+  st.session_state.greeted = False
+
+# Trigger initial personalized greeting once
+if not st.session_state.greeted and student_name:
+  initial_greeting = (
+      f"Hello {student_name} from {student_school}! I am your AI tutor ready"
+      f" to help you master {selected_subject}. How can I assist you today?"
+  )
+  st.session_state.messages.append(
+      {"role": "assistant", "content": initial_greeting}
+  )
+  st.session_state.greeted = True
 
 # Display chat history
 for message in st.session_state.messages:
@@ -87,44 +137,34 @@ if user_query:
   with st.chat_message("user"):
     st.markdown(user_query)
 
-  # Retrieve context from the dataset using simple keyword matching
+  # Retrieve context from the dataset using standard keyword matching
   retrieved_context = (
       "No specific textbook context found. Answer based on general knowledge."
   )
   if not df_dataset.empty:
-    # Search for rows containing keywords from the query
     matches = df_dataset[
         df_dataset["answer_text"].str.contains(
             user_query, case=False, na=False, regex=False
         )
     ]
     if not matches.empty:
-      # OPTION 2 SAFEGUARD: Pull only the top 1 match and truncate text to prevent 413 token errors
-      best_match = matches.iloc[0]["answer_text"]
-      max_chars = 1200  # Strict character limit per prompt injection
-      retrieved_context = (
-          best_match[:max_chars] + "..."
-          if len(best_match) > max_chars
-          else best_match
-      )
+      retrieved_context = matches.iloc[0]["answer_text"]
 
-  # Generate AI response using Groq
+  # Generate precise AI response using Groq with controlled response token size
   client = get_groq_client()
   if client:
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
         try:
+          persona_prompt = (
+              f"You are an expert SHS AI Tutor helping {student_name} from"
+              f" {student_school}. Provide precise, concise, and direct answers"
+              " based on the provided textbook context."
+          )
           completion = client.chat.completions.create(
               model="llama-3.1-8b-instant",
               messages=[
-                  {
-                      "role": "system",
-                      "content": (
-                          "You are an expert SHS AI Tutor. Use the provided"
-                          " textbook context to explain concepts clearly and"
-                          " concisely to students."
-                      ),
-                  },
+                  {"role": "system", "content": persona_prompt},
                   {
                       "role": "user",
                       "content": (
@@ -133,7 +173,7 @@ if user_query:
                       ),
                   },
               ],
-              max_tokens=500,  # Limits response size to conserve token bucket limits
+              max_tokens=300,  # Reduced token limit for precise responses
               temperature=0.3,
           )
           ai_response = completion.choices[0].message.content
