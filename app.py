@@ -135,7 +135,7 @@ if "greeted" not in st.session_state:
 # Trigger initial personalized greeting once
 if not st.session_state.greeted and student_name:
   initial_greeting = (
-      f"Hello {student_name} from {student_school}! I am your AI tutor ready"
+      f"Hello {student_name} from {student_school}! I am Sir O.K, your AI tutor ready"
       f" to help you master {selected_subject}. How can I assist you today?"
   )
   st.session_state.messages.append(
@@ -197,6 +197,7 @@ if user_query:
               f"You are an expert SHS AI Tutor helping {student_name} from"
               f" {student_school}. Provide precise, concise, and direct answers"
               " based on the provided textbook context."
+              F"If answer does not appear in the textbook, use your knowledge"
           )
           completion = client.chat.completions.create(
               model="llama-3.1-8b-instant",
