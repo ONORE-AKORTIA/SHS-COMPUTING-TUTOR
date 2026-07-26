@@ -60,7 +60,6 @@ df = load_data()
 # Function to transcribe audio using Groq's Whisper model
 def transcribe_audio(audio_file):
   try:
-    # Save uploaded audio file temporarily
     with open("temp_audio.wav", "wb") as f:
       f.write(audio_file.getbuffer())
 
@@ -74,7 +73,6 @@ def transcribe_audio(audio_file):
           ),
           language="en",
       )
-    # Cleanup temporary file
     if os.path.exists("temp_audio.wav"):
       os.remove("temp_audio.wav")
 
@@ -84,8 +82,7 @@ def transcribe_audio(audio_file):
 
 
 # Function to query the Groq LLM
-def ask_ai_tutor(query, dataset, student_name, student_school):
-  # Build context from dataset rows
+def ask_ai_tutor(query, dataset, student_name, student_school, previous_themes=None):
   context_text = "\n".join(
       [
           f"Q: {row['question_text']}\nA: {row['answer_text']}"
@@ -93,7 +90,13 @@ def ask_ai_tutor(query, dataset, student_name, student_school):
       ]
   )
 
-  # Streamlined prompt incorporating student name and school
+  theme_instruction = ""
+  if previous_themes:
+    theme_instruction = f"""
+    The user is selecting or referring to one of these previously suggested themes: {previous_themes}.
+    If the user's input is a number (like 1, 2, 3) or matches one of these themes, provide a detailed explanation of that specific theme aligned with the WAEC/NaCCA curriculum.
+    """
+
   prompt = f"""
     You are Sir O.K., an expert, friendly AI tutor for Ghanaian Senior High School (SHS) Computing students (created by Mr. Onore Akortia from OLA SHS, Ho).
     You are currently speaking with a student named {student_name} from {student_school}.
@@ -102,13 +105,14 @@ def ask_ai_tutor(query, dataset, student_name, student_school):
     - Do NOT re-introduce yourself, mention who created you, or state your aims in your response. Jump straight into answering the student's question directly.
     - Keep your tone concise, encouraging, clear, and strictly educational aligned with WAEC/NaCCA standards.
     - Use the provided context to answer accurately. If it's not in the context, use standard curriculum knowledge.
-    - After answering, concisely ask the student if they would like further explanations based on specific sub-themes related to the topic.
-    - If the student reply with a number of the various themes suggested, take that theme and provide a response based on it.
+    - After your answer, provide a numbered list of exactly 3 suggested follow-up sub-themes related to the topic for further exploration.
+    
+    {theme_instruction}
 
     Context:
     {context_text}
 
-    Student's Question: {query}
+    Student's Input: {query}
     """
 
   try:
@@ -137,6 +141,9 @@ if "user_school" not in st.session_state:
 if "messages" not in st.session_state:
   st.session_state.messages = []
 
+if "last_themes" not in st.session_state:
+  st.session_state.last_themes = None
+
 # Step 1: Capture Student Name and School if not already provided
 if not st.session_state.user_name or not st.session_state.user_school:
   st.subheader("Welcome! Let's get started.")
@@ -150,7 +157,6 @@ if not st.session_state.user_name or not st.session_state.user_school:
         st.session_state.user_name = name_input.strip()
         st.session_state.user_school = school_input.strip()
 
-        # Initial greeting happens ONCE
         initial_welcome = (
             f"Hello {st.session_state.user_name} from"
             f" {st.session_state.user_school}! I am Sir O.K., your SHS"
@@ -171,6 +177,7 @@ else:
     st.session_state.user_name = None
     st.session_state.user_school = None
     st.session_state.messages = []
+    st.session_state.last_themes = None
     st.rerun()
 
   # Display chat history cleanly
@@ -178,7 +185,7 @@ else:
     with st.chat_message(message["role"]):
       st.markdown(message["content"])
 
-  # Input selection tabs or expander for Voice vs Text
+  # Input selection tabs for Voice vs Text
   input_method = st.radio(
       "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"], horizontal=True
   )
@@ -186,7 +193,7 @@ else:
   user_query = None
 
   if input_method == "⌨️ Type Question":
-    user_query = st.chat_input("Ask a computing question...")
+    user_query = st.chat_input("Ask a computing question or type a theme number (e.g. 1, 2)...")
   else:
     st.markdown("### Record your question:")
     audio_value = st.audio_input("Click to record your voice question")
@@ -202,7 +209,7 @@ else:
               " your question."
           )
 
-  # Process the query if received from either text box or voice transcription
+  # Process the query if received
   if user_query:
     st.session_state.messages.append({"role": "user", "content": user_query})
     with st.chat_message("user"):
@@ -215,10 +222,13 @@ else:
             df,
             st.session_state.user_name,
             st.session_state.user_school,
+            previous_themes=st.session_state.last_themes,
         )
         st.markdown(answer)
         st.session_state.messages.append(
             {"role": "assistant", "content": answer}
         )
-        # Rerun to clear the active input state cleanly
+        
+        # Simple extraction or holding of the context for the next turn
+        st.session_state.last_themes = answer
         st.rerun()
