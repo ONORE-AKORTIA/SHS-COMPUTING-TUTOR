@@ -1,0 +1,2243 @@
+question_text,answer_text
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 1,"1
+MULTIMEDIA TOOLS 
+AND APPLICATIONS
+SECTION  
+1
+Year 1Information Communication Technology"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 2,"1
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+ICTs IN THE SOCIETY
+Organising, Managing and Presenting Information Using 
+Essential Productivity Tools
+INTRODUCTION
+In our modern world, computers are everywhere, even in places you might not expect! 
+Some are more obvious, such as laptops and desktop computers. Others are obviously 
+electronic, but you might not have thought of them as ‘computers,’ like smart phones, 
+TVs, and video game consoles. Some are completely hidden from view to the point 
+where you might not even know they’re there at all!
+In today’s technological world, computers are integral to our daily lives, popping up 
+in surprising places beyond the usual laptops and desktops— like the smartphones, 
+game consoles, combine harvesters and even in cars! From guiding you with GPS to 
+controlling airbags and playing music. Computers are almost everywhere but not all 
+computers are built for the same tasks; you certainly cannot write an essay with the 
+computer the DJ uses for mixing music.
+In this section you will explore what computers are, focusing on their hardware and 
+software components. You will also learn about word processing applications, which 
+are necessary for creating documents like the book you are reading now. Again, you 
+will study about how to use these document creation tools effectively to produce, edit, 
+and format text, helping you create professional-looking documents. Understanding 
+these basics is key to navigating the digital world efficiently, enhancing both your 
+academic and personal life.
+Stay curious, ask questions and gain the experience.
+At the end of this section, you should be able to:
+•  Describe software, hardware, and other computing features needed to create a document.
+•  Create, Edit and Format text and paragraphs (Cut, Copy, Bold, Italic, Tables, Find and 
+Replace, Format Painter, Spelling & Grammar check, Styles) using desktop/online 
+computing tools (word processing software e.g., MS Word, Google Docs) keyboard, 
+mouse etc.
+•  Save and print documents (Save, Save As, Print)
+•  Format the overall appearance of a page through colours, watermarks, headers and 
+footers, page layout, paragraph and line, change capitalisation, bordering and shading,"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 3,"2
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+perform bullets and numbering, do page column, tables, graphics) using desktop/online 
+computing tools (word processing software e.g., MS Word, Google Docs) keyboard, 
+mouse etc.
+•  Create multimedia documents using appropriate computing tools.
+Key Ideas
+•  Computer Hardware: This is the physical part of a computer that you can see and 
+touch, like the keyboard, screen, and mouse. Hardware needs software to work.
+•  Software: These are the programs and instructions that tell the computer hardware 
+what to do.
+•  Types of Software:  Software is divided into two main types: system software and 
+application software.
+•  Using Word Processing Applications:  These applications let you create, edit, and 
+change the look of text and paragraphs using various tools.
+•  Formatting Tools: Tools like bold, italic, underlining, adding tables, and checking 
+spelling are used to enhance and organise text in a document.
+•  Document Layout:  Adjusting the layout involves setting up the overall look of the 
+page, including borders, shading, and breaks to make the document organised.
+•  Pagination and Layout:  Settings for headers, footers, paragraph alignment, and 
+spacing help organise where text appears on the page.
+•  A list is a series of items presented in a structured way using bullets or numbers.
+•  Bulleted lists, numbered,  and multilevel lists are different types of listing used in 
+MS Word.
+•  Presentation software  is a computer program that is used to present information, 
+normally in the form of a slideshow.
+•  There are three main functions of a presentation software, which are: an editor that 
+allows text to be inserted and formatted, a method for inserting and manipulating 
+multimedia (graphic images, video and sound) and a slideshow system to display the 
+content, usually with the facility to add animations and transitions.
+•  Some examples of presentation software are Microsoft PowerPoint (part of the Office 
+suite) and Apple Keynote.
+What is a computer?
+A computer is an electronic device that can be programmed to automatically carry out 
+sequence of instructions such as arithmetic or logical operations. It can store, retrieve 
+and manipulate data based on instructions given to it called programs.
+The most general definition of ‘computer’ is simply: ‘something that computes,’ 
+i.e. something that performs mathematical calculations. That’s very broad! By this 
+definition, doing maths homework makes you a computer. In fact, the word ‘computer’"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 4,"3
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+was derived from the Latin term ‘computare’ and back in the 1700s a ‘computer’ was 
+used to refer to a person who did calculations.
+A more instructive, but still general, definition of ‘computer’ is ‘something which 
+processes inputs to produce outputs. When you do maths homework, you take in the 
+questions as input and produce answers to the questions as output, The ‘processing’ is 
+how you work out the answers, e.g. you use techniques you’ve learned and write down 
+intermediate results on paper. We can write some more examples in a table like this:
+Example of 
+computer
+Input Processing Output
+You, doing maths 
+homework
+Maths questions Using previous 
+knowledge and 
+techniques you’ve 
+learned. Writing 
+intermediate results 
+on paper.
+Answers to the 
+maths questions 
+(hopefully the 
+correct answers but 
+not necessarily!)
+Your brain (a 
+biological computer)
+Your senses 
+(vision, hearing, 
+smell etc.)
+Complex biological 
+processes involving 
+billions of 
+interconnected 
+neurons sending 
+electrical signals to 
+each other.
+Electrical signals 
+sent to your muscles 
+telling them how to 
+move (among many 
+other things)
+Airbag controller Sensors which 
+measure the 
+strength of 
+impacts on the 
+car
+A ‘microcontroller’ 
+(i.e. a small, 
+specialised 
+computer) which 
+reads the data 
+coming from the 
+sensors and decides 
+whether an impact 
+is strong enough to 
+need the airbags
+A signal to the 
+airbags telling them 
+whether to inflate or 
+not
+Table 1.1
+Activity 1.1
+Think of what computers are used for in your everyday life. Write as many 
+examples as you can! Then, share your findings with colleagues."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 5,"4
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+WHAT IS ICT?
+We’ve looked at a lot of different kinds of computer, but ICT only deals with a particular 
+subgroup of computers. Which subgroup? The clue is in the name ICT: Information 
+Communication Technology.
+Information
+We are focused on computers which input, process, and output information. Information 
+can be approximately defined as ‘meaningful facts and figures’ . For example, ‘Mary is 
+150cm tall’ is information. A class register also contains information, it tells us who is 
+in the class and their attendance. Photographs contain a lot of information about what 
+the world looked like at the exact moment a photograph was taken.
+At this point, we can filter out airbag controllers: it inputs information (the strength 
+of an impact) and processes that information (is the impact strong enough to need the 
+airbags?), but the output is an action (the airbags inflating), not information. These 
+kinds of computers which control mechanical parts are focused on by mechanical 
+engineering, not ICT.
+NOTE: ‘Information’ and ‘data’ are often used interchangeably. There are different ways 
+to distinguish them, depending on your definitions, but ‘data’ is usually a narrower 
+concept than ‘information’ . It refers to the raw ‘facts and figures’ stored on a computer. 
+For example, a printed-out photo contains ‘information’ but not ‘data.’ However, that 
+same photo would be ‘data’ if it was stored on a computer. Communication
+We primarily care about the communication of information.
+• Computer-to-Computer communication:  How do different computers send  
+information to each other? For example, phones send and receive sound to each 
+other across large distances.
+• Human-to-Computer communication: How can you interact with a computer 
+and send it information? For example, by typing on a keyboard you can send 
+text to a computer.
+• Human-to-Computer-to-Human communication: How can you use computers  
+to communicate with other people? For example, you write an essay on a 
+computer (Human-to-Computer) and then your teacher reads it (Computer-
+Human). You are communicating your ideas to your teacher through the 
+computer.
+This focus on communication means we care more about ‘the big picture’ than the 
+small details."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 6,"5
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Technology
+We are focused on ‘technology,’ i.e. human-made devices. When you do your maths 
+homework you input, process, and output information. You also communicating that 
+information when you give your answers to your teacher. But you are not technology, 
+so you and your brain are not the kind of computer we study in ICT!
+Activity 1.2
+In your groups, review the uses for computers the class came up with in Activity 
+1.1. Discuss which examples you think might be studied in ICT and why. Share 
+your responses with the class.
+GENERAL PURPOSE COMPUTERS
+We’ve seen that there are many kinds of computers, but most of the time when people 
+talk about a ‘computer,’ what they really mean is a ‘desktop (personal) computer’ , a.k.a. 
+a PC, which looks like this:
+Figure 1.1: A desktop computer
+We will also focus on desktop computers for the time being. Why? Because desktop 
+computers are the most instructive example of a whole group of computers: general 
+purpose computers.
+A general purpose computer can perform many different tasks, e.g. on the same 
+computer you can:
+• Write essays   • Design posters
+• Surf the internet  • Play games
+• Watch videos   • Bookkeeping"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 7,"6
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+This is the opposite of a special purpose computer, which is designed to exclusively 
+perform a specific task, e.g. an airbag computer only monitors impacts and inflates 
+airbags.
+The reason these general purpose computers can perform so many different tasks is 
+because they are programmable. If you give one of these computers a program (i.e. a set 
+of instructions), it will perform the task described by the program. More on that later.
+Examples of general-purpose computers include desktop computers, laptops, and 
+smartphones. These devices might look very different, but they are all made of similar 
+parts (the main difference is the size!), and they can all perform similar tasks.
+A computer can accept data (input), process the data, and then output the results.
+What makes up a (general purpose) computer 
+system?
+Computer systems are made from hardware and software.
+Computer Hardware Basics
+Did you know?
+The first point of physical contact you can have with any computer system is hardware.
+Think of what you can see, hold, touch on a computer system. Computer hardware 
+can range from smaller size to a huge size. Some of them function by connecting them 
+to other components through a cord. In recent times, there are cordless ones that use 
+wireless connectivity. [pop up]
+Computer hardware is any physical device or component used in or with a computer 
+system.
+Classifications of computer hardware
+Hardware can be classified as external or internal.
+External hardware devices (peripherals)
+External hardware devices are devices located outside the computer. Some of these 
+external devices are called peripherals. A peripheral device is an auxiliary device that a 
+computer uses to transfer information externally—for example: speakers, a computer 
+mouse, and headphones.
+Peripherals are connected to the computer system with cables using a special connection 
+socket called a port (for example, a USB port) or using a wireless connection (Wi-Fi or 
+Bluetooth).
+External hardware devices fall under; input devices, output devices, processing devices, 
+storage devices, and communication devices. These external devices are used in the 
+creation of documents."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 8,"7
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Input device
+An input device is a hardware device which is used to enter data into a computer for 
+processing. Examples are: Keyboard, Mouse, joystick, microphone, scanner, camera, 
+touch screen, web cam and track ball.
+‘Input’ is the actual data that is sent into the computer system for processing.
+Some examples of input include:
+• Words written using a keyboard
+• Screen clicks using a mouse
+• Live video from a webcam
+• Sound from someone using a microphone for voice control
+• Movement in front of a motion sensor in an automatic door
+Someone using a computer to create a poster in Word would use a keyboard and mouse 
+to enter and manipulate text. A scanner could be used to enter and input a photograph 
+for use in a poster.
+ Figure 1.2: Examples of input devices
+Output device
+An output device is a hardware device that receives information from a computer 
+and presents it in a human understandable form. Examples include: monitor, printer, 
+scanner, speaker, touchscreen, projector, and headphones."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 9,"8
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.3: Examples of output devices
+A monitor is used to display text and images
+A printer would be used to get a hard copy of text and images.
+A touchscreen is classified as both an input and output device because it can be 
+touched to ‘click’/tap parts of the screen (like a mouse) and display results as well (like 
+a monitor).
+The data that has been processed and sent out of the computer is called output.
+Examples of output include:
+• Sound coming from a mobile phone speaker
+• Text appearing on a laptop screen or computer monitor
+• Pictures printed from a printer
+• Video shown on a tablet screen
+Storage Device and Storage Media
+In data storage, two pieces of equipment are normally involved. These are storage 
+devices and storage media. The storage device writes or records unto the storage media 
+whiles the storage media hold the data for future use.
+Storage Medium (Media): This refers to the material or substance on which data is 
+actually stored. It is the physical medium that holds the data in a form that can be read 
+or written. The medium can vary based on the technology, such as magnetic, optical, 
+or solid-state.
+Storage Device: This is the hardware component or mechanism that reads from or 
+writes data to a storage medium. It acts as an interface between the storage medium 
+and thecomputer, enabling data to be accessed or stored on the medium."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 10,"9
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Examples
+Storage Medium (Media):
+• Magnetic tape (used in tape drives)
+• Optical discs (such as CDs, DVDs, or Blu-ray discs)
+• Flash memory (used in USB drives or SSDs)
+• Hard disk platters (inside a hard drive)
+Storage Device:
+• Tape drive (reads/writes data on magnetic tapes)
+• Optical drive (reads/writes data on CDs, DVDs, or Blu-ray discs)
+• USB flash drive (contains both the flash memory and device in one unit)
+• Hard disk drive (HDD) (reads/writes data on the magnetic platters) 
+Figure 1.4: Examples of secondary storage devices and media
+There are many types of secondary storage, and each one has its own special features. 
+Because all devices are different, some work better for certain tasks than others. For 
+example, a hard disk drive has a lot of space and good speed, making it great for storing 
+programs and data you use every day. A USB pen drive (also called a USB Flash drive 
+or memory stick) has less space but is small and easy to carry, making it perfect for 
+moving files between computers.
+Some secondary storage devices can be inside your computer (internal) or outside 
+(external). The internal hard drive in your school’s computer can store things like a 
+poster you made in class, and an external hard drive or USB pen drive can help you 
+take that poster home.
+Cloud storage is now very popular for storing computer files. It means saving data 
+on remote servers (computers that store lots of files) in data centres, which you access 
+through the internet. Cloud storage is flexible and scalable, meaning you can get more 
+space if you need it, and you can access your files from anywhere with an internet"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 11,"10
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+connection. So, if you saved your poster file in the cloud at school, you could easily 
+open it at home without having to move the file physically. Devices like a modem and 
+router can help you set up internet access at home.
+Internal hardware devices or components:  They are any hardware that is located 
+inside the computer. Examples include: CPU: (Central Processing Unit), internal hard disk 
+drive, ROM (Read Only Memory), and RAM (Random Access Memory).
+Figure 1.5: Examples of internal hardware
+A brief description of the functions of some of the main internal hardware 
+items
+Motherboard is a large circuit board that holds and connects all the essential 
+components of a computer, allowing them to work together, as well as adding other 
+basic Input/Output ports for connecting peripherals (e.g. USB ports).
+CPU (Central Processing Unit or processor)  is the ‘brain’ of the computer where 
+all the processing such as executing program instructions is done.
+RAM (Random Access Memory)  is the internal working memory of a computer 
+where the programs and data that it’s currently using are stored.
+NIC (Network Interface Card) is the hardware that enables a computer to connect 
+to a network. A computer network is two or more computers connected via wires or 
+wirelessly. NICs exist to support various networking technologies such as Ethernet, 
+Wi-Fi, Bluetooth, and cellular connectivity. Most motherboards come with an Ethernet 
+port built-in, but wireless connectivity usually requires a dedicated NIC.
+A sound card  is hardware that is responsible for handling sound received via a 
+microphone and for producing sound on a computer that can be heard through 
+speakers. Motherboards almost always have built-in sound processing, but dedicated 
+sound cards can be added to provide better sound quality if needed.
+GPU (Graphics Processing Unit) is the hardware which is responsible for displaying 
+images, videos, and animations on a computer screen/monitor. Many CPUs have"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 12,"11
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+integrated GPUs which output through the motherboard. Dedicated GPUs (a.k.a. 
+graphics cards/video cards) are used when the CPU doesn’t have an integrated GPU or 
+if better performance is needed, e.g. for graphically demanding video games.
+Figure 1.6: Motherboards – empty and with components
+All these items would be considered processing hardware. That is, they are responsible 
+for the processing of data within the computer system.
+A multimedia document is a document with two or more types of media, including 
+text, images, video, animation, or sound. If you are creating a multimedia document 
+such as a poster or a slideshow, then:
+• the CPU would run the required program (such as Word or PowerPoint).
+• RAM would store the Word or PowerPoint program as it is running and your  
+ work.
+• a NIC would enable you to save your work on network storage.
+• a sound card would enable you to hear audio output from your slideshow.
+• a graphics card would enable video and graphics on your screen/monitor.
+Putting it all together
+As explained above, the motherboard connects the various types of hardware to make 
+a computer system. The block diagram in Figure 1.7 shows how data flows between the 
+main hardware components.
+Secondary 
+Storage
+Memory
+(RAM/ ROM)
+INPUT
+DEVICES
+PROCESSING
+(CPU)
+OUTPUT
+DEVICES
+ Figure 1.7: Block diagram of a computer system"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 13,"12
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.3
+In your group, match the images of hardware on the left to the descriptions on 
+the right of Table 1.2.
+This device is for inputting text into a 
+computer and controlling it with commands.
+This device is a convenient way to transfer 
+files between computers.
+This device outputs visual data which you can 
+see directly using your eyes.
+This device connects all the computer’s 
+hardware together.’
+This device is the brain of the computer.
+This device generates and outputs visual data, 
+but not in a way you can see directly.
+Table 1.2"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 14,"13
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+COMPUTER SOFTWARE BASICS
+Computers do only what they are instructed to do. Computer programs or software 
+provides these instructions.
+Software is a set of instructions that tell a computer what to do or how to perform a 
+specific task. Like hardware, there are categories of software, with the most important 
+two being system software and application software.
+System Software
+These are computer programs designed to run a computer’s hardware and application 
+software and make the computer system available for use. System software can be 
+further broken down into three main categories  – Operating systems, device drivers, 
+utility software.
+Operating system: system software that manages your application software and how 
+your hardware devices work together. It lies between the applications software and the 
+computer hardware. Examples are operating systems are:
+• Desktop/laptop OS examples: Windows, macOS, and Linux
+• Smartphone OS examples: Android and iOS
+User
+Applications
+Operating 
+System
+Hardware
+ Figure 1.8: The OS links the application/user to the hardware
+Figure 1.8 shows the relationship between the user, application software, operating 
+systems, and the hardware.
+The main functions of an Operating System
+1. Booting the computer.
+2. Managing the computer’s resources (CPU, Memory, storage devices and printers)
+3. Managing files.
+4. Handling input and output operations.
+5. Executing and proving services for application software
+6. Providing a user interface (i.e. a way for the user to interact with the computer)."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 15,"14
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.9: The logos of some popular operating systems
+Device Drivers:  A device driver is a program designed to control a particular 
+hardware device that is attached to a computer. The main purpose of the device driver 
+is to serve as a translator between the hardware device and the operating system or 
+application software that uses it. It helps the computer to communicate with the 
+device by translating the operating system’s instructions into a language that a device 
+understands to perform its task.
+Examples: Printer driver, display driver, USB driver, sound card driver, motherboard 
+driver and scanner driver. Many of these drivers come with the OS, especially for 
+common devices like USB keyboards.
+Utility Software:  Is a program that helps setup, analyse, configure, improve, and 
+maintain a computer system. Utility software provides additional functionality to your 
+operating system. They are used to support, enhance, or expand existing programs in 
+the computer system. Examples of utility programs include:
+• Disk cleanup tools (for utilising the computer’s storage more efficiently)
+• Data backup programs (for creating copies of files, to protect against loss or 
+damage)
+Antivirus programs (for protecting your computer from viruses, i.e. malicious software)
+Application software (Productivity software or End User Programs): These are 
+programs designed to perform a specific task other than one relating to the operation 
+of the computer/device itself. Often, the task is to meet the specific needs of a user. 
+Different users will have different needs, and therefore use different applications, even 
+if they all have the same hardware and operating system. One user may be interested in 
+entertainment, so they run game applications. Another might be interested in personal 
+productivity software. Personal productivity software helps you to do things that you’d 
+otherwise have to do manually. Personal productivity software includes such tools as 
+word processors, spreadsheets software, presentation software, and graphic design 
+software."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 16,"15
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Application software is software designed to help a user solve specific problems 
+(personal or business) or perform specific tasks (again, personal or business). [note for 
+designers put a textbox around this definition]
+SOFTWARE
+SYSTEM SOFTWARE APPLICATION SOFTWARE
+(Productivity software)
+Operating system Utility software
+Language translator
+Personal productivity 
+software
+Business 
+productivity software
+Word
+ processor
+Spreadsheet
+software
+Database
+software
+Presentation 
+software
+Graphic & 
+Multimedia
+Activity 1.4
+Individually, write down how you would define ‘computer,’ ‘hardware,’ and 
+‘software.’ Share your definitions with your group and collectively agree on one 
+definition for each of the concepts. Then, share your definitions with the class.
+Activity 1.5
+In this activity we have a jumbled list of hardware and software components in 
+the box at the left-hand side of Figure 1.10. Also, on the right-hand side are two 
+circles, one labelled, HARDWARE and the other SOFTWARE. In your group, 
+identify whether a component listed inside the box at left-hand side is a hardware 
+or software component of a computer, and map it to the appropriate circle where 
+it belongs by drawing a line with an arrow."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 17,"16
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Keyboard
+Windows 10
+Mouse
+Monitor
+Ms Excel
+Ms PowerPoint
+OS
+Anti-virus
+Browser
+Mother board
+CPU
+Hard disk
+Media player
+Backup utility
+Memory
+Database system
+SOFTWARE
+HARDWARE
+Figure 1.10
+Activity 1.6
+In your group, explain the difference between hardware and software. Can you 
+think of any good analogies?
+Activity 1.7
+For the previously identified uses of computers you narrowed down as a class 
+for Activity 1.2, pick at least one and discuss in your groups what software and 
+hardware is needed for them. Make sure you think of at least one thing for each 
+of the following: application software, input device, output device, and secondary 
+storage device. Feed back to the class about at least one of the uses.
+Activity 1.8
+Play hangman in your groups, taking turns to select a hardware or software 
+related word for the others to guess."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 18,"17
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Extended Reading
+• Page, A., Karl, H., Levine, D., & Lincoln, H. (2020). Computing. OUP: Oxford Hardware 
+and Software (Chapter 2, page 60)
+• Title With Picture Layout (tiu.edu.iq) Basic computer hardware of software
+• Computer Science Basics: Hardware and Software (youtube.com)
+WHAT IS WORD PROCESSING?
+Word processing is the use of a program called a word processor, running on a computer, 
+that allows users to create, edit, format, and store primarily text-based documents.
+Microsoft (MS) Word is the most used word processor, but other word processors exist 
+such as Pages and Google Docs. All the instructions and screenshots in this manual 
+are for MS Word. Your word processor might look different to the screenshots, and 
+that’s OK! You might have a different version of MS Word, or be using a different word 
+processor, or even be using a smartphone instead of a desktop computer. Most word 
+processors will have similar features and follow similar steps, but you might have to 
+spend a bit more time trying to find them. Thankfully, try finding and using the ‘Help’ 
+option in your word processor if you get stuck!
+PARTS OF THE MICROSOFT WORD WINDOW
+Being familiar with the names and various parts of Word window and their function(s) 
+is very useful and will be necessary for you to know when following the instructions 
+in this manual.
+Figure 1.11"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 19,"18
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+The Ribbon
+The ribbon is a command bar at the top of the window in Office programs such as 
+Word. Ribbons are designed to help the user to quickly find the commands they need 
+to complete a task. The ribbon organises a program’s features into a series of tabs at the 
+top of the screen and these tabs are composed of groups of commands with a common 
+purpose.
+The Home tab  is considered as the default tab since the tools of the home tab are 
+displayed on the ribbon upon launching the word application. The home tab has five 
+main groups or views which includes, Clipboard, Font, Paragraph, Styles and Editing. 
+Each of the views have different tools which are used in document creation. The image 
+below shows the home tab.
+Figure 1.12
+The second group in this ribbon under the Home tab is Font as shown in Figure 1.12.
+NOTE: the ‘Office button’ or ‘Application button’ in the top left of the window is often 
+replaced with a tab called ‘File’ in many versions of MS Word. In the following guidance 
+we will refer to it as ‘File’ for the sake of brevity.
+Now that you are familiar with the parts of the Word window, let us look at how 
+to create and save a new document. Follow the following steps: [pop up]
+How to create and save a new document
+Steps:
+1. Start Microsoft Word.
+2. Click Blank document. (A new blank document appears)
+3. Click the File tab
+4. Click on the Save As command (or Save a Copy if using Word 365). Sometimes, 
+you are required to choose a location such as Desktop or browse for any other 
+locations.
+5. Make the necessary changes in the Save As dialogue box (you may need to pick 
+a new file name: choose one which is appropriate for the document or use the 
+auto-filled name if you’re just practicing).
+6. Click Save.
+7. Type in your text. The text you type will be inserted into the document.
+8. Click on Save, or use the keyboard shortcut Ctrl  + S , regularly to update the 
+current content of the last stored file."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 20,"19
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+9. Click on the X in the top right-hand corner of the Word window or select File > 
+Close (i.e. click the File tab, then select the Close option). You may be prompted 
+to save again at this point.
+Use File > New  when starting a new blank document from within Word. Use Save 
+As when saving a document for the first time. It is good practice to save the blank 
+document using an appropriate file name and folder before you start entering text.
+Activity 1.9
+Instructions:
+In this activity, you are going to create your first new blank document, type in 
+some information, save it and finally exit the word application. Follow the steps 
+below to practice.
+Steps:
+Step 1
+Launch or start Microsoft office Word application
+Step 2
+Click Blank document. (A new blank document appears)
+Step 3
+Click the File tab
+Step 4
+Click on Save As command (or Save a Copy if using Word 365)
+Step 5
+Type the word file1 in the Save As dialogue box
+Step 6
+Click Save
+Step 7
+Type in some text. This could be text your teacher tells you to enter, or you 
+could come up with on your own. If you’re not sure what to write, why not 
+try listing some of your favourite things and why you like them?
+Step 8
+Remember to save your work as you go!
+Step 9
+Click on the X in the top right-hand corner of the Word window or select 
+File > Close. You may be prompted to save again at this point.
+Take note of this additional information while typing;"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 21,"20
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Text entry conventions
+• Press Enter to indicate the end of a paragraph, not the end of a line.
+• Many word processor users choose not to indent paragraphs and 
+insert an extra line instead. In this case press Enter twice to move on 
+to a new paragraph.
+• Traditionally the rule was two spaces after a full stop and one after 
+a co mma. Nowadays, it is more common for word processor users 
+to have just one space after both a comma and a full stop.
+The above activity may be repeated several times using different text. This 
+will build up a set of files for you to use for the editing tasks that follow.
+HOW TO OPEN AN EXISTING DOCUMENT FOR EDITING
+Steps:
+1. Click on the File Explorer icon. [ 
+ ]
+2. Go to the folder location where your file is stored.
+3. Open the document you wish to edit by double-clicking on it.
+From within Word, the steps would be:
+1. Click the File tab.
+2. Click Open. The Open screen appears, select/browse a location, and select the 
+file you want to open.
+How to Print a Document
+Steps:
+1. Select File > Print.
+Figure 1.13
+2. To preview each page, select the forward and backward arrows at the bottom of 
+the page.
+If the text is too small to read, enlarge using the zoom slider at the bottom of 
+the page.
+3. Choose the number of copies, and other options you want."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 22,"21
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Check that the correct printer is selected and online.
+Printer properties will give you additional options including colour.
+Select the Print button.
+Figure 1.14
+NOTE: Is a printer connected to your computer? If there isn’t, you won’t be able to 
+print your document!
+Activity 1.10
+In this activity, you will open a file you saved earlier, add some information to it, 
+save the update, and print out your document.
+Follow the steps below:
+Steps:
+Step 1
+Click on the File Explorer icon."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 23,"22
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Step 2
+Go to the folder location where your file is stored. Let’s say you called it 
+file1.
+Step 3
+Double-click on file1 to open it.
+OR
+From within Word, the steps would be:
+1. Click the File tab.
+2. Click Open. The Open screen appears, select/browse a location, and select the 
+file you want to open (file1 in this case)
+Step 4
+Add your name and class to the end of the document.
+Step 5
+Ctrl + Save your updated document.
+Step 6
+Print out your document in black and white on a single side of A4 paper.
+Basic Document Editing Guidance
+Scenario
+Rachael Opoku, a newly employed secretary of a company created her first memo 
+for distribution to various offices within the company. After typing, she printed a 
+draft-copy and showed it to her boss for verification. To her dismay, her boss was 
+displeased since the document contains several spelling and grammatical errors. 
+Also, some of the lines of text were in the wrong place within the document, 
+making it difficult to understand its content.
+What should the secretary do to the document to move the text to the right places, 
+fix the spelling mistakes, and make it understandable? Don’t worry, by the end 
+of this section, you will discover what Rachael needs to do, the tools needed, and 
+how to use them!"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 24,"23
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Editing Documents
+Editing is the act of making changes to the content or text of an existing word document.
+Word offers many features or tools that help you edit text in a document. Some of these 
+tools include C ut, Copy and Paste, Find and Replace, Delete , Undo and Redo. 
+They can usually be found on the Home tab or some other quickly accessible place, 
+depending on what version of MS Word you’re using. See if you can find them!
+NOTE: Often, before you edit text, you may have to select it. Selecting text involves 
+clicking and dragging the curser over the text to highlight it.
+What do you know about these? [pop up]
+Copy and Paste: duplicating the selected item. The selected item can be found in both 
+original and the new, pasted locations. The keyboard shortcut for copy is Ctrl + C, and 
+the shortcut for paste is Ctrl + V.
+Cut and Paste: the same as copy and paste, except the highlighted text is deleted and 
+only the new copy is kept. You can use this to quickly move text from one location to 
+another. The keyboard shortcut for cut is Ctrl + X.
+Find and Replace: is a function in Word which allows you to search for targeted text, 
+characters and replace it with something else. The keyboard shortcut for find by itself 
+is Ctrl + F, and the shortcut for replace is Ctrl + H.
+D. How to Undo the Last Operation
+1. Click the Undo button on the Quick Access Toolbar or press the key 
+combination Ctrl + Z on the keyboard.
+2. To undo multiple operations at once, click on the arrow next to the undo button 
+and choose the desired action(s) you want undo from the drop-down button.
+3. To redo an action, click the Redo button on the quick access toolbar or press 
+Ctrl + Y key combination on the keyboard. You can also redo multiple actions.
+Figure 1.15
+E. How to Select Text in a Word Document
+1. Select any amount of text: click and drag the cursor over the text to highlight 
+it. Alternatively, you can click where you want the start of your selection to be, 
+then hold the Shift key as you click where you want the end of the selection to 
+be. Notice that your cursor changes from an arrow to something which looks 
+like a capital ‘I’ when you hover over text."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 25,"24
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+2. Select a word: double-click on the word.
+3. Select a paragraph: triple-click the paragraph.
+4. Select a line : move the I-beam to the left end of the line until it turns into 
+a right-pointing arrow [
+ ] and then click. (This might not work in all word 
+processors.)
+5. Select an entire document: use the Ctrl + A keyboard shortcut to Select All.
+F. How to Delete (or remove) text
+We may delete an entire block of text in one go or character by character
+Method 1 (Deleting an entire block of text in one go)
+1. Select the text you want to delete.
+2. Press the Delete key or the Backspace key (if none of the keys say ‘Backspace,’ 
+look for the arrow pointing left).
+Method 2 (Deleting text character by character)
+Text can be deleted character by character, either from left to right or from right to left.
+1. Deleting text from right to left:
+a. Click to position the cursor or insertion point (a vertical blinking line) at the 
+right end of the text to be deleted.
+b. Press the Backspace key on the keyboard to delete a character per click.
+NB: Press the Delete key if you are using Mac keyboard.
+Figure 1.16
+2. Deleting text from left to right:
+a. Click to position the cursor at the left end of the text to be deleted.
+b. Press the delete Key to delete text a character per click.
+NB: Press the Fn key in combination with the Delete key if you are using Mac keyboard.
+Figure 1.17
+NOTE: Save your document to ensure the changes you are applied."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 26,"25
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+G. How to Copy or Cut and Paste
+To Cut and paste Text:
+• Select the text you want to cut
+• Click on the Cut icon located on the Home tab in the Clipboard group as 
+shown in Figure 1.18.
+Figure 1.18
+NOTE: You may use the Ctrl + X  key combination to cut the selected text. On Mac 
+keyboard, use Cmd + X
+• Click in the area when you want to paste the cut text.
+• Click on the paste icon in the clipboard or use Ctrl + V .
+To Copy and paste Text:
+• Select the text you want to copy
+• Click on the Copy icon located on the Home tab in the Clipboard group as 
+shown in Figure 1.19
+Figure 1.19
+NOTE: You may use the Ctrl + C key combination to copy the selected text. On Mac 
+keyboard, use Cmd + C
+• Click in the area of the document where you want to paste your text
+• Click on the Paste icon located on the Home tab in the Clipboard group as 
+shown in Figure 1.20"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 27,"26
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.20
+NOTE: You may use the Ctrl + V key combination to paste the selected text. On Mac 
+keyboard, use Cmd + V
+H. How to use the find and replace tool
+When you are working with longer documents, it can be difficult and time consuming 
+to locate a specific word or phrase. Word can automatically search your document using 
+the Find feature, and it allows you to quickly change words or phrases using Replace.
+Finding a word or text
+1. Open the document you want to edit
+2. Select the text to be replaced
+3. From the Home tab, click the Find command. You can also press Ctrl + F on 
+your keyboard. See Figure 1.21.
+Figure 1.21
+4. The navigation pane will appear on the left side of the screen. Type the text 
+you want to find in the field at the top of the navigation pane. In this example, 
+we are finding the word “fiction” as shown in Figure 1.22."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 28,"27
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.22
+5. All occurrences of the word or text in the document will be highlighted yellow. 
+You can use the arrows to jump between occurrences. See Figure 1.23.
+Figure 1.23"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 29,"28
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Replacing a word or text
+1. From the Home tab, click the Replace command. You can also press Ctrl + H 
+on your keyboard.
+Figure 1.24
+2. The Find and Replace dialog box will appear. Type the text you want to change 
+in the Find what: field.
+3. Type the text you want to replace it with in the Replace with field. See Figure 
+1.24.
+4. Click the Find next button to locate and change the first instance of the word 
+or text.
+Figure 1.25"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 30,"29
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+NOTE: You may click the More>> button for additional options.
+5. Clicking the Find next button again will locate the next occurrence of the text.
+6. Click on either Replace (to replace the currently highlighted occurrence) or 
+Replace All (to replace all occurrences of the selected text or word with the 
+new text or word)
+Figure 1.26
+Activity 1.11
+1. Open one of the files saved in Activity 1.10 or a file given by your teacher
+2. Save regularly as you complete steps 3 to 9
+3. Using Cut and Paste, swap the first and last paragraphs in the document
+4. Copy and Paste at least two paragraphs so that you have some duplicate 
+paragraphs.
+5. Now delete these duplicated paragraphs.
+6. Copy two sentences from each paragraph to the end of the document.
+7. Undo the steps completed for step 6.
+8. Use the Find/Replace tool to find all occurrences of a word in the document 
+and replace them with another word with the same or a similar meaning
+9.  Repeat step 8 but this time only replace the second and third occurrences of 
+the found word."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 31,"30
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEWING A DOCUMENT GUIDANCE
+By default, MS Word will point out spelling and grammar mistakes and give you 
+suggestions for how to fix them. You can check this by going to the Review tab and 
+making sure Spelling and Grammar is enabled/shown. Now let’s look at these features 
+in more detail.
+How to Correct Spelling Errors
+Words underlined with red wavy line indicates a misspelt word. The red wavy line also 
+indicates that the word typed is not found in the computer’s dictionary. 
+Let us consider the following misspelled words in the sentence below (you can follow 
+along by copying or typing these words into your own document):
+• This is a tset docment.
+Method 1
+Steps:
+1. From the Review tab, click the Spelling & Grammar command.
+Figure 1.27
+2. The Spelling and Grammar  panel will appear at the right corner. For each 
+error in your document, Word will try to offer one or more suggestions. Select 
+a suggestion and click on Change to correct the error. You can also choose to 
+ignore the spelling error prompt."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 32,"31
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+ Figure 1.28
+1. Word will move through each error until you have reviewed all of them. After 
+the last error has been reviewed, a dialog box will appear confirming that the 
+Spelling and Grammar is compete. Click on OK.
+Figure 1.29
+Method 2
+1. Right-click one of these underlined words (in some versions of MS Word you 
+may need to left-click instead).
+2. Select the correct spelling from the suggested list to correct the spelling error. 
+For each error, Word will offer one or more suggestions. You can also choose to 
+ignore the spelling error prompt or add the word to Word’s dictionary as shown in 
+Figure 1.30.
+Figure 1.30"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 33,"32
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+J. How to Correct Grammatical Errors
+Words with a double-blue underline indicate a possible error with grammar.
+Steps:
+1. Right-click the underlined word or phrase. A menu will appear.
+2. Click the correct word or phrase from the listed suggestions. (The corrected 
+word or phrase will appear in the document as shown below);
+Figure 1.31
+K. How to Use the Synonyms Tool
+Sometimes you want to replace a word with a synonym. You could do this the old-
+fashioned way by looking up synonyms in a thesaurus, but some word processors have 
+synonym tools built in.
+Steps:
+1. Right-click a word you wish to find a synonym for.
+Figure 1.32"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 34,"33
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+2. Click the synonyms command from the pop-out menu.
+Figure 1.33
+3. Find a desired word in the list and click it to replace the original word.
+4. If none of the synonyms are desired, click the Thesaurus option to open the 
+full thesaurus. The Thesaurus pane will appear.
+Figure 1.34
+5. Find a desired word in the Thesaurus pane list, right-click it and then click 
+Insert.
+6. Close the Thesaurus pane."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 35,"34
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.12
+1. Open a Word file you saved earlier or a file given to you by your teacher.
+2. Save this file with a different filename if you need to keep the original file 
+unedited.
+3. Click on Save or use the keyboard shortcut (Ctrl + S) to save your changes as 
+you work through steps 4 to 7.
+4. Replace some of the words in the documents with misspelt words using Find/
+Replace. Some words in the document will now be underlined with a red 
+wavy line.
+5. Make some deliberate grammatical errors in the text (e.g. try using ‘too’ when 
+it should be ‘two,’ or ‘there’ instead of ‘their’). Some word(s) will now be 
+underlined with a double-blue line.
+6. Correct these spelling and grammar errors as per the instructions above.
+7. Use the Synonym tool to change a word or phrase in the document to another 
+word or phrase that means exactly or nearly the same.
+Extended Reading
+• Joan Lambert. (2021). Microsoft Word step by step. Pearson Press
+• Page, A., Karl, H., Levine, D., & Lincoln, H. (2020). Computing. OUP: Oxford
+FORMATTING A WORD DOCUMENT
+The goal of formatting is to make documents easier to read and more attractive by 
+changing the text’s appearance and layout. This involves adjusting font, style, colour, 
+size, alignment, and adding elements like images.
+The process of formatting includes these steps:
+• Selecting text,
+• Applying changes, and
+• Using tools from the ribbon tabs or keyboard shortcuts.
+Effective formatting helps distinguish different parts of the text and highlights 
+important information."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 36,"35
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Small caps for headers
+When to use small caps for headers:
+It is good to use capitalised text for headings and subheadings as that will easily distinguish 
+it from body text. Small caps can be used as a form of emphasis that is less dominant 
+than all uppercase text. Applying the small caps format gives initial letters full-sized 
+capitals while the remaining letters get small capitals, as illustrated here: TEXT WITH 
+SMALL CAPS, TEXT WITH NORMAL CAPITALS.
+It is not advisable to capitalise text (small caps or otherwise) for the body of a paragraph 
+because it makes it difficult to read.
+Formatting Shortcuts
+There are many combinations of keys on the keyboard (a.k.a. keyboard shortcuts) that 
+can be used for formatting.Keyboard shortcuts let you perform common tasks like 
+saving, inserting page breaks, and changing fonts without touching the mouse.
+As a result of Word’s evolution, most editing tools have more than one keyboard 
+shortcut. A new set of keyboard shortcuts came with Word 2007’s new ribbon feature 
+but the traditional shortcuts still work.
+Some common formatting shortcuts include:
+Shortcut Key Functions
+Ctrl + I Italicise text
+Ctrl + B Bold text
+Ctrl + U Underline text
+Ctrl + < Decrease font size
+Ctrl + > Increase font size
+Ctrl + = Subscript (type very small text just below the line)
+Ctrl + Shift + 
+‘+’
+Superscript (type very small text just above the line)
+Alt + H, 7 Change case
+Table 1.3
+NOTE: Use Cmd instead of Ctrl if you’re using a Mac.
+Watermarks
+A watermark is a faint design put over the text of the document. Watermarks are used to 
+protect content, indicate the status or classification of a document, and add branding."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 37,"36
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+They are a visual reminder to the reader of what document they are reading is, and 
+how they should manage the contents.
+Figure 1.35
+Tables and Illustrations
+A table  is an arrangement of information in rows and columns containing cells. 
+Tables can be used to organise content and make it easier to read.
+The inclusion of graphics in a document has many uses and benefits such as:
+• Helping to communicate ideas visually
+• Standing out and grabbing the reader’s attention’To add a table or an illustration 
+to a document, use the tools from the Tables and Illustrations groups in the Insert 
+tab. When a table or illustration is added, extra tabs are added to the ribbon to 
+provide table-specific or illustration-specific editing options. one tab is added to 
+handle the further editing and formatting of these graphic objects.
+Figure 1.36
+Now that you are familiar with the concept of formatting, let’s look at how to 
+apply some basic formatting skills to our text. [Pop up]"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 38,"37
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Basic Formatting
+A. How to apply font style, font colour, and font size changes to a text
+Steps:
+1. Select the text you want to emphasise.
+2. Then either
+• Right-click the highlighted item and click B, I or U (for bold, italic or 
+underline) as shown in Figure 1.37.
+• Click B, I or U on the Home tab Ribbon (Font group).
+Figure 1.37
+• Use the keyboard shortcuts: bold (Ctrl + B), italic (Ctrl + I), or underline (Ctrl 
++ U). Use Cmd instead of Ctrl for Macs.
+3. Click B, I or U again or the Undo button to cancel the format change.
+4. Similarly for changing the font style, size, and colour of writing, first select the 
+text.
+5. Then choose the formatting options you want from the Font group – see Figure 
+1.38.
+Use the down arrows to see more sizes and colours.
+Figure 1.38
+6. Formatting settings can be turned on in advance of text being entered. If the 
+settings for Font were as shown in Figure 1.38, then the text entered would be 
+in the Arial font, italicised, size 16 and green.
+Figure 1.39"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 39,"38
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+7. The Font dialogue box (Figure 1.40) can also be used to set formatting styles. 
+This can be accessed by clicking on the arrow as shown in Figure 1.39.
+Figure 1.40: Font dialogue box
+B. How to use the change capitalisation tool
+Steps:
+1.  Select the text you want to change.
+2. Click on the arrow beside the Change Case tool.
+3. Choose the case that suits your needs from the list of options – see Figure 1.41."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 40,"39
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+4. Small caps can be applied using the Font dialogue box (Figure 1.40).
+Figure 1.41
+C. How to use the format painter tool
+Steps:
+1. Select the text or graphic that has the formatting that you want to copy.
+2. On the Home tab, select Format Painter in the Clipboard group as shown in 
+Figure 1.42.
+Figure 1.42
+3. The cursor changes to a paintbrush icon.
+4. Use the brush to paint over a selection of text or graphics to apply the formatting.
+5. To stop formatting, press ESC."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 41,"40
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.13
+1.  Open a Word file that you saved earlier or a file given to you by your teacher.
+2.  Save a copy of this file with a different filename if you need to keep the original 
+file unedited.
+3.  Click on Save or keyboard shortcut (Ctrl + S) to save your changes as you work 
+through steps 4 and 5.
+4.  Experiment with making formatting changes as instructed above or make the 
+formatting changes specified by your teacher.
+5.  Use Format Painter to quickly apply the same formatting, such as colour, font 
+style, size, and capitalization to other parts of the document.
+Tables Guidance (Using Tables in MS Word)
+Have you encountered a situation where there is a need to organise data in a grid or 
+tabular form? Some forms of data are better presented in a table than a paragraph 
+of text. For instance, the clearest way to present the assessment scores of multiple 
+students is to use a table. See Table 1.4.
+NAME OF STUDENT EXER 1 EXER 2 HOMEWORK EXAM
+Isaac Ansah 3 5 10 60
+Emmanuel Acquah 4 5 9 67
+George Adjei 7 6 10 65
+Irene Gyamfuah 6 6 8 65
+Table 1.4: A table of student assessment scores
+D. How to insert a table
+1. Open the document you wish to edit and left-click where you wish to insert the 
+table.
+2. Click on Insert tab.
+3. Click on Table group."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 42,"41
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.43: Inserting a table in Word
+4. Move the cursor over the grid to select the number of rows and columns you 
+want and click to insert the table – see Figure 1.43.
+5. Enter the contents into your table. Use the Tab key (which should be on the left-
+most side of your keyboard, just above Caps Lock) to move from one cell to the 
+other in your table. You can also left-click the cell you want to type in.
+6. When you click anywhere inside the table, two additional tabs (contextual tabs) 
+may appear in the Ribbon: Table Design and Layout – see Figure 1.44. The 
+buttons in these tabs will enable the user to format and edit the table. 
+7. Use the Insert and Delete buttons in the Layout tab to add/remove rows/columns 
+respectively, if required.
+ Figure 1.44
+Figure 1.45: Table tools ribbon group
+E. How to add a border and shading to a table
+1. To add a border, first select a cell, multiple cells, or the whole table. Borders will 
+only be added to the cell or cells you have selected.
+2. Specify the border style. As indicated in Figure 1.46, you can individually select 
+a border line style, weight (i.e. thickness), and colour using the buttons from the"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 43,"42
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Table Design tab, or use an existing border style. Use the arrows to see the full 
+range of options.
+Figure 1.46: Table borders and shading in Word
+Figure 1.47: Shading colours list
+1. Similarly for shading, first select the cell, multiple cells, or the whole table that 
+you want to add shading to.
+2. Click on the Shading list arrow in the Table Design tab.
+3. Choose the shade colour from the given palette of colours.
+Activity 1.14
+1. Create a table in Word with four columns and six rows. Save using the filename 
+‘Hardware Table.’ Save regularly as you complete steps 2 to 10.
+2. The first row should be populated as follows (these are the ‘headers’ of the 
+table):
+Input Output Processing Storage
+3. Insert another row below the first row. For each cell in this new row, add the 
+name of a hardware item which fits the category of the column it is in. Keep 
+adding rows and hardware items until you can’t think of anymore.
+4. Shade each column with a different colour."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 44,"43
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+5. Insert another column to the right side of the table and use ‘ Communication’ 
+as the header (i.e. write it in the first row of the new column). Then add some 
+communication hardware items (e.g. Modem, Router, NIC, Switch, Hub) to 
+the cells below it, as you did before for the other categories.
+6. Embolden each word in the first row.
+7. Capitalise all words in the first row in a single operation.
+8. Apply a 3 pt black outside border to the table.
+9. Change the font colour of the first input device in the first column.
+10. Use the Format Painter to:
+a. Copy the formatting applied in step 9 to the remaining input devices.
+b. Copy the shading from the second column to the last column.
+Adding Graphics to Word Document
+When working with a word processing application such as MS Word, there are instances 
+where you may be required to incorporate graphics. Graphics include pictures/images 
+and clip art.
+F. How to add a watermark to your document
+ Steps:
+1. On the Design tab, click Watermark.
+Figure 1.48
+2. Choose Custom Watermark.
+Figure 1.49"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 45,"44
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+3. Choose the text or picture option and customise to suit your requirements.
+Figure 1.50
+G. How to insert a picture
+1. Imagine you have been asked to create a letter head for your school using MS 
+Word. You’d need to insert the school’s logo at top, but how would you do that? 
+Create or open an existing document and position the cursor at the location you 
+want the logo to be.
+2. On the Insert tab, click Pictures.
+Figure 1.51"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 46,"45
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+3. Then do one of the following:
+• Click This Device for a picture on your computer.
+• Click Stock Images for high quality images or backgrounds. This option requires 
+an Internet connection.
+• Click Online Pictures to search for a picture on the web. This option also requires 
+an Internet connection.
+4. Select the picture you want, and then click Insert.
+5. Use the tools in the Picture Format tab to format and edit the picture.
+Figure 1.52
+Activity 1.15
+Let us insert an image into a sample document using the first option in step 2 
+above (This Device):
+1. Open an existing or create a sample word document and name it letter head
+2. Click at where you want the image or picture (logo) to be placed in the 
+document
+3. Click the Insert tab
+4. Click the Pictures command button
+Figure 1.53
+I. Click This Device  from the drop-down menu and browse to the 
+Pictures folder (assuming the image is saved in the Pictures folder on 
+the computer)"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 47,"46
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.54
+II. Click on the image (logo) to select it and click the Insert button at the 
+right bottom of the Insert Picture window.
+Figure 1.55
+III. As stated earlier, proceed to format (resize, reposition and more) the 
+picture using the Picture Format tools. Remember to save your document 
+as you work.
+Activity 1.16
+1. Create a new document and save using the filename ‘Hardware Images’ . Save 
+regularly as you complete steps 2 to 5.
+2. Set font to Calibri, size 16, colour Red and add to the following headings to the 
+first three pages: Input Devices, Output Devices, Storage Devices.
+3. Insert images (stock images, images from the internet, or images provided 
+by your teacher) of hardware devices/media in each page to match the page 
+heading.
+4. Add a different colour border to each input device that you have inserted.
+5. Add the watermark ‘Confidential’ to the pages in your document."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 48,"47
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.17
+1. Create a new document and save using the filename ‘Software Images’ . Save 
+regularly as you complete steps 2 to 5.
+2. Add the following headings to the first two pages: Applications Software, 
+Systems Software.
+3. Format both headings to make them more prominent and attractive.
+4. Add a short description to match each heading.
+5. Change the colour, font type and size of the first description.
+6. Copy the format for the first description to the second description (on page 2) 
+in a single operation.
+7. Insert images (stock images, images from the internet, or images provided by 
+your teacher) in each page to match the page heading.
+Extended Reading
+Video on formatting text in MS Word. Click on the links below to watch the videos:
+https://youtu.be/ViGf0RKbCyA
+ https://youtu.be/Fvrtt0h84Mg?si=0osUTc245BetnNLD"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 49,"48
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+DOCUMENT LAYOUT
+Now let’s explore how to use these formatting styles to produce a beautiful 
+document.
+[pop up]
+A. How to adjust the page setup settings – 
+orientation, columns, and margins
+1. Select the appropriate button from Page Setup group in the Layout tab – see 
+Figure 1.56.
+Figure 1.56
+2 For orientation: select Landscape or keep it as portrait. See Figure 1.57.
+Figure 1.57
+3. For columns: the content of a page can be presented in columns by selecting 
+the required number of columns as shown in Figure 1.58. To only change the"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 50,"49
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+number of columns for a particular paragraph or section of text, highlight the 
+text you want to change before selecting the number of columns.
+Figure 1.58
+4. Many of the page settings can also be made via the Page Setup dialogue box 
+which can be displayed by clicking on the arrow in the bottom right-hand side 
+of the Page Setup group (see Figure 1.56).
+ The default page margins are shown in Figure 1.59 and can easily be changed.
+Figure 1.59"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 51,"50
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+5. Clicking on Layout > Borders  will display the Borders and Shading  dialogue 
+box (Figure 1.60) from where you can apply a page border of different styles 
+and thickness, and a colour shading to the document paragraphs. Selecting a 
+paragraph in advance will apply the border settings to that paragraph only.
+Figure 1.60
+6. To apply a page border: go to Design > Page Borders and set the style, colour, 
+etc. of the border.
+7. To insert a page break:  go to Layout > Breaks > Page (see Figure 1.61). 
+Alternatively, you can use the keyboard shortcut Ctrl + Enter (Shift + Enter for 
+a Mac).
+Figure 1.61"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 52,"51
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+8. You can also apply pagination settings  from the Paragraph dialogue box 
+(Figure 1.62) so that headings and paragraphs behave the way you want them to.
+Figure 1.62
+There are four settings:
+1. Widow/Orphan control: Single lines abandoned at the top (widows) or bottom 
+(orphans) of the page look out of place. Turn on this checkbox, and Word keeps 
+the whole family, er, paragraph together.
+2. Keep with next: Certain paragraphs, like headings, need to stay attached to the 
+paragraph that comes immediately after them. Choose the Keep with next option 
+for your headings, and they always appear above the following paragraph.
+3. Keep lines together: Sometimes you have a paragraph that shouldn’t be split 
+between two pages, like a one-paragraph quote or disclaimer. Use this option to 
+keep the paragraph as one unit.
+4. Page break before: Use this command with major headings to make sure new 
+sections of your document start on a new page.
+B. How to add a header and footer
+1. Select Header or Footer from the Insert tab (Figure 1.63).
+Figure 1.63"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 53,"52
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+1. Select Edit Header or Edit Footer.
+2. The Header & Footer tab (Figure 1.64) appears, and by default, the cursor is in 
+the centre section of the header/footer.
+3. Type the text you want in the header/footer.
+4. More options such as inserting page numbers can be set in the Header & Footer 
+tab.
+5. Select Close Header and Footer when finished.
+Figure 1.64: Header & Footer tab
+Activity 1.18
+1.  Open a Word document that you saved earlier, or a file given to you by your 
+teacher. This Word document should have at least 4 pages.
+2.  Save this file with a different filename. Click on Save or use the keyboard shortcut 
+(Ctrl + S) to save your changes as you work through steps 3 to 9.
+3.  Add ‘Practicing Word T ools’ as a header, and your name and page number as a 
+footer.
+4.  Change the top and bottom page margins to 3cm and the left and right margins to 
+2cm.
+5.  Insert a page break at the end of the last page and copy and paste some text to 
+populate the blank page that results.
+6.  Select the first paragraph of the first page and change the format from one to three 
+columns.
+7.  Change the format of another paragraph (you choose which one) to two columns.
+8.  Change the page orientation to landscape for the whole document.
+9.  Add a 3pt black line border to one of the single column paragraphs in the document.
+C. How to set paragraph alignment
+Text or paragraph alignment is a paragraph formatting attribute that determines the 
+appearance and orientation of the edges of a text or paragraph. The easiest ways to 
+change alignment are to use the alignment buttons on the formatting toolbar or the 
+keyboard shortcuts."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 54,"53
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+The are four different ways to align a text or paragraph. These are;
+1. Left align
+2. Center align
+3. Right align
+4. Justified
+Figure 1.65: Alignment option (command buttons) on formatting toolbar
+Figure 1.66 describes the four types of text alignments mentioned above, in a word 
+document, with sample illustrations:
+Align Left
+Align the lines in the paragraph flush on the left side and ragged on the right. Left 
+alignment is standard for letters, reports, and many business documents. To do this, 
+click on the Align Left symbol on the paragraph group or use keyboard shortcut Ctrl 
++ L.
+Align Centre
+Align the lines in the paragraph in the middle. Centre alignment is common for 
+things you want to stand out, like titles. To do this, click on the Align Centre symbol 
+on the paragraph group or use keyboard shortcut Ctrl + E.
+Align Right
+Align the lines in the paragraph flush on the right side and ragged on the left. 
+Right alignment is probably the rarest alignment in documents written in Left-To-
+Right languages like English. However, it is much more common in Right-To-Left 
+languages like Arabic. To do this, click on the Align Right symbol on the paragraph 
+group or use keyboard shortcut Ctrl + R.
+Justified
+Align the lines in the paragraph flush on the left and right side, unless it’s not a full line, in 
+which case align left. Notice that the spaces between words need to stretch a bit to achieve 
+this. Justified alignment is standard in newspapers and multi-column documents. To do 
+this, click on the Justify symbol on the paragraph group or use keyboard shortcut Ctrl + J.
+Figure 1.66: Description of various text alignments and how they display"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 55,"54
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Here are the steps to follow to set align text:
+1. With your document open, select the Home tab.
+2. Highlight the text you want to align and set the alignment by either using the 
+alignment buttons in the Paragraph grouping (highlighted in Figure 1.67) or 
+using the keyboard shortcuts detailed below.
+Using the text alignment command buttons:
+Figure 1.67
+Using keyboard shortcuts
+1. To align the text left: (Ctrl+L)
+2. To align the text right: (Ctrl+R)
+3. To centre the text: (Ctrl+E)
+4. To fully justify the text: (Ctrl+J)
+NOTE: Use Cmd instead of Ctrl if you are using a Mac keyboard.
+Activity 1.19
+In a Word document, write a short paragraph about your favourite book, film, or 
+TV show. Then copy and paste the paragraph until you have four copies of it."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 56,"55
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Apply the following alignments to the corresponding paragraphs and pay attention 
+to the differences between them:
+Paragraph 1: Align centre
+Paragraph 2: Align left
+Paragraph 3: Align right
+Paragraph 4: Justify
+D. How to set spacing between lines 
+Line spacing can be changed using the Line Spacing tool (see Figure 1.68) or the 
+Paragraph dialog box (see Figure 1.69).
+Figure: 1.68
+Line spacing using the paragraph dialog box:
+Steps:
+Click or select the paragraph you want to change the line spacing for.
+1. Select the Paragraph dialogue box from the Home tab. You can also select the 
+text and right-click it, then click the Paragraph option from the menu.
+2. Set your desired line spacing options in the Paragraph dialogue box that appears."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 57,"56
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.69: Paragraph dialog box
+Figure 1.70: Text with line spacing 1.0, 1.5 and 2.0"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 58,"57
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+E. How to indent lines in one paragraph or at the 
+start of every paragraph.
+Line indentation
+Line indentation refers to the practice of adding a specific amount of space or tab 
+characters at the beginning of a line of text.
+Steps:
+1. Place the cursor at the start of the line you want to indent.
+2.  Click on the Increase Indent button.
+ NOTE: There is also a Decrease Indent button next to the Increase Indent button.
+Paragraph indentation
+Paragraph indentation refers to the practice of adding a specific amount of space or tab 
+characters at the beginning of the first line of a paragraph.
+Steps:
+1. Select the paragraph(s) you want to indent.
+ Go to the Paragraph group in the Home tab.
+2. Open the Paragraph dialogue box to set the type of indent (e.g. first line, hanging) 
+and how much to indent by (see Figure 1.69).
+3. Alternatively, drag the indent shapes on the ruler which is situated below the 
+ribbon (see Figure 1.71). The meanings of the different sliders are explained 
+below.
+Figure 1.71: Indentation tabs of word’s horizontal ruler
+NOTE: Here’s how the ruler can be used to adjust indentation in different ways:
+• To add or adjust a first line indent: Find the small arrow/triangle at the top 
+of the ruler. Drag this arrow to the right to indent just the first line of your 
+paragraph. This will only move the first line, leaving the rest of the paragraph in 
+place."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 59,"58
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+• For a hanging indent: Look for the arrow/triangle shape just below the other 
+triangle. Drag it to the right. This will indent every line in the paragraph except 
+for the first line.
+• To adjust the left indent  (i.e. the indentation of text from the left margin) : 
+Look at the ruler at the top of your document. There is a small rectangle shape 
+on the ruler, below the two triangles. Drag this rectangle to the right. This moves 
+both triangles at the same time and therefore moves every line in your paragraph 
+further from the left margin.
+Figure 1.72 shows examples of text with different indentations and the corresponding 
+ruler settings.
+Figure 1.72: Text with different indentations
+NOTE: Do not use Tab to create a first-line indent. If you use the Tab key, you need 
+to remember to hit it at the beginning of every paragraph, and there is a danger of 
+messing up your indents if you change the tab settings.
+Activity 1.20
+Open a Word document which contains four paragraphs of text, with each 
+paragraph having a left-aligned heading.
+1. Use the alignment tools to give a different type of alignment to each heading.
+2. Apply 1.5 line spacing to the second paragraph.
+3. Insert your name and page number as a footer on each page.
+4. Insert a page break at the end of the third paragraph.
+5. Use the Ruler to indent the first line of the last paragraph"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 60,"59
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.21
+Research and write about any one festival celebrated in Ghana. Follow these 
+instructions to produce your write-up using MS Word or whatever word processor 
+you have available:
+1. Use the portrait orientation.
+2. Use a two-column layout.
+3. Use Justified alignment.
+4. The header section should have the name of the festival, and the footer section 
+should have your full name and class.
+5. Increase the first line indent for your first paragraph
+6. Print and submit the assignment to your teacher.
+Extended Reading
+• Microsoft Office Step by step 2010 by Cox J., Lambert J., & Frye C. Microsoft Press.
+• Word: Formatting Text (gcfglobal.org)
+• How to Format a Word Document to Look Professional: 13 Steps (wikihow.com)
+• Video on pagination and paragraphs. Click on the link below and watch.
+•  https://youtu.be/pW4AamU0vGk?si=Wjr1torTjh-cy_Qx
+LISTS
+Hello learner! today, you will explore how you can enhance lists by sorting, renumbering 
+and customising list styles.
+A list is an arrangement of elements created in a sequential fashion, typically with 
+each item shown on its own line and frequently denoted with numbers or bullet points. 
+Bulleted lists, numbered lists and multilevel lists are the types of lists that can be 
+inserted in a word-processed document.
+Sorting and renumbering a list means arranging the items in the list in a specific 
+order, such as alphabetical or numerical, and then updating the numbers or bullets 
+accordingly.
+Now let us delve into how to create list, edit the list and customise the list styles.
+[pop up]"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 61,"60
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Lists
+A list is a series of items that are presented in a structured way using bullets or numbers. 
+This helps to organise information, improve readability, and emphasise key points.
+Types of Listing used in MS Word
+The types of lists that can be inserted in a word-processed document are bullet lists, 
+numbered lists, and multilevel lists.
+Bulleted lists use symbols to separate each item and are useful for listing items that 
+are related or have similar characteristics.
+Numbered lists use numbers to separate items and are used to record items that must 
+happen in a certain order such as a sequence of steps or directions. Numbered lists can 
+also be used to document an order of preference or ranking,
+Multilevel lists are lists with more than one level. Multilevel lists are used when you 
+want to create an outline of items, where each item can have its own sub list of items.
+Examples of two multilevel lists are shown in Figure 1.73;
+Figure 1.73: Multilevel lists
+We use the Home tab and Design tab ribbons to create lists. Let us observe critically the 
+various tools/buttons on these ribbons.
+Note: The tools needed to create a list are found within the Paragraph Group in the 
+Home tab ribbon.
+Figure 1.74: Home tab ribbon"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 62,"61
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Note: Within the Design tab ribbon, the most important part is the document formatting 
+section.
+Figure 1.75: Design tab ribbon
+Now that you are familiar with the required sections in the Home tab and Design tab 
+ribbons. Let’s explore how to create our lists. Launch your MS Word application and 
+follow these steps: [pop up]
+A. Creating a bulleted or numbered list
+Steps:
+1. Position the cursor where you want to insert the bullet list.
+2. On the Home tab, under paragraph grouping, click the Bullets button to display 
+the bullet library (Figure 1.76) OR click on the Numbering button (Figure 1.77).
+ Figure 1.76: Bullet Library  Figure 1.77: Numbering Library
+3. Choose a desired bullet or numbering list.
+4. Type any text and press Enter key between items to create the desired list.
+5. Press Enter key on the keyboard twice to deactivate the selected bullet/
+numbering.
+ Note that numbered lists can be numbers, letters, or roman numerals.
+Now that have created lists using bullets and numbering, let’s look at how multilevel 
+lists are created. [pop up]"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 63,"62
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+B. Creating a multilevel list
+Steps
+1. Type out the lines of your list, with each item of your list on a different line.
+2. In the Paragraph group on the Home tab, click the Multilevel List button in the 
+paragraph group.
+3. Choose a list type from the List Library as shown in Figure 1.78.
+Figure 1.78: Multilevel List Library
+4. Your list will now be formatted in the style you chose but only as a single-level 
+list.
+5. On the Home tab, under Paragraph grouping, click the Increase Indent button 
+on any item on the list demote that item to a lower list level
+6. Click the Decrease Indent button on the list item to demote it back to the first 
+level list.
+Now let us see how to sort a text/number list in a given document.
+C. How to sort a text/number list
+1. Select the list you want to sort.
+2. Go to Home tab > Sort button.
+3. In the Sort Text dialogue box, set Sort by to Paragraphs and Text/Paragraphs and 
+Numbers.
+4. Choose Ascending (A to Z) or Descending (Z to A).
+5. Select OK."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 64,"63
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+D. How to sort a text/number list
+1. Double-click the numbers in the list. The text won’t appear selected.
+2. Right-click the number you want to change.
+3. Click Set Numbering value and enter values.
+These steps are shown in Figure 1.79.
+Figure 1.79: Renumbering a list
+Now let’s do the following activity. Share your results with your teacher or colleagues."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 65,"64
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.22
+Steps:
+1. Create a new document in Word.
+2. Save this document using the filename ‘Software’ . Click on Save or keyboard 
+shortcut (Ctrl + S) to effect changes as you work through steps 3 to 5.
+3. Add your name and page number as a footer.
+4. Create two lists:
+i. A bulleted list of three types of systems software. For example:
+• Operating system
+• Utility programs
+• Device drivers
+ii. A numbered list of the names of at least three examples of application 
+software. For example:
+• Word processor
+• Spreadsheet program
+• Gaming program
+• DBMS
+5. Add some pictures to your document to match your chosen software. Insert 
+pictures of software from the picture folder/online.
+Use the space below to reflect on Activity 1.22. How did you find the activity? 
+Include any notes that will help you to complete the task in the future.
+We are now going to customise a list style. The following provides instructions on 
+how to do this."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 66,"65
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+E.  How to customise a list style such as 
+defining a new bullet
+1. Select the text or bulleted list you want to change.
+2. On the Home tab, in the Paragraph group, click the arrow next to Bulleted List , 
+and then click Define New Bullet.
+3. Click Symbol and then select the symbol you want to use.
+ OR
+4. Click Picture and then browse for your picture from a file or Bing Image Search.
+ Click Insert.
+ OR
+5. Click Font and then change the font properties to be used for the bullet. You can 
+choose settings on the Font tab or the Advanced tab
+6. Click OK.
+STYLES
+Word styles are pre-made sets of font size, colour, and style that you can apply to any text. 
+Using styles will help you to achieve a professional look and feel to your document.
+Styles allow you to apply a consistent look across the whole document instead of 
+having to format each section individually and enable you to quickly generate a table 
+of contents (ToC).
+Style sets include a combination of title, heading, and paragraph styles. Style sets allow 
+you to format all elements in your document at once instead of modifying each element 
+separately.
+Now that you are familiar with the meaning of styles, let us look at how to apply styles 
+to your documents.
+A. How to apply a Word style
+Steps:
+1. Select the text you want to apply a style to or place your cursor at the beginning 
+of the line.
+2. In the Styles group on the Home tab, click the More drop-down arrow (Figure 
+1.80)."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 67,"66
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.80: Applying a Word Style
+3. Select the desired style from the drop-down menu.
+Figure 1.81
+4. The text will appear in the selected style.
+B. How to apply a style set to your document
+1. From the Design tab, click the More drop-down arrow in the Document 
+Formatting group – see Figure 1.82.
+ Figure 1.82
+3. Choose the desired style set from the drop-down menu.
+4. The selected style set will be applied to your entire document."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 68,"67
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+C. How to generate a table of contents from heading 
+styles
+1. By default, any text that you apply a Heading 1, 2, or 3 style to will show up as 
+an entry in the table of contents. Apply heading styles to the text in a document 
+accordingly.
+2. Make sure that you have added page numbers to the document.
+3. Position the cursor where you want to insert the table of contents in the 
+document.
+4. Go to the Reference tab and click on Table of Contents button from the Table of 
+Contents group. Then click on Custom Table of Contents (see Figure 1.83).
+5. Format the table of contents, if required.
+ Figure 1.83 Figure 1.84: Five headings with a Heading 1 
+style and two headings (internal and portable) 
+with a Heading 2 style
+6. To update a table of contents that was created automatically from heading styles, 
+click References > Update Table. You can choose to update page numbers only 
+or select Update entire table to update the page numbers and the text (i.e. a 
+change of heading text).
+Let’s now complete Activity 1.23 on how to apply styles and Tables of Contents 
+within your document
+Activity 1.23
+1. Open an existing file or create a new MS Word file that consists of more than 
+four pages. Top Tip: You can type =rand (40) to generate a four-page text 
+document.
+2. Save this document using the filename ‘Styles Testing’ . Click on Save or use 
+the keyboard shortcut (Ctrl + S) to effect changes as you work through steps 
+3 to 8."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 69,"68
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+3. Apply a mixture of Heading 1, 2, and 3 styles to existing heading text. Insert 
+some new headings across all the pages.
+4. Insert page numbers in the document if this has not been done previously.
+5. Generate a Table of Contents (ToC).
+6. Insert two new pages and add some new heading text to these pages, random 
+text is fine.
+7. Apply styles to the new headings.
+8. Update the ToC.
+Share your document with your teacher and update your document with any 
+feedback given to you.
+Use the space below to reflect on Activity 1.23. How did you find the activity? 
+Include any notes that will help you to complete the task in the future.
+Congratulations on completing the activity!
+Now let’s practice applying different styles in activity 1.24.
+Activity 1.24
+Steps:
+1. Open an existing Word file from your ICT folder or a file given to you by your 
+teacher.
+2. Save this document using the filename ‘Styles Set Testing’ . Click on Save or 
+use the keyboard shortcut (Ctrl + S) to effect changes as you work through 
+steps 3 and 4.
+3. Apply some different styles to your document text from the Styles drop-down 
+menu (shown in Figure 1.81 above).
+4. Go to the Design tab and try out different Style Sets (refer to Figure 1.82).
+Use the space below to reflect on Activity 1.24. How did you find the activity? 
+Include any notes that will help you to complete the task in the future."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 70,"69
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Extended Reading
+• Microsoft Office Step by step 2010 by Cox J., Lambert J., & Frye C. Microsoft Press.
+• Word: Formatting Text (gcfglobal.org)
+• How to Format a Word Document to Look Professional: 13 Steps (wikihow.com)
+• Video on pagination and paragraphs. Click on the link below and watch.
+https://youtu.be/pW4AamU0vGk?si=Wjr1torTjh-cy_Qx
+WHAT IS A PRESENTATION SOFTWARE?
+Welcome learner! Today, you will discover how you can use presentation software 
+to present information, normally in the form of a slideshow. This will help you to 
+present your assignments to your colleagues and later use such skills in your tertiary 
+education as well as in the field of work in your future life. Presentation software are 
+used by a number of professionals to present facts at meetings, workshops, classroom, 
+laboratories. Professionals such as teachers, doctors, engineers, professors and others 
+use this presentation software. Microsoft Office PowerPoint would be used in this 
+section and several of its features would be examined. Many of the tools in PowerPoint 
+match those in Word and work in the same way. The version of PowerPoint you use 
+may have slightly different features from other versions, but they have a lot in common.
+Establishing PowerPoint Version
+It is very prudent to know the version of Microsoft Office you are using. Let’s verify the 
+version being run on your computer. Just follow the steps below:
+Create a new blank presentation or open an existing PowerPoint presentation."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 71,"70
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Choose File from the top left corner, and then click either Account or Help on the 
+left navigation bar. You will see your Office version and information under Product 
+information, on the right side of the window
+Figure 1.85: Checking PowerPoint version
+Parts of the PowerPoint Window
+Figure 1.86: PowerPoint Window
+Being familiar with the names of the various parts of the PowerPoint window and 
+their function(s) is very useful and will be necessary for you to know as they will be 
+mentioned in the guide instructions in this section. [Pop up]"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 72,"71
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Features and functions of MS PowerPoint window
+Title bar: Displays the document name followed by a program name
+Quick Access toolbar: Contains buttons for commonly used commands.
+Tabs: Contain groups of commands organised by function
+Ribbon: Contains buttons and options for the selected tab
+Slide pane: Displays the current slide
+Slides/Outline pane/slide thumbnail list: Shows a thumbnail or an outline of the 
+slides
+Status bar: Displays slide position, design, and other information
+Scroll bars: Allow you to navigate through the slides
+Slide title placeholder: Title of the slide is typed here.
+T able 1.5
+As illustrated in the table above, the PowerPoint window has similar features and 
+layout to the Word window.
+Most of the features of different versions of PowerPoint will match or be similar, but 
+there may be some slight differences.
+Figure 1.87: PowerPoint 2010 Home Ribbon"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 73,"72
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Basic file handling Guidance
+A. How to launch Microsoft PowerPoint, create and save a new presentation
+Now that you are familiar with the parts of Microsoft PowerPoint window, let’s start 
+with how to launch the application. [Pop up]
+Follow the steps below to launch MS PowerPoint, create and save a new 
+presentation.
+1. Click on the Start icon (
+ ). It will be located in the bottom-middle or bottom-
+left corner of your screen.
+2. Type PowerPoint in the search bar and click on the Microsoft PowerPoint app 
+that appears in the search results
+3. Click Blank presentation to open a new blank presentation window as shown in 
+Figure 1.88
+Figure 1.88
+4. Click on Save As command (or Save a Copy if using PowerPoint 365)
+5. Make necessary changes in the Save As dialogue box.
+6. Click Save.
+7. Add content to the title and subtitle in the slide pane by first clicking on the 
+placeholders
+ Figure 1.89 Default first slide type"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 74,"73
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+8. Add more slides if required (see instruction set B).
+9. Click on Save regularly to update the content of the last stored file.
+10. Click on the X in the top right-hand corner of the PowerPoint window or select 
+File > Close. You may be prompted to save again at this point.
+Note: Use Save As when saving a document for the first time. It is good practise to 
+save the blank presentation using an appropriate file name and folder before you 
+start entering content. Use File > New  when starting a new presentation from within 
+PowerPoint.
+B. How to insert a new slide
+Sometimes you may omit very important information that is supposed to be in the 
+middle of your presentation for which you would like to add. Let us look at how that 
+is done. [Pop up]
+Follow the steps below to insert a new slide
+1. Select the slide you want your new slide to follow.
+2. Select Home > New Slide – see Figure 1.90
+Figure 1.90: New Slide pull-down menu
+3. Select a slide layout.
+4. If Blank is selected, the user will have to insert a textbox to enter text."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 75,"74
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+5. Click on the placeholder and enter the content.
+This is the slide layout you will need for most of the tasks in this material:
+Activity 1.25
+Now that you have gone through how to create and save a new presentation, insert 
+a new slide, let’s apply those concepts to create a sample PowerPoint presentation 
+and save it using the file name “Myself” , title- “All About Me” and your own 
+name as a subtitle. Use the tools from the font group (Home tab) to format the 
+entered text as you wish and save your updated document.
+Steps:
+1. Launch MS PowerPoint and select Blank Presentation
+2.  Click on File and choose Save As to save it using the file name ‘Myself’
+3. Add the text ‘All About Me’ as the title and your own name as the subtitle.
+4. Select the title by clicking at the beginning of the title, holding and dragging 
+across the phrase ‘All About Me’ .
+5. Click on the Home tab
+6. Under the Font groupings, choose ALGERIAN as the font style, font size 20, 
+font colour Dark Blue and click the letter B to bolden it.
+7. Select the subtitle for formatting.
+8. Format the subtitle with the following: font style – Times New Roman, font 
+size – 16’ , colour – Dark Red and in Italics.
+9. Save your updated document by clicking on file and select Save or using the 
+keyboard shortcut (Ctrl + S)
+I hope you were able to create your first presentation? If no, go through the steps 
+to create a presentation again and try the activity one more time. Take a colleague 
+through activity 1.25."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 76,"75
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+C. How to delete a single slide
+After you are done with your presentation, you may sometimes realise that some slides 
+contain information that you feel like taking out from your presentation. Let us see 
+how a slide can be deleted. [Pop up]
+Follow the steps below
+1. Right-click the slide in the thumbnail panel/list on the left.
+2. Select Delete Slide.
+D. How to open an existing slideshow for editing
+Now that you are able to create your own presentation, you will sometimes have to 
+open a presentation that was already created by you or someone else to make some 
+changes to it. Let us look at how to open and edit an already existing presentation. [Pop 
+up]
+Follow the steps below
+1. Click on the File Explorer icon. [
+ ]
+2. Go to the folder location where your file is stored.
+3. Open the document you wish to edit by double-clicking on it.
+From within PowerPoint, the steps would be:
+1. Click the File tab.
+2. Click Open. The Open screen appears, select/browse a location, and select the 
+file you want to open.
+E. How to print from PowerPoint
+Let us look at how to print from a PowerPoint. [pop up]
+Follow the steps below
+1. Select File > Print.
+2. To preview each slide, select the forward and backward arrows at the bottom of 
+the page.
+If the text is too small to read, enlarge using the zoom slider at the bottom of the page."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 77,"76
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+3. Choose the number of copies, and other options you want. Check that the 
+correct printer is selected and online. Printer properties will give you additional 
+options. Select the Print button.
+Figure 1.91: Print dialogue box
+F. How to play a PowerPoint slideshow
+After you have finished organising your presentation slides, there is a better way to 
+present your beautiful designs and information to your audience automatically or by 
+the click of a mouse button. It is called slideshow. [Pop up]
+Steps to play a PowerPoint slideshow
+1. On the  Slide Show tab in the  Start Slide Show  group, select  From Beginning as 
+shown in Figure 1.92
+Figure 1.92
+2. Click on the mouse or press N on the keyboard to move to the next slide."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 78,"77
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Activity 1.26
+In this activity below (activity 1.26), you are going to apply the skills you have 
+acquired on how to delete a slide, open an existing slideshow for editing and how 
+to print from PowerPoint.
+Open the file you saved in activity 1 and insert a title and content slide with your 
+title “My Family” and the content containing details about your family. You are 
+required to add at least four slides about yourself with the titles: “My Favourite 
+Things” , “My School” and “My Hope for the Future.” Try to add additional 
+transitions and animations to your slideshow. Save your updated file.
+Steps:
+1.  Open the file saved in Activity 1.25 (Myself.pptx).
+2.  Click on Home tab, select New Slide and choose Title and Content slide
+3.  Enter ‘My Family’ as the title and enter some details about your family in the 
+content area. (Hint for content; Name of parents and siblings, family size, country 
+of origin, favourite meals, hometown and so on.)
+4. Add at least four additional slides about yourself, leaving room for pictures that 
+you will be adding later. Three of these titles should be:
+• My Favourite Things
+• My School
+• My Hopes for The Future
+5. Format your tittle texts to make it more visually appealing using the following: 
+font style – Broadway, colour – Dark Blue and size 20points.
+Click on the Slide Show  tab and select From Beginning  in the Start Slide 
+Show group (refer to figure 1.92)
+How to apply slide transitions
+1. Click on your first slide to select it
+2. Click on the Transitions tab and select the various transitions to see their 
+effects.
+3. Select the desire transition and click Apply to All command.
+How to apply animations
+1. Select or just click on the title of the first slide
+2. Click the Animations tab and choose the various kinds of animations under 
+that tab to see their effects on the text. Apply the same actions to the subtitle."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 79,"78
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+3. Copy your slideshow for a presentation in the ICT lab or classroom.
+ Prepare to explain to your colleagues how you did certain things.
+Take Note
+A transition effect determines how one slide changes to the next during a 
+presentation. Transitions enhance the flow from one slide to another and make 
+the presentation smoother or more visually engaging. For instance, A slide may 
+fade, dissolve, or swipe from one slide to the next.
+Animation Effect: It is applied to individual elements within a slide (such as 
+text, images, or shapes) and determines how objects appear, move, or disappear 
+within the slide. Animations are used to control the pacing of information or to 
+draw attention to specific content. For instance, Text may fly in from the left, an 
+image may zoom in, or a shape may bounce.
+4. Save your updated file.
+G.  How to apply a design template
+Microsoft PowerPoint has some designs for you to choose which can be applied to a 
+slide or a group of slides. Of course, these designs are very beautiful and will make 
+your presentations attractive. Let us now try to apply some of the designs to our 
+presentation. [Pop up]
+[A template is a pattern or blueprint of a slide or group of slides].
+Follow the steps below
+1. Click the Design tab on the ribbon.
+2. Click the design you want from the Themes group – see Figure 1.93.
+Figure 1.93
+The design will be applied to the presentation.
+Inserting Graphics Guidance
+H.  How to add basic shapes to a slide
+Sometimes, you would like to add some shapes to your presentation to add more 
+meanings to your work. Shapes such as; star, diamond, triangle, rectangle, arrows and 
+many more are available for you to choose and draw for your work. Let’s see how 
+shapes are added to a slide. [Pop up]"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 80,"79
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Follow the steps below
+1. Go to the slides pane in the PowerPoint window
+2. On the Insert Tab under the Illustrations group, click on shapes and pick a shape
+3. Drag the cursor using the mouse to enlarge the shape
+4. Select the shape and use the tools from the shape format  menu to format its 
+appearance as you wish.
+Figure 1.94 Inserting shapes
+Activity 1.27
+Having studied how to apply design templates and inserting shapes in PowerPoint 
+presentation, let us try our hands on the activity below; in this activity (activity 
+1.27) you will practice how to apply design templates and insert shapes into a 
+PowerPoint presentation.
+Steps:
+1.  Open Myself.pptx.
+2.  Click the Design tab on the ribbon
+3. Click the design you want from the Themes group.
+Adding shapes
+1. Select any slide and click in the content area.
+2. Click the Insert tab.
+3. Click on shapes and pick a shape under Illustrations group.
+4. Drag the cursor using the mouse to enlarge the shape to your desired size."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 81,"80
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+5. Select the shape and click the Format tab, choose any shape style under the 
+Shape Styles group.
+6. Click Shape Fill to choose a colour for the entire shape.
+7. Click on Shape Outline to change the colour of edges of the shape.
+8. Click the Shape Effects to add special effects to the shape.
+Save your updated slideshow.
+I. How to add pictures to a slide
+Sometimes, you would like to use a picture on your computer, online, flash drive or 
+even a mobile phone in your presentation. Are you wondering how to do it? Don’t 
+worry. Let us start [Pop up]
+Steps:
+On the Insert tab under the Image group, click on Pictures – see Figure 1.95
+Figure 1.95
+1. Then do one of the following:
+• Click This Device for a picture on your computer.
+• Click Stock Images for high quality images or backgrounds.
+• Click Online Pictures for a picture on the web.
+2. Select the picture you want, and then click  Insert. Your picture will be inserted 
+– see Figure 1.96.
+3. Use the tools in the Picture Format tab to format and edit the picture."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 82,"81
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Figure 1.96: A slide with a title and an inserted picture
+Activity 1.28
+After going through how to insert pictures in the slide, let us practice this activity. 
+In this activity you going to add an image ( the school logo ) to the first slide of 
+your PowerPoint presentation.
+Hint: Copy the school logo from your teacher or download it.
+Steps:
+1. Open Myself.pptx.
+2. Select a slide from the slide pane
+3. Click the Insert tab and click on Pictures under the Image group
+4. Choose any of the following depending on the location of your pictures.
+• Click This Device for a picture on your computer.
+• Click Stock Images for high quality images or backgrounds.
+• Click Online Pictures for a picture on the web.
+5. Select the picture you want and click Insert.
+Formatting a Picture
+1. Select the picture and click the Format tab
+2. Under the Adjust group,
+• click on Colour to change your picture’s colour to your choice.
+• Click on Artistic Effects to add special effects to you picture"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 83,"82
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+• Click on Compress picture to compress your picture
+• Click on Change Picture to change your picture
+Save your updated file.
+Activity 1.29
+Project work
+Conduct research on the benefits of AI-powered tools such as ChatGPT for 
+creating presentations. Compile a list of links to useful websites and online videos 
+on this topic.
+Extended Reading
+• How to insert video in MS PowerPoint
+ https://youtu.be/KGaUXc1ex9k?si=_CJBGlQXLZ_wXJB8
+• How to make a PowerPoint presentation using ChatGPT
+ https://youtube.com/shorts/k6ejsuhdf-A?si=4wR-PBziU6-ITtNM"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 84,"83
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEW QUESTIONS 1.1
+1. In recent times, people use a lot of electronic devices to help in performing 
+daily activities. Give three examples of electronic devices and what they’re 
+used for.
+2. Imagine you walk into your school’s ICT lab and the teacher asks you to show 
+them to explain what external hardware is and to give examples. What would 
+you say and what would you point to?
+3. Upon entering your classroom on Monday morning, you witness a hot debate 
+between your two classmates where one of them claims a touch screen is an 
+input device, but the other says it’s an output device. Who is right? What will 
+you say to settle the debate?
+4. USB drives, hard disks, and CDs are all examples of a particular classification 
+of computer hardware. What is it and what is meant by that classification?
+5. You are sending emails using a desktop computer. How do the CPU, RAM, and 
+NIC enable you to do this?
+6. How would you define software?
+7. How does system software differ from application software?
+8. How would you summarise the role of an OS in a computer system?"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 85,"84
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEW QUESTIONS 1.2
+1. What are some examples of word processing software?
+2. What is the function of the ‘ribbon’ in an MS Word window?
+3. What is the keyboard shortcut for undoing the last operation when editing a 
+Word document?
+4. What does a red squiggly underline () indicate in a word document?
+5. A document consists of three paragraphs. Which of the following operations 
+could be used to move the first paragraph to the end of the document?
+a. Move and Paste
+b. Copy and Paste
+c. Cut and Paste
+6. Explain why it’s important of save regularly when word processing a document.
+7. Explain how using copy and paste can save time when creating a Word 
+document.
+8. Describe one tool in the Review tab in Word that you have used in a lesson and 
+what you used it for."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 86,"85
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEW QUESTIONS 1.3
+1. Your friend asks you to help her format the heading of a permission letter to 
+bold and underlined in size 12 Times New Roman font. What will you do to 
+make these formatting changes?
+2. Peter, your class captain, sent the notice below to the class Retype it in your 
+own document and apply the necessary formatting to make it look the same as 
+it is here:
+NOTICE! NOTICE!! NOTICE!!!
+Mr. Sulley will be conducting a class test on Friday, 22nd November 2024.
+The test is going to be online based, so every student should get seated at the ICT 
+lab by 1:00 PM at the latest.
+Figure 1.73
+[NOTE: The font style of the heading is Algerian, font size 16. The rest of the text 
+is size 12 Times New Roman.]
+3. Araba typed the document shown Figure 1.xx and later changed the appearance 
+of the text to what is shown in Figure 1.73. What formatting has been applied 
+to Figure 1.73 to produce the result in Figure 1.74?
+Figure 1.74
+4. Selorm wrote an essay with the title “A Brief History of Ghana” . Currently, her 
+title looks the same as the rest of her essay, but she wants to make it look more 
+appealing and prominent. Suggest at least three formatting changes she could 
+make to it to achieve this result.
+5. Why is it important to format documents?
+6. Use Word to create the following table:"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 87,"86
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+Mammals Reptiles Amphibians
+Dogs Snakes Frogs
+Elephants Lizards Toads
+Lions Tortoises Salamanders
+ Table 1.5
+7. What is a watermark and why would you want to use one?
+8. Open the document with the table from question 7 and compare/contrast the 
+tabular presentation with the horizontal list’s presentation in Figure 1.75 in 
+terms of how easy it is to read.
+Figure 1.75"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 88,"87
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEW QUESTIONS 1.4
+1. Complete the sentence: Text inserted in the bottom margin of every page of a 
+document is called a ______________.
+2. Ctrl + Enter is the keyboard shortcut for
+a. a column break
+b. a page break
+c. a section break
+3. What problem may arise when printing in Word if the document’s page margins 
+are too narrow (i.e. the text is very close to the edge of the page)?"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 89,"88
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEW QUESTIONS 1.5
+1. Your ICT teacher has tasked you to work on a lengthy report with multiple 
+sections and subsections. How would using Word styles for formatting headings 
+benefit you in terms of consistency and document navigation?
+2. Give an example of a picture bullet that is suitable to be used with a list of 
+names of players in a football team.
+3.
+a. Create a document that will generate the following table of contents:
+ 
+Note: No text needs be added to the pages, just the headings.
+b. b. Insert a new page (page 3) with the heading ‘Communication devices’
+c. c. Update the table of contents to show this new page and heading.
+4. When a cook is writing down a recipe, they need to present the instructions 
+in a clear and organised manner. State the type of list that is best suited to this 
+situation. Justify your choice.
+5. What type of page orientation would be best suited to a three-column brochure? 
+Justify your choice of orientation.
+6. Evaluate the effectiveness of using a word processor to create the following 
+documents:
+a. An English essay
+b. A birthday Card
+c. A 3-column brochure
+d. A poster to advertise a school dance
+c. A music quiz slideshow
+7. Investigate the function of the following tool in Word (Design Tab):
+ Use your findings to explain the difference between a Word style set and a 
+Word theme.
+8. Since its inception in 1983, Microsoft Word has gone on to become one of the 
+most popular office applications in the world. Research the history of Word 
+and create a timeline showing its different versions and major functionality 
+extensions over the past 40 + years."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 90,"89
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+REVIEW QUESTIONS 1.6
+1. Your Social studies teacher gave you assignment on the topic “Culture and 
+its elements” . You are supposed to present your work using Microsoft Office 
+PowerPoint. Create a presentation using the details below.
+i. The First slide should contain “Culture” as the title and the definition of 
+culture as the subtitle.
+ii. Add another slide with a title “Elements of culture “and list four elements 
+of culture in the subtitle.
+iii. Insert a slide between the first slide and the second with a title “Revision” 
+and subtitle “End of work”
+iv. Delete the recently inserted slide and save your work as “Social_Studies1”
+2. A reputable company in your area called Mawuse Co Ltd asked you to prepare 
+a presentation with the details below. Produce an attractive presentation using 
+the information below:
+a. Start a new blank presentation
+b. Hint: Your first Slide should be the Title Slide
+c. Use the name of the company (Mawuse Co Ltd) as the title.
+d.  Make the Font of the title Arial Black and size 88 points
+e. Insert a second slide, this should be with a layout of Bulleted List
+f.  Type the Text as seen below;
+g. Change the Font Colour of the list Blue.
+h. Insert a third slide, this should be an Organization Chart. Include the following 
+people in the chart:
+i. Kofi Blay David, General Manager
+ii.  Mabel Nnuro, Head of Sales
+iii. Trinity Gagbe, Assistant General Manager
+iv.  Charlotte Tu Serlom, Human Resources Manager
+i. Add a fourth slide. The slide should contain the Table below:"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 91,"90
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+j. 
+New Products Discontinued Products
+Digital Camera 8mm Cameras
+Ultra Slim Video Camera 8x Zoom Video Camera
+25” Plasma TVs 25” Plasma TVs 21” Black and White TVs
+DVD Recorders Video Players
+7.1 Dolby Surround Systems 2 channel stereo systems
+Make the table headings New Products and Discontinued Products with a 
+shadow effect and centred in the cell. Widen columns to fit Text as above.
+k. The Fifth slide should be a Chart slide. Use the table below to generate a bar 
+chart.
+January February March April
+TVs 22 26 73 34
+DVDs 31 52 27 81
+Wi-Fi equipment 46 45 46 62
+Video Records 24 31 42 45
+l. Change the colours of the chart so that the series of bars are red, yellow, pink, 
+and green.
+m. Add a light-coloured background to all slides in the presentation.
+n.  Add also Transition effects between slides and also different effects for some 
+of the text it the presentation.
+o.  Reverse the order of the second and third slides
+p. Insert an image on the first slide.
+q.  Save the presentation as Mawuse Co Ltd.
+3. Project work
+ There is going to be an annual food fair in your locality so all the stake holders 
+will be meeting as one of the activities towards this event. You are to prepare 
+a presentation that will be played at the meeting. Use the details below:
+a. The first slide is a Title Slide. Select the appropriate layout and enter the title:
+ Annual Food Fair.
+b. Add the sub-title:
+ A Celebration of Eating
+c. Insert a small, red circle at the bottom right of the title slide."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 92,"91
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+d. Change the font colour for the whole title and sub-title to blue and apply a text 
+shadow effect just to the words Food and Fair.
+e. Insert a second slide to the presentation. Select a layout appropriate for a series 
+of bullet points. Use text “ The Menu” as the title. Enter the following text as 
+the content placeholder:
+i. Fufu with goat meat light soup
+ii. Tubani and wasawasa
+iii. Akple and okro soup
+iv. Fried rice with chicken
+f. Change the line spacing for these bullet points to 1.5 lines.
+g. Increase the font size for the words The Menu in the title.
+h. Add a footer with your name and the text: “Food Fair” so they both appear on 
+every slide, and number all the slides. (Make sure the number is not obscured 
+by the red circle on the title slide)
+i. Add another slide and insert a video that contains some Ghanaian dishes. Save 
+your presentation.
+j. Save your presentation as Proudly Ghanaian.
+4. A travel and tour company is organising a vacation trip for workers who will be 
+interested to join. You have been tasked to prepare a presentation for this event 
+given the details below:
+a. The first slide is a Title Only Slide. Select the appropriate layout and enter the 
+title:
+  Cook Family Cruises.
+b. Add a small blue rectangle at the top left of this slide.
+c.  Change the font colour for the whole title to red and apply a text shadow effect 
+just to the word Cruises.
+d.  Insert a second slide to the presentation, selecting a layout appropriate for a 
+series of bullet points, and using the title: Our Itinerary. Enter the following 
+text:
+i. Akosombo Islands
+ii. Mole National Park
+ii. Nzulenzu Stilt Village
+e. Change the line spacing for these bullet points to 2 lines. Increase the font size 
+of the word Itinerary in the title. Add a footer with your name and the text: 
+Cruise Information so they both appear on every slide, and number all the 
+slides."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 93,"92
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+f. Insert a third slide, to contain a pie chart. Use the title Our Market Share . 
+Use the following data to produce a pie chart: Cook 54%; Kidi 28%; MzVee 12%; 
+Lazzy Bwoy 5%
+g.  Embolden the text in the title of the third slide and change the font to Arial.
+h.  Apply a different background to each slide in the presentation.
+i.  On the third slide, insert an image suitable for the topic of holidays from 
+an image library. Reduce the size of the image and place it where it will not 
+interfere with text.
+j.  Add a 4th slide containing nothing but the text: Travel with us for less!!
+k. Save the presentation as holidays.
+l.  Print the presentation with 4 slides per page and close the presentation."
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 94,"93
+MULTIMEDIA TOOLS AND APPLICATIONSSECTION 1
+References
+• Wempen, F. (2014). Computing Fundamentals: Introduction to Computers. New York: 
+Wiley.
+• Rajaraman, V . (2018). Introduction to Information Technology. PHI Learning Pvt. Ltd
+• Vermaat, M., E., Sebok, S., L., & Freund, S., M. (2014). Discovering Computers: Technology 
+in a World of Computers, Mobile Devices, and the Internet, Course Technology, Cengage 
+Learning
+• Philo, A. and Angstadt, M. (2020). Microsoft Word 2016 Step-By-Step Guide. A MC-NPL 
+Computer Lab Lesson Plan
+• Gunter, G. A. and Gunter, R. E. (2015). Teachers Discovering Computers
+• https://support.microsoft.com/en-us/microsoft-365
+• https://www.youtube.com/
+• Safwan Mawlood (2019), Basic Computer Hardware and Software, Packt Publishing, USA.
+• Page, A., Karl, H., Levine, D., & Lincoln, H. (2020). Computing. OUP: Oxford.
+• Gunter, G. A. and Gunter, R. E. (2015). Teachers Discovering Computers
+• https://support.microsoft.com/en-us/microsoft-365
+• https://www.youtube.com/
+• O’ Leary, T. J., & O’ Leary L. I. (2017). Computing Essentials, 26th Edition New York: 
+Mcgraw Hill.
+• Page, A., Karl, H., Levine, D., & Lincoln, H. (2020). Computing. OUP: Oxford
+• Philo, A. and Angstadt, M. (2020). Microsoft Word 2016 Step-By-Step Guide. A MC-NPL 
+Computer Lab Lesson Plan
+• Rajaraman, V . (2018). Introduction to Information Technology. PHI Learning Pvt. Ltd
+• Safwan Mawlood (2019), Basic Computer Hardware and Software, Packt Publishing, USA.
+• The Vocabularist: What’s the root of the word computer? (2016) https://www.bbc.co.uk/
+news/blogs-magazine-monitor-35428300
+• Vermaat, M., E., Sebok, S., L., & Freund, S., M. (2014). Discovering Computers: Technology 
+in a World of Computers, Mobile Devices, and the Internet, Course Technology, Cengage 
+Learning
+• Wempen, F. (2014). Computing Fundamentals: Introduction to Computers. New York: 
+Wiley.
+• Ty Anderson & Guy Hart-Davis (2010), Beginning Microsoft Word, Apress. USA
+• Linda Foulkes (2020), Learn Microsoft Office 2019, Packt Publishing, Birmingham UK.
+• O’ Leary, T. J., & O’ Leary L. I. (2017). Computing Essentials, 26th Edition New York: 
+McGraw Hill.
+• Wempen, F. (2014). Computing Fundamentals: Introduction to Computers. New York: 
+Wiley.
+• Rajaraman, V . (2018). Introduction to Information Technology. PHI Learning Pvt. Ltd
+• Vermaat, M., E., Sebok, S., L., & Freund, S., M. (2014). Discovering Computers: Technology 
+in a World of Computers, Mobile Devices, and the Internet, Course Technology, Cengage 
+Learning
+• Philo, A. and Angstadt, M. (2020). Microsoft Word 2016 Step-By-Step Guide. A MC-NPL 
+Computer Lab Lesson Plan
+• Gunter, G. A. and Gunter, R. E. (2015). Teachers Discovering Computers
+• https://support.microsoft.com/en-us/microsoft-365"
+Explain key concepts from ICT_LM_FINAL_SECTION_1_LV - Page 95,"Acknowledgements
+List of Contributors
+Name Institution
+Felix Tenkorang Opare Accra Academy
+Kwadjo Adjei SDA SHS Asokore Koforidua
+Solomon Nam Padam Kadjebi Asato SHS
+Abdul Rahim Mahmud Yeji SHS"

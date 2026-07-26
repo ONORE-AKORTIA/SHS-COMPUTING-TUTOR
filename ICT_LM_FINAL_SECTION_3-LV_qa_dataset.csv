@@ -1,0 +1,895 @@
+question_text,answer_text
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 1,"INTERNET EVOLUTION, 
+ISPs AND THEIR 
+FUNCTIONS
+SECTION  
+3
+Year 1Information Communication Technology"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 2,"1
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+ICTs IN THE SOCIETY
+Connecting and Communicating Online
+INTRODUCTION
+Welcome, learner. In this section, you will be introduced to the concept of the internet 
+and its numerous advantages as well as some disadvantages associated with the usage 
+of the internet. You will explore internet services, the evolution of the internet and 
+how the internet works. In addition, you will learn about and explore Internet Service 
+Providers (ISPs) and their functions. 
+At the end of this section, you should be able to:
+• Describe the evolution of the Internet and identify the Internet Service Providers (ISPs) 
+and their functions.
+Key Ideas
+• The internet is a global or worldwide interconnection of computer networks for 
+communication and data services using protocols which allows users to:
+• Connect easily through personal computers.
+• Exchange electronic mail (email) with friends and colleagues.
+• Post information for others to access and update. 
+• Access multimedia information that includes sound, photographic images and video.
+• Access diverse perspectives from around the world
+• The internet provides services such as the World Wide Web (WWW), email, social 
+networking, search engines, online shopping and many more. 
+• The internet comes with a lot of advantages and some disadvantages.
+• There are two groups of computers on the internet, namely servers or host and client 
+computers. 
+• The host or server computers house the information that users need on the internet. 
+• Servers are created and managed by companies called Internet Service Providers (ISPs). 
+• ISPs play a major role in sustenance of the functioning of the internet."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 3,"2
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+WHAT IS THE INTERNET?
+What comes to your mind when you hear the term internet? 
+The Internet
+The internet is a global interconnection of computer networks for communication and 
+data services using protocols. 
+Protocols are rules and standards that govern communication on a network.
+The internet involves an interconnection of networks such as private, public, academic, 
+business and government networks. 
+Transmission Control Protocol/Internet Protocol (TCP/IP) are used in the transmission 
+of data to the right destination. The internet is a network of networks linked by a broad 
+array of electronic, wireless and optical networking technologies.
+The Internet Provides a Vast Range of Services, these 
+Services include
+1. The World Wide Web (WWW)
+The World Wide Web (WWW) , often referred to as the internet’s backbone, is a 
+system of interconnected public webpages. 
+It is made up of all the public websites that users can access on their computers through 
+the internet. 
+Hyperlinks are used to interconnect Web pages and documents on these sites. When a 
+user clicks on a hyperlink, she/he is redirected to a different location for the information. 
+Users access and navigate websites through programs called web browsers.
+A web browser is a software application used to access information on the World Wide 
+Web.
+Figure 3.1: Some popular internet browsers"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 4,"3
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+2. Email Services
+Email, short for electronic mail, is a message distributed by electronic means from one 
+computer user to one or more recipients via a network.
+Email is convenient, fast, and economic means of exchanging messages. These 
+messages can include text, pictures and animations, and can have file attachments.  
+Email has become an essential tool for personal and professional communication. 
+Examples of web-based email providers are Gmail, Outlook, and AOL. 
+Figure 3.2: Examples of web-based email providers
+3. Social Networking Services
+Social networking  is the use of internet-based social media platforms to connect with 
+friends, family, or peers.
+Marketers use social networking to increase brand recognition and encourage brand 
+loyalty.
+Popular social networking sites include Facebook, Instagram, TikTok, WhatsApp, and 
+X. 
+Figure 3.3: Popular social networking sites
+4. Search Engines Services
+Search engines are web-based application software or programs that enables users to 
+locate information on the World Wide Web."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 5,"4
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Search engines help people find the information they are looking for online using 
+keywords or phrases. They employ complex algorithms to provide relevant search 
+results based on user queries, enabling efficient information retrieval. Examples of 
+search engines are Google, Yahoo, Yandex, AOL
+Figure 3.4 Some popular search engines
+As illustrated in the statistics in Figure 3.5, Google currently has the highest share of 
+the search engine market worldwide by a long way, with over 90%.
+Figure 3.5: Search engine statistics. Source: www.statcounter.com, April 2024
+5. Online Shopping Services
+Online shopping, also known as e-commerce, is the activity of buying and selling goods 
+or services over the internet.
+Online shopping  has changed the way many people buy products and services. It 
+provides a wide variety of items that users can buy from the comfort of their homes 
+through websites and apps. Online shopping comes with some advantages such as: 
+a. It provides convenience for users
+b. It provides extensive product choices for users, and 
+c. It provides competitive pricing for users.
+Online shopping has reshaped the retail industry and consumer habits. Amazon leads 
+the global e-commerce market. Its inventory (April 2024) included  12 million  items 
+and 350 million third-party sellers list items. 
+Examples of online shopping sites in Ghana include Jumia Ghana, Shopwice, Afrikart, 
+KiKUU, and Superprice."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 6,"5
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Figure 3.6: Some online shopping sites in Ghana
+6. File Transfer Services
+File Transfer Services enable the seamless transfer files over the internet. File Transfer 
+services help individuals and businesses share documents, media and data with others 
+digitally through platforms like File Transfer Protocol (FTP).
+7. Streaming Services
+Streaming services are online platforms providing on-demand access to movies, TV shows, 
+music, and more which allow users to enjoy entertainment at their convenience.
+The rise of streaming has led to changes in how many people watch and listen to media, 
+with many traditional cable and radio services adapting to the digital streaming trend. 
+Examples of streaming platforms include Netflix, Apple TV , Amazon Prime Video, and 
+Spotify
+Figure 3.7: Some streaming platforms  
+8. Cloud Storage Services
+Cloud storage is a mode of computer data storage in which data is stored on servers in 
+remote locations. Users can store files and data in the cloud, making them accessible 
+from anywhere with an internet connection.
+Cloud storage is cheaper in cost compared to the acquisition of a storage device. It can 
+easily be used as a back-up system. Cloud storage cannot be accessed without network 
+connectivity which means, one will need a network connection to access files from 
+cloud storage."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 7,"6
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+The servers are maintained by a third-party provider who is responsible for hosting, 
+managing, and securing data and stored on its infrastructure. 
+Examples of cloud storage services are Google Drive, Dropbox and iCloud.
+Google Drive Dropbox iCloud
+Figure 3.8: Examples of cloud storage services
+9. Online Gaming Services
+Online gaming is the playing of a video game over the internet or any computer network. 
+Examples of online game services are: Steam, Xbox Live, PlayStation Network, and the 
+Epic Games Store.
+Online games bring a lot of people across the world together to form digital 
+communities. It creates competition among players at the same time serving as a source 
+of entertainment. Online gaming has become one of the most popular and fastest-
+growing sports in the world.
+Steam Xbox Live PlayStation Network Epic Games Store
+Figure 3.9: Online gaming platforms
+Difference between Internet and World Wide Web
+Some people incorrectly interchange the terms ‘internet’ and ‘world wide web’ . They 
+are not the same thing.  The table below highlights the differences between them.
+Internet World Wide Web
+• The internet is a global 
+interconnection of computer networks. 
+• The internet is infrastructure.
+• The World Wide Web is a collection of 
+information accessed via the internet.
+• The WWW is a service on top of the 
+infrastructure provided by the internet."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 8,"7
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Activity 3.1
+Instructions:
+In this activity, you are going to match the images in Group A with their 
+corresponding names (descriptions) in Group B. Write your answers in your 
+notebook and compare with your colleagues. This activity can be done in groups 
+or individually.
+Materials needed: Notebook or a jotter, pen, ruler.
+Match the images(icons) in Group A with their correct names and descriptions 
+in Group B.
+Group A (Image) Group B (Name)
+Instagram
+A free photo and video sharing app available on iPhone and 
+Android.
+Facebook
+A social networking site that makes it easy for you to connect and 
+share with family and friends online
+Google Chrome
+Is a free internet browser developed by google that is used for 
+accessing the information available on the World Wide Web
+WhatsApp
+A free, multiplatform messaging app that lets you make video and 
+voice calls, send text messages, and more
+Microsoft Edge
+Is a cross-platform browser developed by Microsoft that’s installed 
+by default on all new Windows devices
+Tiktok
+Is a social media platform for creating, sharing and discovering 
+short videos
+Follow the steps below:
+Step 1
+Draw a two-column table with the headings in the table above (Group A (Images) 
+and Group B (Description).
+Step 2
+Write the numbers representing the images in the first column (1, 2, 3, 4, 5, 6, 7)
+Step 3
+Carefully observe the images and write one of the descriptions against each 
+image’s number in the second column."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 9,"8
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Step 4
+Compare your work with what your classmates did and finally submit it to your 
+class teacher for a whole class discussion.
+EVOLUTION OF THE INTERNET
+The number of internet users has increased so much from the time internet started. It 
+is expected that the number of internet users will reach 6.54 billion by 2025. Sharing 
+information and knowledge has become extremely easy for those that have access to 
+the internet. As a result, the number of computer networks that are connected to the 
+internet also increased significantly.
+Let us Take a Look at How the Internet Started
+1. The internet started in the USA in the late 1960s for government researches to 
+share information. The academic, military and government agencies’ computers 
+across USA interacted and shared information on a single network via telephone 
+lines. This network was called Advanced Research Projects Agency Network 
+(ARPANET). 
+ This project was funded by the U.S. Department of Defense. Computer files were 
+broken into smaller segments called packets before being transmitted over the 
+network and then reordered back into a single file at their destination, known as 
+packet switching.
+2. A lot of computer networks joined ARPANET which led to an agreed set of 
+rules for data handling and transmission over the network. In the 1970’s, TCP/
+IP (Transmission Control Protocol/Internet Protocol). TCP made it possible for 
+computers to speak the same language which helped ARPANET to grow into a 
+global interconnected network of networks (internetworking – internet for short).
+ IP when combined with TCP , helps internet traffic find its destination. Every device 
+connected to the internet is given a unique IP number. Known as an IP address, the 
+number can be used to find the location of any internet-connected device in the 
+world.
+3. The growth of ARPANET resulted in email though it was not intentionally planned 
+to be so.
+ As the network increased in popularity and scope, users quickly realised the 
+potential of the network as a tool for sending messages between different ARPANET 
+computers. The first email was sent in 1971.
+4. As time went on, the number of computers on the network increased making it 
+difficult to keep track of all the different IP addresses. This problem was solved 
+by the introduction of the Domain Name System (DNS) in 1983. The DNS is the 
+internet’s equivalent of a phone book and converts hard-to-remember IP addresses 
+into simple names."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 10,"9
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+5. A British computer scientist by name Tim Berners-Lee invented the World Wide 
+Web (WWW) at CERN (the European Organisation for Nuclear Research) in 
+Switzerland in the year 1989 which was opened to the public in 1991. Tim Berners-
+Lee wrote three technologies; URL, HTML and HTTP. This enabled  a user-friendly 
+interface for the internet that allowed it to enter everyday use.
+6. Some of the other milestones in the evolution of the internet are shown in Figure 
+3.10.
+Figure 3.10: Evolution of the internet
+In brief, the internet stated in the United States in the 1960s but did not become visible 
+to the public until the early 1990s. 
+Internet usage has steadily and rapidly increased since then. By 2020, approximately 
+4.5 billion people, or more than half of the world’s population, were estimated to have 
+had access to the internet. 
+According to Statista (www. Statisa.com), 5.35 billion people use the internet worldwide 
+as of 2024, accounting for 66.04% of the global population. With over 1.05 billion users, 
+China has the highest number of internet users. 
+India and the United States follow with 729 million and 692 million internet users, 
+respectively. 
+The percentage of the population using the internet in Ghana has also been growing 
+rapidly. As of January 2023, Ghana registered approximately 24.06 million internet 
+users, growing from the 23 million reported in 2022. 
+Several factors drive the continued growth of internet users in Ghana and elsewhere. 
+These factors include the increasing affordability of smartphones and mobile data, 
+and the growing popularity of online services such as online shopping/e-commerce, 
+streaming video, and social media."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 11,"10
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Activity 3.2
+Materials: Notebook or jotter or a piece of paper, pen, ruler.
+Instructions: In your group, create a timeline of the evolution of the internet. 
+The table below, provides some key dates. Use these dates as a guide to research 
+and add their corresponding activities. Surf the internet with the dates given for 
+more information.
+Dates Activities
+1960 The establishment of the Advanced Research Projects Agency Network 
+(ARPANET)
+1970
+1971
+1983
+1989
+1991
+2000s Broadband mobile internet 
+2010s
+2020s 5G and Internet of Things (IoTs)
+Follow the steps below:
+Step 1
+Draw a two-column table with the headings: Dates and Activities
+Step 2
+Write the dates shown in the table above in the first columns of your table
+Step 3
+Search for the corresponding activities to the dates you copied (You can search 
+for it online)
+Step 4
+Compare your work with your colleagues and submit it to your teacher for a class 
+discussion."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 12,"11
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+ADVANTAGES AND DISADVANTAGES OF THE 
+INTERNET
+Advantages of the use of the internet
+1. The internet helps in getting information faster with the help of search engines. 
+2. The internet makes it easy to connect with others through email, social media, and 
+video conferencing applications.
+3. It enables many more people to be able to work from home or have a virtual office.
+4. The internet makes it easier for people to buy goods and services with e-commerce 
+websites from the comfort of their own home. Examples include; groceries, clothes, 
+household items, and much more.
+5. The Internet of Things makes our lives easier and more efficient. Everyday objects 
+like lights, heating and security systems can be connected to the internet. This 
+means you can control them remotely without having to do everything manually. 
+For example, you can turn on the lights in your house before you even get home 
+using an app on your smartphone.
+6. The internet provides a diverse array of options for leisure and amusement. From 
+streaming movies and TV shows on platforms like Netflix to gaming communities 
+and social media platforms, the internet offers endless opportunities to keep people 
+entertained.
+7. The internet provides a range of education resources and tools such as online 
+courses, videos, tutorials, and FAQs. There are also websites where you can ask 
+questions and get answers from experts. It is like having a whole library at your 
+fingertips! This ready access to information and training has empowered learners 
+across the world.
+8. The internet provides a source of income for many people. There are many 
+e-commerce businesses which employ people with a range of skills, from web 
+designers to delivery drivers. The internet enables freelancers to find work 
+globally, entrepreneurs to start new e-commerce businesses, and content creators 
+to monetise their blogs, videos, and social media. 
+9. The internet provides online banking services that allows users to manage their 
+financial affairs. For example, paying someone by a bank transfer from the comfort 
+of your own home.
+Disadvantages of the use of the internet
+1. Time wastage, addiction and distractions: 
+• Most internet users waste a lot of time on social networking and other websites 
+while doing nothing productive. 
+• Users can become addicted to these online services which diverts users from 
+other productive pursuits in their lives."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 13,"12
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+• It can also negatively impact workplace productivity. Students can get 
+disconnected from their studies, which can negatively impact their education. 
+2. Lack of content control: 
+• The vastness of the WWW means there is an abundance of content, both good 
+and bad. 
+• Users may accidentally encounter violent or pornographic material they did 
+not intend to see. 
+• Many unethical and pornographic websites harm the younger generation.
+3. Trolls, bullying, and stalkers: 
+• Trolls: These are individuals who intentionally provoke or harass others online. 
+The anonymity of the internet often makes them more confident. 
+• Cyberbullying: Especially affecting young people, cyberbullying occurs when 
+someone uses technology (often via the internet) to intimidate others. 
+• Stalking: With personal information readily available online, stalkers can easily 
+find details about individuals.
+4. Never disconnecting from work: 
+• While remote working from home is convenient, it blurs the boundaries 
+between work and personal life. 
+• Notifications can disrupt leisure time, leading to fatigue and burnout.
+5. Wrong information 
+ Although the WWW is regarded as a primary source of information, some websites 
+include inaccurate and worthless information. Sometimes, users can have trouble 
+distinguishing between what is correct and what is incorrect.
+6. Hacking, identity theft, and crime: 
+• To hack means to illegally break into someone’s computer. The internet can be 
+used for hacking. 
+• Hackers exploit people to steal personal information (identity theft). 
+• Internet fraud continues to grow. This involves the internet being used to offer 
+scam advertisements that request advance payments via email, websites, chat 
+rooms, or message boards. 
+• Hidden corners of the internet facilitate criminal activities. 
+• Malware is harmful software that damages your data or slows down your 
+computer’s performance. It can infect your computer using various means 
+such as email and downloading infected files from the internet.
+7. Health and social impacts: 
+• Excessive internet use can lead to loneliness and social isolation. 
+• Sitting for too long can contribute to health issues like obesity."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 14,"13
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Activity 3.3
+1. Create a mind map for:
+a. The advantages of the internet
+b. The disadvantages of the internet
+c. An internet service (your teacher will assign your group with an internet 
+service)
+which is the use of diagrams to represent information visually. The central idea 
+would be placed in the middle while the associated ideas arranged around it. You 
+will create a mind map for ‘the advantages of the Internet’ ,’ the disadvantages of 
+the internet’ and ‘an internet service’ . This activity should be done in groups or 
+individually.
+2. Let’s start with the mind map for ‘the advantages of the internet’ .
+Materials needed:  plain sheet of paper, pencil, pen, ruler.
+Steps:
+Step 1
+Pick one of the sheets of paper. 
+Step 2
+Sketch a circle in the middle of the paper using a pencil and write ‘Advantages 
+of the Internet’ in the circle.
+Step 3
+Draw an arrow from any part of the circumference of the circle outward and 
+draw an oval at the end of the arrow. Write one advantage of the internet 
+in the oval.
+Step 4
+Repeat step 3 until you have at least four advantages of the internet.
+Note: What you just did is called a mind map. Compare your mind map with 
+other groups and submit it to your teacher for a whole class discussion.
+3. Instruction:
+Follow the steps in Question 2 to create a mind map for the ‘disadvantages of the 
+internet’ .
+4. Follow the steps in Question 2 to create a mind map for your assigned ‘internet 
+service’ ."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 15,"14
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+HOW THE INTERNET WORKS
+The internet is essentially a vast network of computers connected to one other, allowing 
+them to send and receive data. Here is a simplified explanation:
+1. Data Transmission: Information is broken down into smaller units called packets. 
+Each packet is transferred across the internet. Each packet contains a portion of 
+the data and a header with information about its origins and destination.
+2. Networking Hardware : Network devices like routers and switches direct the 
+packets to their destination by using protocols. The transmission control protocol 
+(TCP)  and the  internet protocol (IP) are responsible for the transmission and 
+routing of the packets. The hypertext transfer protocol (HTTP) is what we use to 
+view web sites through a browser. 
+ HTTPS is  the secure version of HTTP. HTTPS ensures that any data transferred 
+between a website and a user cannot be tampered with or modified by a hacker. 
+HTTPS also ensures that the user accesses the actual website and not a fake version.
+3. Distributed Network: The internet is a distributed network, meaning it is not 
+dependent on any individual device/computer. This makes it resilient and scalable, 
+as the network can still function even if parts of it go down.
+4. Connection Types: Digital devices can connect to the internet via various methods, 
+including fibre optic cables, Wi-Fi, and cellular networks. These connections 
+translate data into electrical signals or light pulses that travel at high speeds.
+5. IP Addresses and DNS: Every device on the internet has a unique IP address. The 
+Domain Name System (DNS) translates human-friendly domain names (like www.
+example.com) into IP addresses that computers use to connect to each other. 
+Figure 3.11: 
+For example,  if you type the web address, also called the URL (Uniform Resource 
+Locator),  www.heightslibrary.org into your browser, your browser would ask DNS for 
+the corresponding IP address."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 16,"15
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+DNS would return the IP address assigned to the Heights Library’s domain name 
+(151.101.2.159). This IP address gives an accurate location of the webs server where 
+the website files reside. 
+Your browser then connects to that IP address. 
+The browser sends a request to the server, asking it to send a copy of the website to the 
+user/client – see Figure 3.12 below.
+Figure 3.12: How the internet works 
+Activity 3.4
+In this activity, you will research a topic relating to the evolution of the internet 
+such as internet protocols, virtual reality, artificial intelligence, Internet of Things 
+and report your findings to the whole class.
+Materials needed: Notebook, pen, smartphone or laptop or desktop computer 
+or tablet.
+Instructions:
+1. Connect your computing device (example; mobile phone, computer) to the 
+internet"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 17,"16
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+2. Launch any browser on the device (example; Google Chrome, Firefox, 
+Internet Explorer)
+3. Type the topic (keywords: internet protocols, artificial intelligence) in the 
+search box of the search engine.
+4. Press the enter key on the keyboard or search.
+5. Copy the relevant information about the topic and create a word file for it or 
+write in your notebook.
+6. Print a copy of your findings and show it to your teacher and the whole 
+class as well. (If yours is written in your notebook, submit that one to your 
+teacher).
+Activity 3.5
+In your group, create a glossary of terms relating to the internet using the Tables 
+tools in Word (or similar word processing software). 
+Materials needed: Computer internet access and with installed MS Word (or 
+similar).
+Instructions:
+1. Launch or Open MS Word app on your computer.
+2. Create a new file.
+3. Save the file as ‘Glossary’ . 
+4. Add a heading to your document.
+5. Navigate to where you want to create the glossary.
+6. Click on the “Insert” tab in the ribbon.
+7. Select “Table” and then choose the number of rows (11) and columns (2). 
+8. In the first column of the table, enter your terms (e.g., Artificial Intelligence, 
+Robotics etc).
+9. In the second column, enter the corresponding definitions or descriptions of 
+each term as shown below."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 18,"17
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Glossary term names Descriptions
+Artificial Intelligence (AI) Artificial intelligence (AI) refers to the simulation of 
+human intelligence in machines that are programmed 
+to think and learn like humans. It encompasses a 
+wide range of technologies and techniques that enable 
+machines to perform tasks that typically require 
+human intelligence. AI systems can analyse data, 
+recognise patterns, make decisions, and solve problems 
+autonomously, often with a level of accuracy and 
+efficiency that exceeds human capabilities in certain 
+domains.
+The key aspects of artificial intelligence include: 
+Machine Learning, Natural Language Processing 
+(NLP), Computer Vision and Robotics.
+Artificial Intelligence (AI) can be grouped as Narrow 
+AI and General AI.
+Narrow AI (Weak AI): AI designed and trained for a 
+specific task or set of tasks, such as voice recognition 
+or playing chess. Narrow AI operates within a 
+limited context and cannot perform tasks beyond its 
+programmed capabilities.
+General AI (Strong AI): AI that exhibits human-like 
+intelligence and can perform any intellectual task that 
+a human can. General AI remains theoretical and is 
+the subject of ongoing research and debate.
+Robotics Combining AI with physical machines to create 
+robots that can perform tasks autonomously or semi-
+autonomously
+Computer vision AI applications that enable machines to interpret and 
+understand visual information from the world, such as 
+images and videos.
+10. Add at least 8 more Glossary term names and their descriptions to your table.
+11. Show your work to your teacher in a printed or soft copy form.
+Activity 3.6 (Project work)
+1. Research about a person who has made a significant contribution to the 
+development of the internet such as Tim Berners-Lee and create a slideshow 
+about this person and their contribution(s).
+2. Create a poster which illustrates the difference between two internet-related 
+terms, for example, the difference between the WWW and the internet, a 
+search engine and a browser, or a web address and an IP address."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 19,"18
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Use the space below to reflect on the Activities above.  How did you find 
+the activities? Include any notes that will help you to complete the tasks 
+in the future.
+WHAT ARE INTERNET SERVICE PROVIDERS
+The evolution of the Internet has brought about a whole lot of opportunities as 
+well as challenges. We learnt that the Internet is a global network of networks of 
+computers. The interconnections were made possible through telecommunication 
+links. Interestingly, it is believed that no one owns the internet. The generally accepted 
+fact however is that there are certain companies that are said to own portions of the 
+internet. These companies are called Internet Service Providers (ISPs). ISPs specialise 
+in creating servers that house the information users need on the internet and provide 
+accessibility to users. ISPs play crucial roles in the workings of the Internet. 
+You will now be introduced to ISPs,  their functions, and what they have to offer in the 
+digital space, alongside examples. You will also get to familiarise yourself with some of 
+the challenges ISPs encounter, their impact on customers, and more.
+Scenario
+Before you proceed to move on, read the following scenario carefully and see if you can 
+answer the questions that follow:
+While at home, John Mensah was able to access the internet with his mother’s 
+smartphone, he chatted on Facebook with friends, watched how cake is prepared on 
+YouTube, downloaded some games from the Google Play store and installed them on 
+the smartphone. The next day, John’s younger sister Abena also tried but she could no 
+longer access the internet. She then switched to a desktop computer thinking that may 
+work for her, yet to no avail because the desktop PC was not connected to the internet."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 20,"19
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+What answer do you have for these statements based on the given scenario:
+a. Why was John able to access the internet from his mother’s smartphone that day 
+and do all that he expected (chats, watching video, downloads)?
+b. Why was John able to chat on Facebook, watch YouTube videos and downloaded 
+games when the smartphone had internet access, yet Abena couldn’t do same 
+when she tried the next day. 
+c. What can be changed relating to the desktop PC that will allow the same activities 
+John carried out using the smartphone to be carried out using the desktop PC? 
+Definition of an ISP and Examples
+An Internet Service Provider (ISP) is a company that provides internet access for homes 
+and businesses, typically for a fee. There are thousands of these companies throughout 
+the world, the most popular in the U.S.A. and China being AT&T and China Telecom 
+respectively. Popular ISPs in Ghana include:
+Activity 3.7
+Research and create a list of different ISPs available in Ghana. Include information 
+such as the services offered, pricing plans, customer reviews, and any unique 
+features of each ISP. 
+You can complete this activity alone or in a small group with your colleagues.
+NOTE: Wikipedia (April, 2024), reported Ghana has over 15 commercial internet 
+service providers and the majority of their customers access the internet from 
+mobile devices)."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 21,"20
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+FUNCTIONS OF ISPs 
+Internet Service Providers (ISPs) perform variety of functions including the following:
+1. Provide access to the internet
+This is the primary function of an ISP. Connecting directly to the internet would 
+require owning and managing the infrastructure and technology necessary for an 
+internet connection, which is not feasible for the average user due to the high cost, 
+complexity, and expertise required. For a monthly fee, ISPs will provide and maintain 
+this infrastructure and technology.
+ISPs offer different connection speeds to cater for the diverse need of society. The 
+connection speed and cost of the ISP service are determined by the type of connection. 
+Connection types include: 
+a. Dial-up 
+b. DSL 
+c. Cable 
+d. Wireless 
+e. Fibre-optic. 
+Your location may restrict your choice of ISP access. For example, despite significant 
+advancements in telecommunications technology, there are still many regions in the 
+world where geographical challenges and the high cost of infrastructure development 
+make it difficult for service providers to offer broadband or wireless services. In these 
+areas, dial-up internet connection, even though it is slow and now considered ‘old 
+technology’ , becomes the only feasible option for connecting to the digital world.
+2. Email services
+Many ISPs provide an email account with a unique address linked to your internet 
+service account. See Figure 3.13 below for the benefits of MTN email service advertised 
+with the MTN email service (April 2024).
+Figure 3.13: Email service advertisement"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 22,"21
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+3. Web hosting
+Every website is typically made of many files, including images, videos, audio, text, and 
+code, that are stored on special computers called web servers. Web hosting is a service 
+that maintains, configures, and runs physical servers to store files that constitute your 
+website, and make it accessible on the internet. Web hosting services also provide 
+additional support, such as security and website backup. Website hosting fees can vary 
+from one ISP to another, from free (though often limited) space, to charges based upon 
+the size and functionality desired on the website.
+4. Proxy server
+A proxy server is a server (host computer) that sits between you (client computer) 
+and the rest of the internet, acting as a ‘proxy’ (intermediary) for your traffic. It is also 
+known as application-level gateway – see Figure 3.14. 
+Figure 3.14: A proxy server
+For example, consider a situation where you want to search for something on Amazon. 
+Without a proxy server, your computer would make a data request directly to Amazon’s 
+servers which would send the data back to your computer. When connecting via a 
+proxy server, that request is passed through an external server and sent to Amazon. 
+From there, the requested information is sent back through the proxy and finally to 
+your computer. Your IP is replaced (concealed) with the proxy server’s IP , making every 
+online system ‘think’ as though you are connecting from the proxy server, not your 
+computer. In other words, the proxy server makes it appear to every online system as 
+if you are accessing the internet directly from it, rather than your computer or device. 
+There are many reasons why a proxy server is used; two popular reasons include: 
+a. Enhancement of privacy in a network 
+b. Ensuring of anonymity while browsing the internet."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 23,"22
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+5. Technical support
+The ISP’s technical support staff (human) or chatbots are responsible for troubleshooting 
+of customer problems, diagnosing of faults related to internet access and resolution of 
+issues over the phone. When you sign up with an internet service provider (ISP), they 
+usually send you a modem and a router (nowadays usually a modem/router combo). 
+They usually replace this equipment at no extra cost if it stops working.
+Figure 3.15 A Modem/Router combo
+A modem is an essential piece of hardware that allows internet-enabled devices to 
+connect to the Internet. It works by converting signals (analogue) from a telephone 
+line (wire or cable) into a form (digital) that your computer can understand and vice 
+versa (converts digital signal from computer to analogue for transmission). A router 
+allows you to connect multiple devices (i.e., laptop, desktop, smart TV , printer, etc.) 
+directly or through a switch or hub to your home or office internet. A router also acts 
+as a bridge to allow the devices interconnected (wirelessly or with cables) on the local 
+network(s) to communicate with each other or one another.
+ISPs in More Detail
+Here is additional information about what ISPs do and how they go about it:
+1. Connecting users to the internet
+a. When you subscribe to an ISP , you can establish a link between your devices 
+(such as computers, smartphones, or tablets) and the internet.
+b. ISPs facilitate this connection by providing access through various technologies, 
+including:
+ Broadband: High-speed connections via cable modems, fibre-optic lines, or 
+DSL.
+ Wireless: Utilising cellular networks or Wi-Fi.
+ Dial-up: Using the public telephone network to provide last-mile connections.
+c. The maximum amount of data transmitted over an internet connection in a 
+given amount of time is known as bandwidth. This varies depending on the type 
+of internet connection."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 24,"23
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+2. Data transmission
+a. Once connected, ISPs act as intermediaries between end users and the internet.
+b. When you send a request to access a website, download content, or perform 
+any online activity, your ISP is responsible for transmitting that request to the 
+relevant servers.
+c. Similarly, when data (such as web pages, emails, or files) is sent in return for 
+your request, the ISP delivers it to you.
+3. Services provided by ISPs (some explained in more detail earlier)
+a. Internet access: The primary service of ISPs is to connect users to the Internet.
+b. Internet transit: Allows network traffic to cross or transit network of computers 
+through access points, thereby connecting smaller ISPs to the larger Internet or 
+the internet backbone, which allows data to flow globally.
+c. Domain name registration: Manage domain names (e.g., www.example.com) 
+for websites.
+d. Web hosting: Lease out computing capacity or resources to host websites.
+e. Colocation: Provide physical space for servers in data centres.
+f. Data storage: Allows storage of files and documents on ISPs servers remotely.
+g. Offsite backups: Offer capability to backup data on the servers of an ISP for 
+system recovery purposes
+Note that the list above is not exhaustive. You can read from the internet or other 
+sources for more on the services or functions of ISPs. 
+4. Historical Context
+a. The internet (originally ARPANET) began as a network between government 
+research labs and universities.
+b. ARPANET is derivative of the name of the agency that pioneered the design 
+and construction of the Internet. The agency was called, Advanced Research 
+Project Agency (ARPA)
+c. In the late 1980s, commercial use of the internet started, and ISPs emerged.
+d. Dial-up ISPs were common initially, but cable TV companies and telephone 
+carriers later emerged and offered faster broadband connections.
+e. In 1989, the first commercial ISP was founded. It was called ‘The World’ , a slow 
+dial-up. Since then, the number of commercial ISPs has increased exponentially.
+5. Net Neutrality
+a. Net neutrality is the principle that ISPs should enable access to all content 
+and applications regardless of the source, and without favouring or blocking 
+particular products or websites.
+b. Municipal broadband (i.e., broadband provided by public entities instead of 
+private companies) has been suggested as a solution to net neutrality issues."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 25,"24
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Figure 3.16: Data transmission
+Conclusion
+As shown in Figure 3.16 above, ISPs provide the infrastructure and technology outside 
+homes and buildings that will enable its customers to access the internet. Within the 
+home a modem and router are required for internet access, and an ISP will usually 
+supply its customers with this equipment. The ISPs also maintain the infrastructure 
+and deal with customer queries and problems. Other functions of the ISPs include 
+providing email, web hosting services, and a proxy server. Without ISPs, you would be 
+unable to connect to the internet. These companies therefore make it possible for their 
+customers to surf the web, shop online, conduct business, do research, and connect 
+with family and friends, at a fee. 
+Activity 3.8
+With the knowledge gained so far regarding what an ISP is, its functions and 
+other related aspects, conduct research and develop a business plan for your own 
+ISP firm, taking into consideration the following parameters:
+a. Services you want to offer
+b. Your target customers
+c. Type of servers
+d. Type of transmission media and connection method
+e. Security features
+f. Ethical considerations
+g. Location
+h. Pricing plan
+Share your plan with your teacher."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 26,"25
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+LINKING TO THE INTERNET FROM HOME
+There are instances where individual may want to establish internet connections 
+personally and directly from the comfort of their homes. The figure below (Figure 
+3.17) illustrates the steps and digital devices used to access the internet at home.
+Figure 3.17: Linking to the internet from home
+How you connect your digital device to the internet will vary a little depending on your 
+connection type, but the steps are generally similar and straightforward as follows:
+1. Wi-Fi connection (quick to set up and flexible positioning)
+ Step 1: Ensure your Wi-Fi is turned on. Look for the Wi-Fi icon in your taskbar.
+ Step 2: Access your device’s settings (the path varies by operating system).
+ Step 3: Find your Wi-Fi network name (Service Set Identifier or SSID) from the 
+available list and click on it.
+ Step 4: Enter the network password (if requested).
+ Step 5: Wait for your computer to connect to the Wi-Fi network.
+ Step 6: Open your browser and confirm access by visiting a given web site."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 27,"26
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Figure 3.18: Wi-Fi Connection (Windows 10, 11)
+2. Ethernet connection (good for stability and speed)
+ Step 1: Connect the Ethernet cable to a yellow LAN port on your modem.
+ Step 2: Connect the other end of the Ethernet cable to an Ethernet port on your 
+computer or laptop.
+ Step 3: Make sure that the Ethernet light is green and flashing next to the port 
+connected to on your modem.
+ Step 4: Open up your browser to confirm that you can load a webpage.
+Figure 3.19: Ethernet connection
+3. Dial-up connection (slow, an older method and less common nowadays)
+ Step 1 : Verify hardware requirements (Ensure modem is installed on your 
+computer)
+ Step 2: Obtain dial-up internet service.
+ Step 3: Plug your modem into the phone jack.
+ Step 4: Connect the modem to your computer.
+ Step 5: Set up the dial-up connection.
+ Step 6: Adjust settings if necessary.
+ Step 7: Connect to the internet."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 28,"27
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Figure 3.20: Dial-up connection
+Activity 3.9
+Your father wants to access the internet at home from a laptop computer or 
+desktop PC and has asked you to do it for him.
+With a partner role-play a call to your chosen ISP to enquire about their service 
+plan, how to set up the new connection, any questions you have around potential 
+technical issues and what upgrade options are available.
+Activity 3.10
+Now that you have set up your internet connection for your parent, you will want 
+to conduct a Ping test to establish the speed of the service matches the speed 
+indicated by the ISP.
+Using your school internet connection, conduct a Ping test to check the speed 
+of the connection. You can use the following site or similar: https://www.
+bandwidthplace.com/ping-test"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 29,"28
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Activity 3.11
+Case Study
+Transmission Media (network system) is an ISP who hosts (offers services to) 
+four international financial institutions (banks). They were once hijacked by 
+unknown cyber criminals. The attackers succeeded by using a  script (malicious 
+software) that tapped into the network backbone of the ISP and either diverted 
+(redirected) or blocked incoming and outgoing traffic. This caused the  services 
+of these banks to be interrupted for a number of days. This led to what we call a 
+denial of service (DoS) attack. This type of attack is experienced quite often in IT 
+systems or infrastructure. 
+1. With this scenario as a background, research and identify at least five possible 
+challenges that ISPs may encounter in their operations and how these 
+challenges can be mitigated?
+2. Identify at least five potential impacts on customers related to the case study 
+above. 
+Activity 3.12
+Pair with a friend to research and analyse current policies and regulations related 
+to ISPs in Ghana. Explore the implications of these policies on:
+a. Competition
+b. Consumer rights
+c. Privacy
+Create a word-processed report of your findings.
+Activity 3.13
+Add the following terms to your Glossary created earlier in this section:
+a. ISP
+b. Bandwidth
+c. Broadband"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 30,"29
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+Use the space below to reflect on the Activities above.  How did you find 
+the activities? Include any notes that will help you to complete the tasks 
+in the future."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 31,"30
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+REVIEW QUESTIONS
+Read the scenario below and answer question 1 below.
+Jason Napadam, a SHS first year learner of Accra Academy, visited his grandfather 
+in a town called Torchedor in the Tatale Sanguli District in the Northern region 
+of Ghana. On his third day of the visit, there was a cultural dance display called 
+Kinachung by the Konkomba group of people.
+He was so enthused by the display. He observed closely how the dancing steps 
+were made with the rhythms from the drums and the songs sung. Special costumes 
+were worn by both males and females. He took out his smartphone and captured 
+some pictures and videos. Just like the picture below. 
+Jason decided to share these beautiful pictures and videos with his classmates, 
+Ayitey Annan and Obed Acheampong who live in Accra and Kumasi respectively. 
+Jason’s friends, Esi Koomson and Salima Mohammed in Cape Coast requested 
+that he also sends them these pictures and videos. They intend to post these 
+videos on social media for monetary gains.
+1. 
+a. What application software on the phone did Jason use to capture the 
+pictures and videos?
+b. Through which social media platforms can he share his pictures and 
+videos with his classmates and friends? Mention four.
+c. Mention two internet services (Social media platforms) that Esi can upload 
+these videos to make money.
+2. Why are internet protocols important?"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 32,"31
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+3. Describe two ways that a computer could get infected with a virus from being 
+connected to the internet.
+4. Evaluate the impact of cybersecurity threats on individuals and organisations 
+using the internet.
+5. Considering the terms internet and World Wide Web, do you see them to be the 
+same? Justify your answer.
+6. Prepare a presentation on the history of ISPs, including key milestones, 
+technological advancements, and the evolution of internet connectivity over 
+time. 
+7. As individual or in group with colleagues (recommended), research how current 
+or emerging technologies such as 5G, AI, IoT, net neutrality regulations, and 
+the growth of fiber-optic networks impact services delivery of ISPs. Present 
+your findings in typed form and show it to your teacher or ICT instructor for 
+publication on your school’s notice board.
+8. Critique the ethical implications of ISPs collecting and monetising user data 
+without their consent.
+9. Develop a plan to improve customer service and satisfaction for an ISP facing 
+negative feedback."
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 33,"32
+INTERNET EVOLUTION, ISPs AND THEIR FUNCTIONSSECTION 3
+EXTENDED READING
+• Internet Basics- What is the internet? https://edu.gcfglobal.org/en/internetbasics/what-is-
+the-internet/1/
+• Click on the link below to watch a video on the concept internet: https://www.youtube.
+com/watch?v=G91s61R4qhs&pp=ygUQaW50ZXJuZXQgY29uY2VwdA%3D%3D
+• Internet and its components: https://youtu.be/G91s61R4qhs
+• What Broadband Costs and How to Afford It: https://www.investopedia.com/what-
+broadband-costs-and-how-to-afford-it-5184821
+• What is an internet service provider (ISP)?: https://www.verizon.com/about/blog/isp-
+meaning
+• net neutrality. https://www.techtarget.com/searchnetworking/definition/Net-neutrality
+• Optical Fiber and 5G Networks: Allies in the Quest for Better Connectivity
+• https://blog.internexa.com/en/benefits-of-optical-fiber-in-5g-networks
+REFERENCES 
+• Introduction to Networking: How the Internet Works” by Charles Severancehttps://books.
+google.com/s?id=DNE6SAAACAAJ&dq=A+Beginner%27s+Guide+to+the+Internet%22+b
+y+Philip+D.+Wilson&hl=en&newbks=1&newbks_redir=1&sa=X&ved=2ahUKEwi-p5vai_
+mGAxVRQkEAHRqyB_EQ6AF6BAgMEAI
+• “Learning Internet Basics” by Jobilize: https://edu.gcfglobal.org/en/internetbasics/what-is-the-
+internet/1/
+• Adjei, K. (2019) ICT FOR ALL 2nd Edition. Cee Dordor Publishing Enterprise
+• Patel P. (2024) The Role of Internet Service Providers https://medium.com/@learning3601/the-
+role-of-internet-service-providers-308a57e155db
+• Dr Prem (2022) The Biggest Challenges that Internet Service Providers Face. https://ecofriend.
+org/the-biggest-challenges-that-internet-service-providers-face/
+• Yoo, C.S. and Lambert J. (2019) “5G and Net Neutrality”. https://scholarship.law.upenn.edu/
+faculty_scholarship/2089"
+Explain key concepts from ICT_LM_FINAL_SECTION_3-LV - Page 34,"Acknowledgements
+List of Contributors
+Name Institution
+Felix Tenkorang Opare Accra Academy
+Kwadjo Adjei SDA SHS Asokore Koforidua
+Solomon Nam Padam Kadjebi Asato SHS
+Abdul Rahim Mahmud Yeji SHS"

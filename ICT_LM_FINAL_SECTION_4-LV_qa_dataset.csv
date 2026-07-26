@@ -1,0 +1,2143 @@
+question_text,answer_text
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 1,"1
+GUIDED AND 
+UNGUIDED NETWORK 
+SYSTEMS
+SECTION  
+4
+Year 1Information Communication Technology"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 2,"2
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Network Systems for Transmitting 
+Information
+Guided and Unguided Network Systems
+Introduction
+This section is designed to introduce you to how computers and other digital tools 
+are linked to communicate. You will explore the fundamental concepts of computer 
+networks, how networks are structured, how they operate, and their applications 
+in various settings. As you embark on this journey, you will explore and learn how 
+computers and other digital tools are connected together to share information and 
+resources easily and effectively offering deeper understanding guided and unguided 
+network systems.
+We will start by defining what a computer network is, network topologies, network 
+architectures, guided and unguided transmissions and identify common devices 
+required to create a network. We will also discuss in the section how data transmission 
+occurs under different circumstances in a network.
+Remember, creating networks is just like making new friends and establishing a 
+relationship with them to communicate and share information regardless of where 
+they are. So, stay curious, ask questions and take advantage of this opportunity to learn 
+skills and understand the importance of communication networks in today’s crucial 
+digital world.
+At the end of this section, you will be able to:
+• Classify Network Types and Topologies
+• Classify transmission media used to send receive data in a network environment
+Key Ideas:
+• A Computer Network is a group of computers and other devices connected together 
+to share information and resources with or without cable irrespective of their locations.
+• Network Type: computer networks classification based on geographical setting
+• Network Architecture: refers to the design and layout of a computer network. It’s like 
+the blueprint for how different devices (like computers, routers, and printers) connect 
+and communicate with each other.
+• Cloud Network: refers to using the internet to access and manage resources like storage, 
+applications, and services instead of relying on local servers or hardware. It is like having"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 3,"3
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+an online school library, computer lab, and filing cabinet all in one location.
+• Network Topology: is the arrangement of devices and connections in a network. It 
+determines how data travels and how devices are linked, impacting the network’s 
+efficiency and reliability
+• Guided transmission media (wired): the use of cables to connect a device to another 
+in a network. They are called “guided” because the signals are directed along a specific 
+path, usually within a cable. Example Coaxial, Twisted pair etc.
+• Unguided transmission media (wireless) : refer to the methods of sending data 
+without using physical cables. Instead, the signals travel through the air, water, or even 
+space. These are commonly used for wireless communication. Example Bluetooth, Wi-
+Fi etc.
+What is a Computer Network?
+If you can make friends and communicate with them irrespective of where you are, 
+then you have created a network. In the same way computers are connected to other 
+devices to communicate among themselves.
+A computer network is a group of two or more computers or devices connected together 
+so they can share information, resources, and communicate with each other. This 
+connection can be made using wires, like Ethernet cables, or wirelessly, like Wi-Fi.
+A standalone computer is a computer that works independently, without needing to be 
+connected to a network or other computers.
+Advantages of a Computer Network Over Stand-
+Alone Computers
+Computer networks offer many benefits, which have significantly transformed how we 
+communicate, access information and conduct business. Some of the key advantages 
+of computer networks over having a set of stand-alone computers include:
+Advantages Computer network Stand-alone computer
+Resource sharing Allows sharing of resources 
+like printers, files, and internet 
+connections.
+Resources are used individually 
+without sharing.
+Data sharing and 
+collaboration
+Facilitates easy data sharing and 
+collaborative work.
+Data sharing is manual and 
+often less efficient.
+Shared Internet 
+access
+Enable sharing of internet services 
+with other devices
+The internet cannot be shared 
+with other devices.
+Centralised 
+management
+Enables centralised management of 
+resources and security.
+Each computer must be 
+managed individually."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 4,"4
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Communication Provides built-in communication 
+tools like email and messaging 
+systems.
+Communication tools are often 
+separate and less integrated.
+Improved 
+efficiency
+Applications can be installed on 
+a central server and accessed by 
+multiple users.
+Applications cannot be 
+accessed by multiple users.
+Remote access Allows access to files and resources 
+from remote location
+Typically requires physical 
+access to the computer
+Scalability Networks is set up in a way that 
+makes it easy to add more devices 
+and users.
+Depends only one user at time.
+Cost savings Reduces costs by sharing expensive 
+hardware and software.
+Requires individual purchases 
+of hardware and software.
+Global 
+connectivity
+W AN and internet are huge webs 
+of connected computers which 
+allow people to share different 
+information
+It relies only on software and 
+information installed on them.
+Figure 4.1: A possible layout of a local Area Network"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 5,"5
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.1
+In this activity you are to research on the benefits of computer network in our 
+everyday lives. Perform this activity in groups or as an individual.
+Materials needed: Computer with internet access, Projector, Smartphone with 
+internet access, exercise book and pen.
+Instructions:
+Choose one of following topics:
+• Resource Sharing
+• File Sharing and Data Accessibility
+• Communication and Collaboration
+• Centralised Data Management
+• Improved efficiency
+Discuss the benefit, real-world examples and applications.
+You should consider how this benefit impacts different fields, such as education, 
+business, or healthcare.
+Steps:
+1. Open any web browser on your computer.
+2. Type the name of your chosen topic e.g. Resource sharing
+3. Click on any hyperlink to display the content (if the content does not reflect a 
+good understanding of desired searched result, go back and select on another 
+hyperlink) search results.
+4. Read and make relevant notes on the benefit, real-world examples and 
+applications.
+5. Share your findings with your peers.
+Note: In the absence of internet connection, consult your teacher or textbooks."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 6,"6
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Network Hardware
+There are several hardware components that are used in network connectivity. The 
+following are the key components that are needed in every network system:
+1. Nodes: A node can be anything that sends, receives, or forwards information. This 
+could be a computer, a printer, a router, or even a smartphone. Each of these devices 
+can talk to each other over the network, sharing information like messages, files, or 
+accessing the internet. So, a network node is basically any device that can connect 
+and communicate within a network.
+. 
+Figure 4.2: Network with 6 connected nodes
+2. Network interface card (NIC):  A Network Interface Card (NIC) is a piece of 
+hardware in a computer that allows it to connect to a network, like the internet or a 
+local area network (LAN). Think of it like a translator between your computer and 
+the network. Just as you might need a translator to help you understand another 
+language, your computer needs a NIC to “talk” to other computers and devices 
+over the network. The NIC takes data from your computer, converts it into signals 
+that can travel over a network cable (or wirelessly), and then sends it to the right 
+place. It also does the reverse: it takes signals from the network, converts them 
+back into data that your computer can understand, and then delivers it to the right 
+application. Without a NIC, your computer cannot be able to connect to the internet 
+or communicate with other computers."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 7,"7
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.3: Network interface card
+3. Communication Channels: A communication channel is like a path that allows 
+information to travel from one place to another. Imagine you are sending a message 
+to a friend. The way you send that message could be through a spoken conversation, 
+a text message, or an email. Each of these methods is a different “communication 
+channel.” In computer networks, a communication channel is a pathway that data 
+(which is like the message you send) moves between devices. This data could travel 
+through wires, like in Ethernet cables, or wirelessly, like Wi-Fi signals. The channel 
+makes sure the information goes from one device to another so they can “talk” to 
+each other, just like how you talk to your friend using different methods.
+4. Hub: This device serves as a central connection point for multiple devices in a 
+network. It relays any signal it receives with some amplification back out to all 
+the devices connected to it. Hubs are less common today due to their inefficiency 
+(bandwidth is shared) and lack of intelligence in data transmission, causing 
+potential security breaches.
+Figure 4.4: A hub connected to devices"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 8,"8
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+5. Switches: These are devices that facilitate the connection and communication 
+between multiple devices within a local area network (LAN). They use MAC 
+addresses (media access control addresses) to forward data to the intended recipient. 
+A MAC address is a 48-bit number assigned to each device connected to the network. 
+This intelligence difference between a hub and a switch is illustrated in Figure 4.5.
+Figure 4.5: A hub and a switch – the switch sends the data to ONLY the correct recipient, whereas a hub sends 
+any data to ALL devices.
+6. Routers: A router is like a traffic manager for your home or office internet. When 
+you connect to Wi-Fi, the router takes the data from your device (like a laptop 
+or phone) and sends it to the right place on the internet, and then it brings back 
+the information you asked for, like a website or a video. It helps different devices 
+on the same network talk to each other and ensures everything goes to the right 
+destination, much like a postal service sorting letters and packages to deliver them 
+to the correct addresses.
+Figure 4.6: Router
+7. Modems: A modem is a device that allows your computer to connect to the 
+internet. These devices are used to modulate and demodulate digital signals to 
+enable communication over analogue communication channels such as telephone 
+lines. A modem is an essential piece of hardware for a computer to connect to the 
+internet. Modem router combo devices combine the functionalities of routers and 
+modems."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 9,"9
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.7: Modem
+8. Network Cables and Connectors:  These physical cables (e.g., Ethernet cables) 
+and connectors are used to establish wired connections between devices in a 
+network. A network cable is like a road that connects different devices, such as 
+computers, printers, and routers, so they can share information with each other. 
+Just like cars travel on roads to get from one place to another, data (information) 
+travels through network cables to move between devices.
+Figure 4.8: Network Cables with connectors
+9. Wireless Access Points (WAPs): These provide wireless connectivity to devices 
+within a local area network, allowing them to connect to the network without the 
+need for physical cables. Some W APs can be wall-mounted – see Figure 4.9.
+Figure 4.9: A Wireless Access Point (W AP)"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 10,"10
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+10. Workstation: A term sometimes used to describe a computer (usually desktop) 
+connected to a LAN. Each of these components play a specific role in a network, 
+contributing to the efficiency and effectiveness of its operation. They work together 
+to enable data sharing, resource sharing and communication between network 
+devices and users.
+Figure 4.10: A Workstation
+Activity 4.2
+This activity tests your understanding on the various types of network hardware 
+and how prepare budget for its purchase.
+Materials needed : Computer with internet access, Smartphone with internet 
+access, exercise book and pen.
+Instructions:
+• Open any web browser of your choice.
+• Using a search engine, research different types of networking hardware.
+• Select at least three network hardware detailing features, costs, and brand 
+reputation.
+• Use reliable sources for your research (e.g., manufacturer websites, tech 
+reviews).
+• Using your research, please put together the price to construct a network 
+and justify your choices.
+• Prepare a short presentation on your findings. Deliver the presentation to 
+the entire class."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 11,"11
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.3
+Instructions:
+This activity will test your knowledge in network hardware and how its functions. 
+Read the scenario in the last column and write the correct corresponding network 
+hardware in the answer column. The first column has the possible network 
+hardware which are mismatched to guide your answers.
+Material Needed:
+• Exercise book
+• Pen or Pencil
+• Ruler
+Network 
+Hardware
+Answer Scenario
+I am a traffic controller, and my job is to manage the flow 
+of cars coming from different directions to ensure each 
+car reaches its correct destination without getting stuck 
+or crashing into another car. Which hardware device is 
+this?
+Imagine you have two tin cans connected by a string, 
+and you are talking to a friend through them. The string 
+carries the sound from one can to the other, allowing 
+your friend to hear you. Which hardware can be 
+attributed to the string?
+The first hardware resource you need before you can 
+setup any network.
+The master computer on a network, that provide and 
+receive services is?
+Imagine you are in a large building with many rooms, 
+and you need to send a letter from one room to another. 
+The postal worker knows exactly which room each letter 
+should go to. When you hand over your letter, the postal 
+worker reads the address and delivers it to the correct 
+room through the quickest and most efficient path.
+This device is like a translator for your computer in a 
+school network. Imagine your computer is a student 
+trying to communicate with other students (computers) 
+in the school (network). Which device is this?
+A
+B
+C
+E
+F
+D"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 12,"12
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.4
+In this activity, create a presentation slide on the following information:
+1. Research for different definitions of computer networks.
+2. Identify and explain at least five benefits of using computer networks
+3. The functions of the following network hardware:
+a. NIC,
+b. Router,
+c. Switch,
+d. Modem and
+e. WA P.
+Note: Use images and videos to enhance your presentation.
+4. Save your presentation as “Computer network” .
+5. Deliver your presentation to the entire class for appreciation and feedback.
+Classification of Network Types According to 
+Area
+Previously we looked at networking and its benefits in our everyday lives. This section 
+covers the classification of network types according to geographical area it covers. A 
+Network can be confined in a room, building(s), a locality, metropolis, continent or 
+the entire world. It also discusses the comparison between the different area networks 
+in terms of ranges, examples, transmission speed, fault tolerance, maintenance and 
+congestion.
+Network Types According to Area
+Area network refers to a type of computer network that connects computers and 
+devices within a specific geographic area. It can be classified into following types:
+• Personal Area network (PAN)
+• Local Area network (LAN)
+• Metropolitan Area Network (MAN)
+• Wide Area Network (W AN)"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 13,"13
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Personal Area Network (PAN)
+A Personal Area Network (PAN) is a small network used to connect devices that are 
+close to each other, usually within a range of just a few meters. Think of it as a way for 
+your gadgets, like your phone, smartwatch, and wireless headphones, to communicate 
+with each other without needing the internet or long cables.
+For example, when you connect your phone to your Bluetooth speaker to play music, 
+you are using a type of PAN. The connection is short-range and only for your personal 
+devices, making it convenient for things like listening to music, transferring files, or 
+even connecting a wireless keyboard to your computer. So, a PAN is like your own 
+private network that lets your devices “talk” to each other directly and wirelessly when 
+they are close by.
+Figure 4.11: Personal Area Network
+Local Area Network (LAN)
+A local area network (LAN) consists of a collection of computers in a single building 
+or building complex and covers a limited distance (typically 10m to 1km). For example, 
+the computers in a school or those in a manufacturing plant might be connected by a 
+LAN. A Local Area Network (LAN) is like a small community of devices that can talk to 
+each other. Imagine you’re in a classroom, and everyone has their own computer. Now, 
+you want to share files, play games together, or maybe even print something from the 
+same printer. A LAN is what allows all these computers to connect and communicate 
+with each other.
+Local: This means it’s nearby, like in the same building or a few close buildings, such 
+as your school or home.
+Area: It covers a specific area, not too big, just like your classroom, a few rooms, or 
+maybe the whole school.
+Network: This is the system that connects all the devices (like computers, printers, or 
+phones) so they can share information."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 14,"14
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+How It Works:
+Wired Connection: In many LANs, devices are connected with cables (like Ethernet 
+cables). These cables plug into a device called a router or a switch, which helps direct 
+the information to where it needs to go.
+Wireless Connection: Some LANs use Wi-Fi, so the devices connect without cables. 
+You might already know this from how your phone or laptop connects to the internet 
+at home or school.
+Figure 4.12: Local Area Network
+Metropolitan Area Network (MAN)
+A metropolitan area network  or MAN is a computer network larger than a LAN 
+but located in a single geographic area. For example, a campus, a city or a region with 
+multiple cities. It can connect several LANs and is capable of spanning an area of 
+between 5 to 50 km in a range. Imagine it as a network that connects multiple buildings 
+or offices within a city or large campus. For example, a MAN could connect various 
+school buildings across a city, allowing them to share resources like files and printers, 
+and access the internet more efficiently than if they were all standalone. It’s like having 
+a supercharged school network that spans the whole town.
+Figure 4.13: Metropolitan Area Network"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 15,"15
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Wide Area Network (WAN)
+A W AN covers a large geographical area. It can spread over a country, countries and 
+continents. It can also connect small and medium networks like LANs and MANs 
+using wired or wireless technologies. W ANs are mostly used in large organisations, 
+businesses and institutions with various branches worldwide. The internet is essentially 
+a huge international W AN.
+How It Works:
+Multiple LANs: A W AN is made up of several LANs connected together. Each LAN 
+might be in a different location (like different offices of the same company or different 
+schools in a district).
+Internet: The internet itself is the biggest example of a W AN. It connects millions of 
+smaller networks all over the world, allowing them to communicate with each other.
+Telecommunication Lines: W ANs often use telephone lines, fibre-optic cables, or 
+satellite links to connect the different LANs. This allows the data to travel long distances 
+quickly.
+Figure 4.14: Wide Area Network"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 16,"16
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Differences Between Different Types of Networks
+The below table identifies the three different types of area networks including LAN, 
+MAN and W AN and what makes them different, some of these areas will be covered in 
+more detail later.
+Criterion LAN MAN WAN
+Area A network that 
+connects devices in 
+a small geographic 
+range.
+A network that 
+connects larger 
+areas than LANs, 
+such as small 
+towns or cities.
+The network covers 
+a large area such as 
+a country or several 
+countries.
+Range 10m to 1km 5 km to 50 km Can be global
+Example School network University network Internet, ATM 
+network
+Ownership Private Public or private Public or private
+Topology Star, Bus or Ring Ring, Mesh, Hybrid Point-to-point1, Mesh
+Transmission speed High Moderate Low
+Fault tolerance More fault tolerance Less fault tolerance Less fault tolerance
+Maintenance Easy to maintain, as 
+has a less complex 
+structure
+More complex 
+structure than 
+LAN and is also 
+more difficult to 
+maintain.
+Maintenance and 
+design structure 
+are more complex 
+compared to LAN and 
+MAN.
+Congestion Less More More
+Activity 4.5
+This activity tests your research skills and brings out information about types of 
+networks.
+Instructions:
+1. Select one of the following types of network areas to research:
+• Local Area Network (LAN)
+• Wide Area Network (W AN)
+• Metropolitan Area Network (MAN)
+• Personal Area Network (PAN)"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 17,"17
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+• Campus Area Network (CAN)
+• Virtual Private Network (VPN)
+• Storage Area Network (SAN)
+2. Focus on the following areas in your research:
+• Definition: What is this type of network? What are its characteristics?
+• Real-life Examples : Identify at least two real-life examples where this 
+network type is used.
+• Suitability: Explain why this type of network is appropriate for these 
+particular uses. Consider aspects such as range, speed, security, and cost.
+• Technological Components : Discuss any specific technologies, 
+hardware, or software associated with this network type.
+3. Create a Presentation:
+Using tools like PowerPoint, Google Slides, or Canva, create a presentation 
+summarizing their findings. The presentation should include:
+• Introduction Slide:  Name of the network type and the student/group 
+members.
+• Definition Slide: A clear and concise definition of the network type.
+• Example Slides: One slide per example, with details on where it’s used, 
+and why it’s suitable.
+• Technology Slide: Describe any key technologies involved.
+• Conclusion Slide:  Su mmarise the key points and reflect on why this 
+network type is important.
+4. Presentation:
+Present your findings to the class or share with your peers.
+Activity 4.6
+The diagram below shows all the area networks. Identify the location the arrow is 
+pointing to and name the type of area network. Justify the reason for your choice.
+Materials needed:
+• Exercise book or jotter
+• Pen or Pencil
+Instructions:
+1. Study the diagram below and identify the type of area networks."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 18,"18
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+2. Write your answer in your exercise book or jotter.
+3. Submit your answer to your facilitator or share it with your peers for 
+discussions.
+Activity 4.7
+The table below has different types of networks. Compare their range, use cases, 
+data transfer speed and typical infrastructure.
+Materials needed:
+• Computer/Tablet or smartphone connected to the internet.
+• Markers and sticky notes.
+• Pen and paper.
+Type of 
+Network
+Range Typical Use 
+case
+Data 
+Transfer 
+speed
+Example Devices/
+Infrastructure
+PAN
+LAN
+MAN
+WA N
+Instructions:
+1. Research the types of networks in the table above, their network range, use 
+cases, data transfer speed and sample devices or infrastructure."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 19,"19
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+2. Discuss your findings with your peers.
+3. Use your findings to fill the table provided.
+4. Compare your work with other students’ or share it with your teachers.
+Classification of Networks Types According to 
+Architecture
+Network architecture refers to how the network is designed. The architecture determines 
+how the nodes are organised in a network and how tasks are allocated between these 
+nodes. There are two main types of network architecture models, namely;
+• Client-server and
+• Peer-to-peer (P2P).
+Figure 4.15: Client-server and P2P network
+Client-server architecture: In this model, nodes may be servers or clients. Server 
+nodes provide resources like memory, processing power and data to client nodes. They 
+may also manage client node behaviour. Servers tend to be quite powerful computers, 
+and there are different types of servers, including:
+1. File servers - store and maintain user files
+2. Applications servers - allow programs to be run over a network
+3. Web servers - store and share web pages
+4. Print servers - manage printing across a network
+5. Mail servers - handle emails between users"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 20,"20
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.16: Client server network
+A client  is any node connected to the network that can request access to a service 
+provided by a server. For example, a workstation on the network could send a request 
+to a file server to access a file stored on the server. Clients can communicate with 
+each other over the network. The client-server model can be found in small and large 
+networks.
+To summarise, client-server architecture refers to a network design where a server 
+provides resources or services, and a client requests them.
+Peer-to-peer architecture: Peer-To-Peer network architecture is a type of network in 
+which all the computers are linked together with equal privileges and responsibilities 
+for processing the data. With this model, all connected nodes have equal status - no 
+connected node (called a peer) has control over the network and there is no central 
+server for coordination. Each peer can act as a client or a server and may share some 
+of its resources, such as memory and processing power, with the entire computer 
+network. An example is a company using P2P architecture to host a memory-consuming 
+application, such as a 3-D graphic rendering program, across multiple digital devices. 
+The P2P model is generally found in trusting environments with less than 10 computers.
+Figure 4.17: P2P Network"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 21,"21
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Comparing Client-Server to Peer-To-Peer Networks
+The key difference between these two technologies is that, in a peer-to-peer network, 
+every node can ask for assistance and deliver services. While in a client-server network, 
+the client nodes demand services and the server node answers with assistance. The 
+following table summarises the rest with respect to given criteria:
+Criteria P2P Model Client-Server Model
+Communication Devices communicate 
+directly with each other
+Devices communicate with a 
+central server
+Resource Sharing Nodes share resources such 
+as storage, processing power, 
+and bandwidth among 
+themselves
+Central server controls resources 
+and data (All clients depend on 
+the server for resources (device, 
+application)
+Scalability Network can easily scale up 
+to accommodate more nodes
+Network may require more 
+resources to handle traffic
+Flexibility Nodes can join and leave the 
+network dynamically
+Server controls client connections 
+and resource access
+Security More difficult to secure due 
+to lack of centralised control
+Easier to secure and manage with 
+centralised control
+Speed Slower to respond to requests 
+since each node processes its 
+requests
+Faster to respond to requests with 
+centralised control
+Flexibility More flexible and cost 
+effective due to resource 
+sharing
+Creates a single point of failure
+In conclusion, whereas Client-Server network has inherent merits which make it 
+suitable for specific conditions, so too has the Peer-to-Peer network. The Client-Server 
+model can be useful where there is the need to have centralised management and is 
+more scalable than the Peer-to-Peer model, which is suitable for scenarios where there 
+is decentralisation and direct sharing of the resources. Such a distinction might help 
+in choosing the right type of a network model depending on the particular need and 
+demand."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 22,"22
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.8
+Your brother at a lower grade came home with an assignment with a list of 
+network servers. The assignment was given to the class after a lesson in which the 
+teacher mentioned the various types of servers, but did not explain them. Instead, 
+he asked the children to go and find out more information about them in terms 
+of functions and features. With the understanding gained so far in this section, 
+conduct research on any four of the following categories of network servers and 
+create a summary on the functions and the features of each and write is in a way 
+that you could explain to your brother:
+• File server
+• Print server
+• Email server
+• Web server
+• Database server
+• Proxy server
+• DNS server
+• Cloud server
+• Application server
+Activity 4.9
+Compare a client-server network to a peer-to-peer network using the criteria 
+specified in the first column of the table. Present this comparison in a tabular 
+form using MS Word; include a labelled diagram of each network design.
+CRITERIA
+(PARAMETER)
+CLIENT-SERVER NETWORK PEER-TO-PEER NETWORK
+Communication
+Resource Sharing
+Scalability
+Flexibility
+Security
+Speed"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 23,"23
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.10
+a. Copy and complete the table below by filling in the corresponding empty cells. 
+You may do it alone or together with a classmate.
+NEWORK MODEL 
+OR ARCHITECTURE
+SCENARIO
+A school with multiple offices in the same building as well as 
+different buildings on campus shares one printer
+Peer-to-peer (P2P)
+An office with ten computers whereby each computer comes 
+with at least one resource (software/hardware) that others do 
+not have, as a result, the users of each of the various computer at 
+a point have to fall on one another’s PC to get a given tasked or 
+processing need accomplished.
+Client-server
+b. Create a glossary of network terminologies you came across in this section
+CLOUD TECHNOLOGIES
+Imagine keeping your files or documents somewhere where you can access from any 
+location, whenever the need arises: Besides storing information on your computer at 
+home or office, recent advancement in information technology permits you to upload it 
+to a remote computer from which you can access anywhere, provided you have access 
+to the Internet. You can depend on this for a storage for your digital documents or files 
+even if you do not own a personal computer or run applications that are not found on 
+your local computer from a remote computer. This brings us to the concept of cloud 
+storage.
+Cloud Networks
+The term ‘cloud’ in this context refers to servers that are accessible over the Internet, 
+together with the software and databases that run on those servers. Cloud servers are 
+located in data centres all over the world.
+In a cloud network, the user’s network is on-premises, but some or all resources used 
+to manage it are in the cloud (a remote server). These resources are rented from a third-
+party cloud provider (cloud vendor).
+Cloud network can be described as the infrastructure that supports cloud computing 
+(i.e., the delivery of various computer related services through the Internet). It involves"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 24,"24
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+a network of remote servers hosted on the Internet to store, manage and process 
+data, rather than a local server or a personal computer. Subscribers require Internet 
+connection to enable them access to cloud resources.
+A cloud network can employ a client-server architecture. In this model, the cloud 
+acts as the server that provides resources and services, whereas the clients (which can 
+be end-user devices like computers, smartphones, etc.) request and consume these 
+services. The cloud-based services delivery ensures that, clients can access resources 
+on-demand via the Internet.
+The client-server architecture in a cloud environment is designed to:
+• Be easily scalable and efficient.
+• Allow for a robust network that can handle varying workloads.
+• Provide services to a large number of clients simultaneously.
+With cloud networking, an organisation can shift its network management, control 
+and data connectivity from on-premises to a cloud infrastructure. Cloud networking 
+allows organisations to create complex networks using only the Internet. The figure 
+below (4.18) illustrates the general concept of cloud networking:
+Figure 4.18: Cloud networking
+Classification of Cloud Computing: By service, cloud computing is usually classified 
+as:
+• Infrastructure as a Service (IaaS): A foundational (base) cloud service layer that 
+allows organisations to rent IT infrastructure such as storage space (hard disks), 
+servers, OS, and networks from a cloud provider or vendor.
+• Platform as a Service (PaaS): This is a layer that rides on top of IaaS, and provides 
+the ability to run application software; Users or subscribers can use it to build user-
+level tools and application software.
+• Software as a Service (SaaS):  This is a layer on top of PaaS, and allows users to 
+run or use cloud-based apps remotely over the Internet. For instance, Office 365 
+together with OneDrive is one of the world’s most popular SaaS."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 25,"25
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Differences Between Cloud Computing and Traditional 
+Computing
+Cloud computing and the traditional (conventional) computing differ in various ways. 
+These differences have been summarised in the table below:
+Criteria Cloud Computing Traditional Computing
+Model Subscription – monthly cost Up-front infrastructure costs
+Scalability Can easily increase or reduce 
+services when the need arises.
+Scaling up often requires new 
+hardware and/or software.
+Data Access Data can be accessed anywhere 
+provided there is Internet 
+connection.
+Can only access data on-site. 
+Internet access is not required.
+Cost Lower expenses but includes 
+monthly fees.
+High initial costs
+Maintenance Responsibility lies with cloud 
+service providers. Data backups 
+can be done automatically at 
+frequent intervals.
+Companies have to recruit and 
+pay local IT staff to manage the 
+data, including data backups.
+Security Involves sharing sensitive data 
+with a third-party provider, which 
+raises concerns about data security 
+and privacy.
+It however has the advantages of 
+robust and tested disaster recovery 
+solutions to ensure applications 
+and data are available in the event 
+of outages or disruption.
+Can offer a high level of data 
+security if access and transfer 
+of sensitive data stored on-site 
+is controlled by the company 
+using security measures such as 
+firewalls and encryption. Does not 
+offer convenience means of data 
+backup and restoration
+A cloud network infrastructure offers a flexible, scalable, and cost-effective solution for 
+modern businesses. However, traditional on-site network infrastructure is not without 
+merit. For example, in some instances, it can offer more robust security measures.
+Use the following link or scan the QR code to watch a YouTube video for further 
+explanation of the concept of cloud computing: https://www.youtube.com/
+watch?v=M988_fsOSWo."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 26,"26
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.11
+Research and discuss with your colleagues on cloud computing; take into 
+consideration the following aspects:
+• Infrastructure (components)
+• Services
+• Advantages
+• Disadvantages
+Instructions:
+1. You may make use of the Internet and/or resource persons such as your ICT 
+teacher, website designer or other relevant persons to aid your investigation.
+2. Summarise your result using MS Word or pen and paper.
+3. Show it to your ICT teacher or a known IT expert for verification.
+Activity 4.12
+Assume your older brother runs a photo studio in an in-house network storage 
+environment, but with the knowledge gained so far, you have realised it would be 
+better if he switches to a cloud-based network storage system. Write a business 
+case proposal of at least one-page to your brother, outlining the reasons why 
+you consider a cloud-based storage or network a better option. Your proposal 
+should compare the two options in terms of merits and demerits to justify your 
+recommendation.
+Instructions:
+1. You may use the Internet, relevant books from your school library or a library 
+close to you or a resource person to gather required information.
+2. Make your notes with pen and paper or type it with MS Word and print it out.
+3. Show your final write-up to your teacher or ICT expert for verification.
+4. Edit your findings if necessary.
+5. Show the verified finding to a classmate (in place of your brother) and explain 
+it to them.
+Activity 4.13
+A business uses a client-server architecture for their computer network but 
+wishes to transfer its network to a cloud environment. With at least one of your"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 27,"27
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+classmates, investigate what processes would be involved (including costs) for 
+this migration.
+Instructions:
+1. You may make use of the Internet and/or resource persons such as your ICT 
+teacher, website designer or other relevant persons to aid your investigation.
+2. Create a report that summarises the findings of your investigation using MS 
+Word - Include diagrammatic illustrations and description of how a cloud 
+network works.
+3. Present the report to your IT teacher or expert for assessment.
+4. Present the verified report to a classmate (in place of the business owner).
+Activity 4.14
+Investigate how cloud networks evolved over the past 20 years. Use MS Word or 
+pen and paper to create a timeline to show the main markers or indicators in this 
+development.
+Instructions:
+1. The Internet can be a great source of information for this research. For 
+instance, to search for information on how cloud networks evolved over the 
+past 20 years, you can use the following steps:
+• With your connected to the Internet, open the browser
+• Lauch a search engine such as Google by typing www.google.com in the 
+address bar of the browser
+• Type a keyword such as “evolution of cloud networks” in the search box 
+and click the search button
+• Click the various relevant hyperlinks that show up and extract the required 
+information
+2. Compile and edit the information gathered using pen and paper or MS Word
+3. Present your write-up to your ICT teacher or an ICT resource person for 
+verification
+4. Share the final work with your colleagues or class mates
+5. Add the new terminologies introduced in this section to your computer 
+network glossary.
+Instructions:
+Your glossary should be in the format shown in the sample below:"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 28,"28
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Network Topologies
+This section focuses on how devices in a network are arranged and connected to each 
+other. It will show us how data moves between devices and how the main types of 
+network topologies have their own ways of connecting devices, making them useful 
+for different purposes.
+Classification of Networks According to Topologies
+Network topology refers to how the different parts of a network, like computers and 
+cables, are arranged. It plays a big role in how well the network works, how reliable it 
+is, and how easily it can grow. The topology can be physical, showing where cables and 
+devices are placed, or logical, showing how information moves within the network.
+There are different types of network topologies, each with its own pros and cons. The 
+choice of topology depends on factors such as the size of the network, how much 
+backup (network redundancy) is needed to prevent failures, costs, and the specific 
+requirements of the organisation or application.
+Network redundancy means adding extra devices, equipment, or communication paths 
+to a network to make sure it keeps working even if something fails.
+There are many types of network topologies, these are the main types.
+1. Bus topology: It is a network setup where all devices are connected to a single, 
+long cable. This cable has a special device called a terminator at both ends to stop 
+signals from bouncing back. In this setup, each device can directly communicate 
+with the others, and data can travel in both directions along the cable. The cable 
+acts like a shared communication line, so all devices on the network receive the 
+same signal at the same time.
+Figure 4.19: Bus Topology"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 29,"29
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+The advantages of a bus topology include:
+• Low installation cost: Since the network uses just one main cable, it is cheaper to 
+set up because less cable is needed.
+• Easy to expand: Adding new devices to the network is simple—you just connect 
+them to the main cable.
+The disadvantages of a bus topology include:
+• Bus cable dependency: If the main cable in the network stops working, the entire 
+network will fail.
+2. Star Topology: It is a network setup where all devices are connected to a central 
+device, like a switch or hub. Each device has its own direct connection to this central 
+point. If one device stops working, it doesn’t affect the rest of the network, unless 
+the central device fails. Star topology is the most common setup used in local area 
+networks (LANs).
+Figure 4.20: Star Topology
+The advantages of a star topology include:
+• communication: Devices can easily talk to each other through the central node.
+• Simple setup : Setting up a star topology is straightforward, as each device only 
+needs one cable to connect to the central hub.
+• Easy to fix problems : Troubleshooting is simple because you can identify and 
+remove a faulty device without affecting the rest of the network, as long as the 
+central node is working properly.
+The disadvantages of a star topology include:
+• Central node dependency : The whole network relies on the central node. If it 
+fails, the entire network will stop working.
+• Need for long cables: In a wired star topology, every device needs to be connected 
+to the central node, so long cables are required."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 30,"30
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+3. Ring Topology: It is a network setup where each device is connected to two other 
+devices, forming a closed loop. Data travels in one direction around the ring, passing 
+from one device to the next until it reaches its destination.
+Figure 4.21: Ring Topology
+The advantages of a ring topology include:
+• Easier data traffic management : Since data moves in only one direction, there 
+are fewer chances of data collisions, making it easier to manage data traffic.
+• Simple network structure: There’s no need for a central hub or server to control 
+connectivity. Every device has equal access to network resources.
+• Cost-effective: It’s relatively cheap to set up and expand compared to other network 
+topologies.
+The disadvantages of a ring topology include:
+• Node failure causes network problems : If one node fails, it breaks the ring, 
+causing the whole network to stop working. To fix it, you need to remove or repair 
+the broken node. This is why ring topologies are less common—they’re risky if one 
+node fails.
+• Hard to find faults : It can be tough to find and fix problems in a ring network 
+because it’s hard to locate exactly where the issue is.
+• Difficult to expand : Adding new node is not easy because you have to stop the 
+network while connecting new nodes.
+4. Mesh Topology: In mesh topology, every device is connected to several other 
+devices, creating a web-like structure. Instead of having a central hub, each device 
+connects directly to many others. This setup offers multiple paths for data to travel, 
+which makes the network more reliable and able to handle failures better. Although 
+mesh topologies are very resilient and often used in Wide Area Networks (W ANs), 
+they can be expensive to set up because of the many connections needed."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 31,"31
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.22: Mesh Topology
+The advantages of mesh topology include:
+• High fault tolerance : This means the network can keep working even if one or 
+more devices fail. If a node has a problem, the network can still use other nodes to 
+keep running smoothly.
+• Enhanced redundancy: There are many different paths for data to travel, so if 
+one path has an issue, others are available.
+The disadvantages of a mesh topology include:
+• High cost: Setting up a mesh network is more expensive than other types because 
+it needs lots of cables and ports. All nodes have to stay active, which means more 
+power is used, leading to higher costs for installing and maintaining the network.
+• Complex installation and maintenance: Installing and keeping a mesh network 
+running is tricky and takes a lot of time because every node has to be connected to 
+each other.
+• Challenging troubleshooting: Finding and fixing problems in a mesh network 
+can be difficult because of how all the devices are connected together.
+Note:
+1. There are other network setups too, like tree topology. This type combines star and 
+bus topologies. It has groups of devices arranged in a star shape, all connected to a 
+main bus cable that acts like a backbone.
+Figure 4.23: Tree Topology"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 32,"32
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+2. Network topology and network architecture are closely related. Network topology 
+is about how the different parts of a network, like routers, switches, and computers, 
+are arranged and connected. Network architecture, on the other hand, is the overall 
+design and plan of how the network is setup.
+3. In wireless networks, common setups include star and mesh topologies. The 
+simplest setup is the star topology, where each node connects to a central node, like 
+a wireless access point (W AP), which handles sending and receiving data between 
+nodes.
+4. Choosing the right network topology is very important because it affects how well 
+the network performs, how reliable it is, and how easily it can grow or change.
+Activity 4.15
+In this activity, you are going to match the correct type of topology with its 
+corresponding images of topology individually. Write your answers in your 
+exercise book. Materials needed: Exercise book, pen or pencil and ruler.
+Types Of Topologies Images
+Star Topology
+Bus Topology
+Mesh Topology
+Ring Topology"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 33,"33
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.16
+In this activity, you are to create a PowerPoint presentation on the four key 
+network topologies, their advantages, and disadvantages. Include diagrams in 
+your presentation. Perform this activity in groups.
+Materials Needed:
+• Computer with and internet access and PowerPoint presentation software
+• Smartphone or Tablet with internet access
+• Projector
+• Notebook and pen for planning
+Instructions:
+1. Individually, choose one of these four network topologies; (Bus, Star, Ring, 
+and Mesh) and research as a group.
+2. Open any web browser on either your computer, smartphone or tablet.
+3. Using a search engine, search for your chosen network topology; (Bus, Star, 
+Ring, and Mesh).
+4. Click on any hyperlink to display the content network topologies. If the 
+hyperlink does not show you a good understanding of the desired searched 
+result, go back and select on another hyperlink search results.
+5. Read through the content and make relevant notes on the advantages and 
+disadvantages of your chosen network topology from the search results.
+6. Share your findings with your group members.
+7. What did your other group members write that you did not write.
+8. Write down the differences in your notebooks.
+9. Find or draw diagrams for each of the network topologies. You may use online 
+resources or create your own simple diagrams.
+10. Create a PowerPoint presentation to present your findings to the whole class 
+for further discussion and contributions from other group members.
+Activity 4.17
+In this activity, you are going to research on a tree topology and its common uses, 
+advantages, and disadvantages. Create a diagram to illustrate the tree topology. 
+Perform this activity in groups.
+Materials Needed:
+• Computer, Mobile Phone or Tablet with internet access for research
+• Drawing tools (e.g., drawing software, paper, pen or pencil and ruler)"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 34,"34
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+• Notebook for taking notes
+Instructions:
+1. Research on tree topology to understand its structure, common uses, 
+advantages, and disadvantages. You should focus on:
+2. Individually, search on tree topology, its uses, advantages, and disadvantages 
+and research on as group.
+3. Open any web browser on either your computer, smartphone or tablet.
+4. Using a search engine, search for ‘tree topology’ .
+5. Click on any hyperlink to display the content tree topology. If the hyperlink 
+does not consider as a good understanding of the desired searched result, go 
+back and select on another hyperlink search results.
+6. Read through the content and make relevant notes on the common uses, 
+advantages and disadvantages of tree topology from the search results.
+7. Share your findings with your group members.
+8. Understand what your other group members write that you did not write.
+9. Write down the differences in your notebooks.
+10. Fill in the blank space with your findings to complete the table.
+Network Topology Common Uses Advantage Disadvantage
+Tree Topology
+11. Draw a diagram to illustrate the tree topology. You may use online resources 
+or create your own simple diagram.
+12. Present your findings to your teacher for further clarification."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 35,"35
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.18
+In this activity, you are going to analyse key factors that influence the choice of 
+network topology and apply this knowledge to select the most suitable topology 
+for given scenarios, providing reasoning for your choices. Perform this activity in 
+groups.
+Materials Needed:
+• Computer, Smartphone or Tablet with internet access for research
+• Projector Pen or pencil and paper or digital note-taking tools
+Instructions:
+1. In your groups, discuss the key factors that influence the choice of your 
+network topology, for example:
+• Network Size:
+• Required Reliability:
+• Cost:
+• Ease of Implementation:
+• Future Scalability:
+2. Briefly explain how each factor influences your choice of topology.
+3. You are to consider the following network scenarios below and analyse each 
+scenario based on the discussed factors.
+• Designing a Network for a Small Office: Consider factors like cost and 
+ease of implementation.
+• Setting Up a Network for a University Campus : Focus on scalability 
+and reliability.
+• Creating a Network for a Remote Office : Look at cost and ease of 
+implementation.
+• Designing a Network for a Busy City Hospital : Emphasise reliability 
+and fault tolerance.
+4. Select the most appropriate network topology for each scenario and provide 
+reasons for your choice based on the factors discussed.
+5. You should write a brief explanation for each scenario, detailing:
+• The chosen topology.
+• How the factors influenced their choice.
+• At least one reason why the selected topology is best suited for the scenario.
+6. Present your choices and reasons to the whole class for further discussion and 
+contributions from other group members."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 36,"36
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Wired Transmission Media
+This section covers transmission media, which are the ways data travels between 
+devices. They can be either guided (wired), which uses physical cables, or unguided 
+(wireless), which uses signals through the air (e.g., Wi-Fi). Guided media include 
+twisted pair, coaxial, and optical fibres, each with different speeds, costs, and uses. 
+Understanding these helps you to select the best option for connecting devices in a 
+network.
+Classification of Network Transmission Media
+In computer networks, transmission media are the physical paths that data travels 
+through when moving from one device to another. These paths are generally divided 
+into two main types:
+• Guided media (like wires and cables)
+• Unguided media (like wireless signals through the air).
+Figure 4.24: Types of Transmission Media
+Features of Guided (Wired) Media
+Guided network transmission media, often called network cables, use physical 
+connections to send data between devices in a computer network. There are three main 
+types of guided transmission media: twisted-pair cables, coaxial cables, and optical 
+fibre cables.
+1. Twisted-pair cable
+A twisted pair cable is a common type of cable used in LAN networks (see Figure 4.25) 
+and for telephone connections. It has two separate copper wires, each covered with 
+insulation, that are twisted together inside a protective cover. The twisting helps to 
+reduce interference between the wires, making the signal clearer."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 37,"37
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.25: Twisted-pair cabling, the most common choice for networking cabling.
+There are two types of Twisted-pair cabling: UTP and STP.
+• Unshielded Twisted Pair (UTP): This is a type of cable often used in LANs. UTP 
+cables have twisted pairs of copper wires inside. They are thin and flexible but don’t 
+have extra protection against electrical interference.
+Figure 4.26: UTP cable
+• Shielded Twisted Pair (STP): This type of twisted pair cable has an extra layer of 
+foil or copper around it to protect it from problems like cuts, noise, and interference. 
+It is often used underground and is more expensive than UTP cables. STP cables 
+can handle higher data speeds over long distances.
+Figure 4.27: STP cable
+Ethernet cables, also known as network cables, are used to connect devices in a LAN 
+based on rules called the Ethernet protocol. You can use these cables to connect 
+computers to routers, switches, or other network devices. Ethernet cables come in 
+different types, like Cat5, Cat5e, Cat6, Cat6a, Cat7 and Cat8. Each type has its own 
+specifications for how fast it can transfer data and how well it handles different 
+frequencies, but they are all twisted-pair cables."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 38,"38
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.28: Ethernet cable (Cat5e)
+2. Coaxial cable
+This type of copper cable is designed with special metal shielding and other parts to 
+block interference from signals. It has a copper core inside insulation, covered by a 
+metallic shield, and an outer layer for protection.
+Coaxial cables are commonly used today to connect cable modems to the internet 
+and for cable broadband. They are also used in cars, airplanes, military and medical 
+equipment, and to connect satellite dishes, radio, and TV antennas.
+Figure 4.29: Coaxial cable
+3. Fibre-optic cable
+Fibre-optic cables, or optical-fibre cables, use thin strands of glass or plastic to send data 
+as pulses of light. They provide very fast data speeds, work well over long distances, 
+and are not affected by electromagnetic interference. These cables are often used in 
+high-speed networks, telecommunications, and data centers.
+Figure 4.30: Fibre-optic cable"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 39,"39
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Comparing Different Guided Transmission Media
+Characteristics Twisted pair cable Co-axial cable Fibre-optic cable
+Signal 
+transmission
+Takes place in the 
+electrical form 
+over the metallic 
+conducting wires.
+Takes place in the 
+electrical form over 
+the inner conductor 
+of the cable.
+Takes place in an 
+optical form over 
+glass or plastic fibres.
+Installation and 
+Implementation
+Simple and easy Relatively difficult Difficult, fragile 
+cabling
+Cost Very low Moderate Expensive
+Diameter Larger than optical 
+fibre cable.
+Larger than optical 
+fibre cable.
+Small diameter
+Bandwidth1 Low bandwidth. Moderately high 
+bandwidth.
+A very high 
+bandwidth.
+Electromagnetic 
+interference (EMI)
+UTP is susceptible to 
+external interference
+EMI is reduced due 
+to shielding.
+EMI is not present.
+Attenuation2 Very high Low Very low
+Note:
+1. Bandwidth is the maximum data transfer rate over a network connection in a given 
+amount of time. Network bandwidth is commonly measured in bits per second 
+(bps).
+2. Attenuation is the reduction in the strength of a signal
+Conclusion
+Each type of cable has different features and uses. Twisted-pair cables are the most 
+common and affordable. Coaxial cables offer higher speeds and are used for fast 
+connections. Optical fibre cables are great for very high speeds and are not affected by 
+interference. The choice of cable depends on things like how fast you need to transfer 
+data, how far the data needs to travel, the cost, the environment, and the kind of 
+network you are setting up."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 40,"40
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.19
+In this activity, you will further investigate on the types of network Cables (twisted-
+pair, coaxial, and optical-fibre), focusing on the structure of each medium, data 
+transmission, advantages and disadvantages.
+Materials Needed:
+• Digital devices (computers, tablets, or smartphones)
+• Textbooks or online resources about network cables
+• Worksheet for recording findings
+• Pen or pencil
+Instructions:
+1. Individually, choose one of these guided transmission media (twisted-pair, 
+coaxial, and optical-fibre) and research on it.
+2. Open any web browser on your Digital devices (computers, tablets, or 
+smartphones) and open your preferred search engine.
+3. Type the name of your chosen guided transmission media (twisted-pair, 
+coaxial, and optical-fibre)
+4. Click on a suitable hyperlink to display content of guided transmission media. 
+If the hyperlink does not consider as a good understanding of the desired 
+searched result, go back and select on another hyperlink in the search results.
+5. Read through the content and make relevant notes on the structure, 
+data transmission, advantages and disadvantages of your chosen guided 
+transmission media from the search results.
+6. Share your findings with your group members.
+7. What did your other group members write that you did not write?
+8. Write down the differences in your notebooks.
+9. Fill out the worksheet below with the information gathered.
+No. Types of Cable Structure Data 
+Transmission
+Advantage Disadvantage
+1 Twisted-pair
+2 Coaxial
+3 Optical-fibre
+10. Present your findings as a group to the whole class for further discussion and 
+contributions from other group members."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 41,"41
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.20
+In this activity, you are to Create and Present a Comparison Chart for Guided 
+Transmission Media (twisted-pair, coaxial, and optical-fibre), focus on Bandwidth, 
+Susceptibility to interference and Typical use cases.
+Materials Needed:
+• Digital devices (computer, tablet, or smartphone) or textbooks
+• Chart paper or digital presentation tools (e.g., PowerPoint, Google Slides)
+• Marker or digital drawing tools
+• Ruler (if using paper)
+Instructions:
+1. Open any web browser on your Digital devices (computers, tablets, or 
+smartphones) and open your preferred search engine.
+2. Type the name of the guided transmission media (twisted-pair, coaxial, and 
+optical-fibre). Focus on: Bandwidth, Susceptibility (weakness) to interference 
+and Typical use cases.
+3. Click on any hyperlink to display content of guided transmission media. If the 
+hyperlink does not consider as a good understanding of the desired searched 
+result, go back and select on another hyperlink search results.
+4. Read through the content and make relevant notes on the bandwidth, 
+susceptibility to interference and typical use cases of your chosen guided 
+transmission media from the search results.
+5. Share your information gathered with your group members if done individually.
+6. What did your other group members write that you did not write.
+7. Write down the differences in your notebooks.
+8. Create a comparison table with the information gathered.
+9. Label the columns with the different cable types (Twisted-pair, Coaxial, 
+Optical-fibre).
+10. Label the rows with the key features (Bandwidth, Susceptibility to Interference, 
+Typical Use Cases).
+11. Each group should present their information gathered on the comparison 
+chart to the whole class for further discussion and contributions from other 
+group members."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 42,"42
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.21
+In this activity, you are to match the image of a network transmission media type 
+to its name and description on the right-hand side by drawing a line from the 
+image to it.
+NB: Lines are allowed to cross each other.
+Image of network transmission 
+media type
+Name and Description
+…………………………. High-speed, high-bandwidth cable 
+made of glass or plastic fibers, used for long-distance 
+and high-speed data transmission.
+……………………….: cable with single copper conductor 
+surrounded by insulation, shielding and an outer 
+cover commonly used for TV and broadband internet.
+………………………….: Cable consisting of pairs of 
+insulated copper wires twisted together to reduce 
+interference, commonly used for telephone lines and 
+local area networks (LANs).
+………………………….: Typically consist of four twisted 
+pairs of insulated copper wires. Each pair is twisted 
+to reduce electromagnetic interference and crosstalk 
+from other pairs or external sources, used for 
+connecting devices in a LAN and comes in different 
+types, such as Cat5, Cat5e, Cat6, Cat6a and Cat7.
+Activity 4.22
+In this activity you will review the advantages and the disadvantages of the various 
+types of guided media (Twisted-pair, Coaxial, Optical-fibre). This activity should 
+also inform your decision on which guided media you will use as a network 
+developer.
+Instructions:
+1. Choose one of these guided transmission media (twisted-pair, coaxial, and 
+optical-fibre)"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 43,"43
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+2. Open any web browser on your digital devices (computers, tablets, or 
+smartphones) and open your chosen search engine.
+3. Type the name of your chosen guided transmission media (twisted-pair, 
+coaxial, and optical-fibre) and search on its advantages and disadvantages.
+4. Click on any hyperlink to display content of guided transmission media. If the 
+hyperlink a does not display your desired searched result, go back and select 
+another hyperlink.
+5. Read through the content and make relevant notes on the introduction, 
+data transmission, advantages and disadvantages of your chosen guided 
+transmission media from the search results.
+6. Document your findings using PowerPoint or Microsoft Word.
+7. Present your work to your peers for questioning and review session.
+• Slide 1: The title, include the type of guided media and group members’ 
+names.
+• Slide 2: Introduction.
+• Slide 3: Data transmission.
+• Slide 4: Advantages.
+• Slide 5: Disadvantages.
+• Slide 6: The Scenario, discuss your specific scenario chosen and how the 
+guided media would perform in that context.
+• Slide 7: Conclusion, Summarie the key points.
+8. Each should present their slideshow to the whole class and answer questions 
+from their classmates about the guided media they chose and its application 
+to the scenario.
+9. Your teacher will lead the class for discussion and compare the different types 
+of guided media which might be best suited for various environments and 
+why.
+WIRELESS TRANSMISSION MEDIA
+Activity 4.23
+1. Write in your books names of electronic devices you have at home that use a 
+remote control.
+2. Discuss with your peers how the remote control is able to communicate with 
+the electronic device in your homes."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 44,"44
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+3. Write in your books names of electronic devices you have at home that connect 
+to share information and resource
+4. Discuss ways that files can be share from one device to another device without 
+using cables (e.g.: from a phone to a laptop).
+5. After going through steps 1-4 effectively, write your explanation for unguided 
+transmission media in your words with examples
+By completing these steps, you should have gained the understanding of unguided 
+transmission media.
+Unguided (Wireless) Transmission Media
+Unguided transmission media refers to communication methods where signals are 
+transmitted through the air or space without the need for physical cables or wires. This 
+type of media is often used in wireless communication systems.
+So instead of connecting computers to peripheral devices or to another computer 
+through ports and connectors, wireless communications technologies are used.
+Wireless media are easy and flexible, but they can be affected by environmental factors 
+and have limited range and security concerns.
+Unguided transmission media play a vital role in shaping the way we live, work, and 
+interact with one another.
+Types of Unguided Transmission Media
+1. Near Field Communication (NFC)
+2. Infrared
+3. Wi-Fi
+4. Bluetooth
+Activity 4.24
+Now, get your get your tablets and smartphone ready. We are going put your 
+internet researching skills into practice. You will search for the characteristics, 
+features, advantages and disadvantages of these unguided transmission media 
+(Near Field Communication, Infrared and Wireless Fidelity).
+Are you ready: Let start the activity.
+Materials needed:
+• Computer/Smartphone with internet access,
+• Projector,
+• Notebook and pen"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 45,"45
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+1. Choose one of these unguided transmission media (NFC, IR and Wi-fi).
+2. Open any web browser and search engine of your choice.
+3. Type the name of your chosen unguided transmission media (NFC, IR and 
+Wi-Fi)
+4. Click on any hyperlink to display content of unguided transmission media (if 
+the content does not reflect a good understanding of desired searched result, 
+go back and select on another hyperlink) search results.
+5. Read and make relevant notes on characteristics, features, advantages and 
+disadvantages of your chosen unguided transmission media from the search 
+results.
+6. Present and discuss your findings to your peers for further for discussion.
+NEAR FIELD COMMUNICATION (NFC)
+NFC is a proximity-based wireless communication standard that uses close-range 
+radio signals to transmit data between two NFC-enabled devices. Examples of NFC-
+enabled devices include many smartwatches, most smartphones, some digital cameras, 
+computers and smart televisions. Other objects, such as contactless debit and credit 
+cards, and contactless travelcards also use NFC technology.
+For successful communications, the devices either touch or are within a distance of 
+4 centimetres (1.6 inches) of each other. NFC interaction is limited to an extremely 
+short range. Besides smartphones, you can sometimes find NFC on tablets, speakers, 
+collectibles, and even gaming consoles.
+Characteristics of NFC Transmission Media
+1. Short Range: NFC has a very short range of typically up to 10 cm (4 inches).
+2. Low Data Transfer Rate and power consumption: NFC has a relatively low data 
+transfer rate of up to 424 Kbps and consume low power, making them suitable for 
+battery-powered devices.
+3. Wireless Connectivity: NFC enables wireless connectivity between devices.
+4. Passive and Active Modes: NFC devices can operate in both passive (no power 
+required) and active (power required) modes.
+5. NFC transmission media enables peer-to-peer communication between devices.
+6. NFC has built-in security features, such as encryption and secure authentication.
+7. NFC connections are easy to set up and require minimal user intervention.
+8. Low Power Consumption: NFC devices"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 46,"46
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+9. Compatibility: NFC is compatible with various devices, including smartphones, 
+tablets, and wearables and supports communication between multiple devices
+10. NFC is easy to set up and its connections are established quickly, typically in a 
+matter of milliseconds.
+Weaknesses of NFC Transmission Media
+1. NFC has a very short range of typically up to 10 cm (4 inches), making it less 
+convenient for long-range applications.
+2. NFC has a relatively low data transfer rate of up to 424 Kbps, making it less suitable 
+for large file transfers.
+3. NFC standards are still evolving, which can lead to compatibility issues.
+4. NFC tags have limited storage capacity, making them less suitable for large amounts 
+of data.
+5. NFC is vulnerable to eavesdropping, data skimming, and other security risks due to 
+its wireless nature. It can also be used to track user behaviour and location, raising 
+privacy and security concerns.
+6. NFC devices and tags can be more expensive than other technologies.
+7. NFC devices emit electromagnetic fields, which can pose health risks to some 
+individuals.
+Infrared (IR)
+Infrared connectivity is a wireless technology that uses infrared light to transmit data. 
+It is used for short-range or medium-range communications between two devices. 
+Examples include a TV remote control and, as shown in Figure 4.31 a wireless 
+presentation pointer/clicker/remote. IR communication is among the simplest wireless 
+communication methods and serves as a cost-effective way of transmitting a few bits of 
+data wirelessly. It requires direct line of sight and operates only at close range.
+Figure: 4.31: PowerPoint Presentation on IR remote"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 47,"47
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Characteristics of Infrared Transmission Media
+1. Infrared requires a direct line-of-sight between the transmitter and receiver. Physical 
+obstructions can block the infrared signal
+2. It has a relatively short data transfer range of up to 10 meters (33 feet).
+3. Infrared support medium bandwidth and its data transfer rates is up to 4 Mbps.
+4. It is used in remotes for devices like TVs, air conditioners, applications like automatic 
+door openers and certain security systems and other household electronic devices
+5. Infrared communication systems tend to consume less power compared to some 
+other wireless technologies, making them ideal for battery-operated devices
+Weaknesses of Infrared Transmission media
+1. It less suitable for environments where line-of-sight cannot be maintained since 
+it cannot penetrate opaque objects. IR signals can be disrupted by environmental 
+conditions
+2. Infrared transmission is typically limited to shorter distances compared to other 
+wireless technologies like radio frequency (RF). This makes it less ideal for long-
+range communication.
+3. Although it is less prone to interference from radio frequency signals, IR can 
+be affected by other sources of infrared radiation, such as sunlight, fluorescent 
+lighting, or other IR-emitting devices. This can lead to signal degradation or loss of 
+communication.
+4. Infrared communication generally offers lower bandwidth compared to other 
+wireless technologies, which can limit data transfer rates and make it unsuitable 
+for high-speed data applications.
+5. Misalignment with devices can reduced signal quality or complete loss of 
+communication.
+Wireless Fidelity (Wi-Fi)
+Wireless Fidelity, commonly known as Wi-Fi, is a technology that allows devices to 
+connect to the internet and communicate wirelessly using radio waves.
+Creating a Wi-Fi network
+Typically, in a home environment, a wireless (Wi-Fi) network is created by using a 
+device called a router. The router connects to the internet through a wired connection 
+(like a cable). The router sends out data using radio waves, which are invisible waves 
+that travel through the air. These waves are similar to how radio stations broadcast 
+music, but they carry data instead. Devices like laptops, smartphones, and tablets have 
+built-in Wi-Fi capabilities. They have antennas that can receive and send radio waves."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 48,"48
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Connecting to a Wi-Fi network
+To connect to a Wi-Fi network, your device needs to be within range of the router. 
+When your device is close enough, it can “see” the Wi-Fi network and connect to it by 
+using a name (also known as a SSID – Service Set Identifier) and sometimes a password. 
+Once connected, your device can send and receive data through the router. This allows 
+you to browse the web, stream videos, and communicate with other devices without 
+needing physical cables.
+Wi-Fi works best within a certain range from the router. The signal strength decreases 
+the farther you are from the router, and walls or other obstacles can weaken the signal. 
+The wireless technology primarily used by wireless local area networks (wLAN) is Wi-
+Fi.
+Characteristics of Wireless Fidelity Transmission Media
+1. Wi-Fi allows devices to connect to the internet or communicate with each other 
+without physical cables and allows devices to move freely while maintaining 
+connectivity.
+2. Wi-Fi Transmission media uses radio waves to transmit data between devices.
+3. Wi-Fi supports high data transfer rates of up to 9.6 Gbps (gigabits per second) and 
+has a data transmission range of up to 100 meters (330 feet), depending on the 
+environment and access point.
+4. Frequency Bands: Wi-Fi operates on two main frequency bands: 2.4 GHz (for 
+indoor) and 5/6 GHz (for outdoor)
+5. Standards: Wi-Fi follows standards set by the IEEE (Institute of Electrical and 
+Electronics Engineers), such as 802.11ac and 802.11ax.
+6. Security: Wi-Fi has built-in security features, such as WPA2/3 encryption and 
+firewalls.
+7. Wi-Fi devices from different manufacturers can communicate with each other as a 
+result Wi-Fi networks can be easily expanded or upgraded.
+8. They are it suitable for real-time applications and supports QoS (quality of services), 
+which prioritizes certain types of traffic.
+Weaknesses of Wi-Fi Transmission Media
+1. Limited Coverage: Wi-Fi signals degrade with distance from the router and can 
+be obstructed by walls, floors, and other physical barriers. This results in reduced 
+signal strength and speed in areas far from the router.
+2. Wi-Fi networks share the same frequency channels among all connected devices. 
+As more devices connect to the network, the available bandwidth per device can 
+decrease, leading to congestion and slower speeds.
+3. Setting up and managing Wi-Fi networks can be complex, especially for larger 
+networks with multiple access points. Issues such as channel selection, network 
+security, and coverage optimisation can require technical knowledge."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 49,"49
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+4. Wi-Fi can consume significant power, which may impact battery life in mobile 
+devices like smartphones and laptops, especially when connected to multiple 
+networks or transmitting large amounts of data.
+5. Wi-Fi signals can be weakened by physical barriers and other electronic devices, 
+leading to reduced signal quality and network performance
+6. Though there are security protocols Wi-Fi networks can still be vulnerable to 
+hacking, unauthorized access, and eavesdropping if not properly secured.
+Activity 4.25
+This activity is to help you understand the characteristics of NFC, IR, and Wi-Fi 
+by creating a comparison chart based on their features researched in activity 
+4.24.
+Materials Needed:
+• Cardboard or large paper,
+• Ruler,
+• Markers,
+• Notebooks,
+• Pen or pencil and Computers or tablets with word processor (if using digital 
+tools)
+Instruction:
+1. In your notebook, raw a table matching the one below:
+Feature NFC Infrared Wi-Fi
+Signal Type
+Range
+Typical Uses
+Bandwidth
+Susceptibility to 
+Interference
+Typical Use 
+Cases
+3. Ensure you keep the order of the headings."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 50,"50
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+4. In your groups, fill the empty cells under the appropriate headings with 
+relevant information obtained from the search made in activity 4.24 on the 
+characteristics of your chosen unguided transmission media.
+5. Present your work to the whole class for discussion.
+Connecting To A Wireless Network
+Bluetooth Transmission Media
+Bluetooth is a technology that allows devices to communicate wirelessly over short 
+distances using radio waves. The devices such as laptops, smartphones, and tablets 
+must have built-in Bluetooth capabilities.
+Characteristics
+1. Bluetooth is a wireless personal area network (PAN) technology.
+2. Bluetooth has a range of up to 30 feet (10 meters).
+3. Power Consumption of Bluetooth devices are low.
+4. Simple Setup: It is simple can cost effective to set up a Bluetooth connections
+5. Multi-Device Support: It supports multiple device connections.
+6. Frequency Hopping: Bluetooth uses frequency hopping to minimize interference.
+7. Data Transfer Rate: Bluetooth has a data transfer rate of up to 2 Mbps.
+Strength and weaknesses of Bluetooth Transmission Media
+Strength Weaknesses
+1 Wireless and requires no 
+cables
+The range of transmission is limited |Up to 
+30 feet (10 meters)
+2 Setting up is simple and easy 
+since it’s a simple pairing 
+process.
+Signals can be disrupted or interfered
+3 The energy consumption in 
+this media is very low
+Vulnerable to eavesdropping and hacking 
+since it allows for multiple devices 
+connection.
+4 There is minimal interference Devices from different manufacturers may 
+not be compatible"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 51,"51
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+5 Does not require cabling 
+making it very affordable
+Health Risks as a result of 
+Electromagnetic radiation
+6 Easy to use and is very portable Dependence on Hardware because it 
+requires specific hardware to function
+Cellular Communication
+Cellular communication is a type of wireless communication that allows mobile 
+phones and other devices to connect and communicate over long distances using a 
+network of cells.
+The term “cellular” comes from the idea of dividing a large area into smaller sections 
+called cells. Each cell is served by a cell tower or base station.
+These towers are spread out across cities and towns to cover large areas and make sure 
+you can stay connected even when you’re moving around.
+Cellular communication is essential for staying connected while on the move, enabling 
+us to make calls, send messages, and access the internet without needing physical 
+connections.
+How Cellular Communication works
+When you make a call or use data on your phone, your device sends a signal to the 
+nearest cell tower. The cell tower then sends this signal to a central system that manages 
+the network, which connects it to other cell towers or the internet. As you move from 
+one location to another, your phone automatically switches from one cell tower to 
+another without dropping the call or interrupting your data connection. This process 
+is called handoff.
+Examples of Cellular Communication
+1. Making a Phone Call : When you call a friend using your mobile phone, your 
+voice is converted into a signal that travels to the nearest cell tower. From there, the 
+signal is routed through the cellular network to reach your friend’s phone, which is 
+also connected to a cell tower.
+2. Sending a Text Message: When you send a text message, your phone sends the 
+message as a signal to the cell tower. The cell tower then forwards this signal through 
+the network to the recipient’s phone, wherever it is, as long as it’s in range of a cell 
+tower.
+3. Using Mobile Data : When you use the internet on your smartphone, such as 
+browsing websites or streaming videos, your phone sends and receives data through 
+the cell towers. The cell towers connect to the internet, allowing you to access online 
+content.
+4. GPS Navigation: Cellular networks can also help with GPS navigation. Your phone 
+communicates with cell towers to determine your location and provide accurate 
+navigation directions."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 52,"52
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Satellite Communication
+Satellite communication involves transmitting data signals to and from satellites 
+in space. It is commonly used for long-distance communication in remote areas and 
+for global connectivity. Satellite communication helps us stay connected and access 
+information even in remote or isolated places where other forms of communication 
+might not reach.
+Figure: 4.32: Satellite communication
+How Satellite Communication Works
+Satellite act like relay stations, receiving signals from one place and sending them to 
+another.
+When you use a satellite phone, watch TV through a satellite dish, or use GPS, your 
+device sends a signal to a satellite. The satellite then sends this signal back down to a 
+different location on Earth, where it’s picked up by another device or a ground station.
+Figure: 4.33: how satellite Communication works"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 53,"53
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Examples of Satellite Communication
+1. Satellite Phones: Satellite phones can make calls from anywhere on Earth, even 
+remote areas without cell towers. They send your voice to a satellite, which then 
+relays the signal to another satellite or a ground station where it connects to the 
+person you’re calling.
+2. GPS Navigation: GPS devices or apps on your phone use signals from satellites 
+to determine your location. The satellites send signals to your device, which then 
+calculates your exact position and helps with navigation.
+3. Satellite TV: When you watch TV using a satellite dish, the dish receives TV 
+signals from a satellite orbiting the Earth. The satellite picks up TV signals from 
+a broadcasting station, sends them to the dish, and you can watch your favorite 
+shows.
+4. Internet via Satellite: In places where traditional internet connections like fibre 
+or cable are not available, satellite internet can provide a connection. Satellites in 
+space send data to a dish at your home, which then connects you to the internet.
+Advantages and disadvantages of guide and unguided transmission media
+The table below show the advantages a guided transmission media has over unguided 
+transmission media based of factors such as cost, installation, security of connection, 
+maximum transmission speed and distance for reliable communication.
+Guided networks (Wired) Unguided networks (Wireless)
+Cost Installation costs can be expensive. 
+As well as materials for setting up
+Cheaper to set up, devices can 
+connect if in the range of a 
+wireless access point.
+Installation Installation requires technical 
+knowledge and space to install 
+cables
+Installation is quick and 
+simple as most wireless devices 
+will connect automatically.
+A solution for outdoor 
+locations that are impossible 
+for cabling.
+Maximum 
+transmission 
+speed
+ Up to 10 Gbps for Ethernet (Cat6) Up to 9.6 Gbps (Wi-Fi 6E)
+Maximum 
+distance 
+for reliable 
+communication
+Up to 100 metres for Ethernet.
+40 to 100 kilometres for fibre optic 
+(single mode)
+Up to 50 metres
+Security of 
+connection
+More secure as a physical 
+connection is required to intercept 
+data.
+Less secure as wireless signal 
+cannot be contained within 
+a building and no physical 
+connection is needed to 
+intercept data."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 54,"54
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Activity 4.26
+Based on what you have learned on guided and unguided transmission media, 
+take these instructions to find a solution for this scenario:
+The management of your school wants to build a network to link all the block of the 
+school to enable staff (both teaching and non-teaching) and students to share information 
+effectively. As the network administrator recommend a type of transmission media (Guided 
+or Unguided). Justify your choice with a reason outlining the advantages your choice has 
+other the other.
+Instructions:
+1. Make a choice of the type of transmission media (guided or unguided) you 
+will recommend
+2. Discuss five strengths of your choice in your group and explain your points in 
+your book
+3. Discuss five weaknesses of the other types over your choice and explain your 
+points in your book
+4. Prepare a PowerPoint presentation on your findings, include pictures in your 
+presentation if possible
+5. Present your work to your peer or the whole class for further discussion and 
+contributions from others.
+Glossary
+• ISPs: Internet Service Protocols
+• IoT: Internet of Things
+• Architecture:
+• Installation
+Setting Up Network Connections
+Welcome to the digital age’s vital lifeline: Setting up a network to share resources 
+with devices you use in everyday life should not be a big deal at all. For example, 
+setting up a new wireless network connection apple devices Wi-Fi, connecting to the 
+internet using a hotspot, connecting to the internet using a cellular network, pairing 
+Bluetooth enabled device to an iPad or iPhone and other device and connecting desktop 
+computers and other devices such scanners, printers, laptop in a wired or wireless 
+network environment."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 55,"55
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Ever asked yourself how your computer talks to the internet? Get ready to uncover 
+the fascinating journey of data and how it travels to you through the interesting 
+connections.
+Let’s get those connections up and running for your gateway to a smarter, more 
+connected world is just a few steps away!
+How can I connect my device to a cellular network?
+Cellular Network uses mobile data to connect to the internet. Smartphones, tablets, 
+and dedicated mobile hotspots can connect to the internet through cellular networks.
+Activity 4.27
+To connect your mobile phone to the internet through cellular network;
+1. Tap the Settings app on your home screen of your mobile phone.
+2. Look for options labeled Network & Internet, Connections, or Data Usage 
+(the exact name may vary depending on your device).
+3. Tap Mobile Network or Data Usage.
+4. Find and toggle the switch for Mobile Data to the On position.
+5. Ensure you see the mobile data icon in the status bar at the top of your screen, 
+indicating that mobile data is active.
+Note:
+1. Check if you have enough mobile data to supports hotspot usage. If not, you 
+can buy extra data from your cellular network provider.
+2. You can set up data usage limits or warnings by navigating to data usage and 
+configuring data Saver or Usage Limits.
+How to set Up a New Wireless Network Connection on an iPad or iPhone
+Materials Needed:
+• iPads or iPhones
+• Wi-Fi network details (SSID and password)
+Activity 4.28
+1. Turn on your iPhone or iPad
+2. Locate and tap the Settings app on your home screen and tap to open. (The 
+app icon looks like a gear.)
+3. Locate Wi-Fi icon to take you to the Wi-Fi settings page where you can view 
+available networks."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 56,"56
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+4. Tap on the Wi-Fi icon is turned on (it should be green). If Wi-Fi is off, tap the 
+switch to enable it.
+5. Select a Network: Find and tap on the name (SSID) of the network you want 
+to connect to.
+6. Enter the Network Password
+7. After entering the password, tap Join. Your device will attempt to connect to 
+the network.
+Note:
+• Once you are connected, you should see a checkmark next to the network 
+name, and the Wi-Fi icon should appear in the status bar at the top of your 
+screen, indicating that you’re connected to the internet.
+• To test the connection, open a web browser and see if the home page will be 
+displayed.
+• You can also open an app that needs internet access to be launched.
+• If the web browser or the app do not open then, there is a problem with the 
+connection
+• Troubleshoot to find the possible problem and reconnect.
+• Ensure that your iPad or iPhone is successfully connected to the Wi-Fi network 
+and run your test again.
+• If it works, then you can start using your Wi-i connection to communication 
+and access your desire information.
+• Where the needed materials are not available, your teacher will show you a 
+video on how this connection is done, after that you will discuss with your 
+peer for better understanding
+• You can also do it whenever you get access to the needed materials once you 
+understand how the connection between apple devices is done.
+Possible Troubleshooting result:
+• Incorrect Password: If you entered the wrong password, you’ll need to try 
+again.
+• Network Issues: If you cannot connect, make sure you are within range of the 
+network and that the router is working properly.
+• Insufficient or no data plan
+• Forget Network: If you have trouble connecting, you can tap the network 
+name and select Forget This Network, then try connecting again from the 
+first step."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 57,"57
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Connecting to the internet using a hotspot
+If you have internet access on your device, you can allow others to connect to your 
+device and use your internet access through hotspot.
+When you do that, you have created a wireless network. Connecting to the internet 
+using a hotspot means using a special device or feature on your phone to create a small 
+wireless network that other devices can connect to.
+This network provides internet access by using cellular data, just like how your phone 
+gets online. Let us take this activity to establish this network connection
+How will you Connect a computer and a 
+smartphone using hotspot?
+To connect your computer to a smartphone using hotspot, get the following;
+1. Mobile Hotspot Device or Smartphone with Hotspot Capability
+2. Data Plan from your cellular provider
+3. Device to Connect (e.g., laptop, tablet, or another smartphone)
+4. User Manual (for the mobile hotspot device or smartphone)
+Activity 4.29
+Check if you have enough mobile data to supports hotspot usage. If not, you 
+could buy extra data from your cellular network provider.
+1. Set up your smartphone by:
+i. Going to your device’s Settings.
+ii. Locate and select Network & Internet (or similar).
+iii. Tap Hotspot & Tethering.
+iv. Select and tap Wi-Fi Hotspot and turn it on.
+2. Configure your smartphone’s hotspot settings
+i. Choose the Network Name
+ii.  Provide Password.
+3. Turn on the hotspot and the mobile data on your smartphone
+4. On your connecting device (e.g., laptop, tablet):
+a. Open the Wi-Fi settings.
+b. Look for the network name (SSID) you set up for your hotspot."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 58,"58
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+c. Select the network and enter the password.
+d. Tap Connect to create the network connection
+5. Test your connection ( refer to notes under activity 1 on setting up a new 
+wireless network connection on an iPad or iPhone to run the test on your 
+connection)
+Note:
+• Monitor the data usage  on your mobile hotspot device or smartphone 
+settings to avoid exceeding your data limit.
+• Some devices offer data tracking features; make use of these to stay 
+informed.
+• Make sure your hotspot network is secured with a strong password.
+• Avoid sharing your hotspot password with others unless necessary.
+• To conserve battery life and data, turn off the hotspot feature when you no 
+longer need it
+How to pair a Bluetooth device to an iPad or 
+iPhone
+From the previous activities in this lesson, you can now connect to apple devices to 
+share information using Wi-i. Now based on your understanding from the previous 
+lesson undertake this activity to pair Bluetooth device and apple devices (iPhone or 
+iPad, apple watch or apple TV) and share music files.
+Activity 4.30
+Materials needed
+• Bluetooth device
+• Apple devices
+1. Choose an apple device and bring it to a close proximity with the Bluetooth 
+device
+2. Write down the steps you will follow to pair your choice of apple device and 
+the Bluetooth device
+3. Follow the steps that you have written one after the other to pair the Bluetooth 
+and your apple device.
+4. Play a music file from your device for the Bluetooth device to produce the 
+sound."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 59,"59
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+If the Bluetooth is able to produce the sound from the music file for you, then 
+the connection between the Bluetooth device and your choice of apple device has 
+been create if not then, scan the QR code and retry.
+QR code 4.1: Pairing Bluetooth Devices
+Connecting To a Wired Network
+Earlier in this section, you have been able to connect two or more devices without 
+using cables or wires. Now, let us look at how you can connect your computer and 
+other devices to share information by using cables.
+Connecting to a wired network involves using physical cables to establish a direct 
+connection between your device and a network. This type of connection is commonly 
+used in office environments, homes, internet cafés and data centers. It is more reliable 
+and has high transmission speed compared to wireless connections. Now get ready and 
+let journey on these exciting activities to connect computers to other devices in a wired 
+network environment.
+Activity 4.31
+In this activity, you will need a computer that has an ethernet port, router, switch 
+or modem and ethernet cable.
+1. Gather your materials. Eg:
+Figure 4.34
+2. Locate the ethernet port on your computer and the switch or router."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 60,"60
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Figure 4.35
+3. Pick your ethernet cable and plug one end into your computer’s Ethernet port
+Figure 4.36
+4. Turn the power of your router or switch on and plug the other end of the 
+ethernet cable into the router or switch.
+Figure 4.37
+5. On your computer, Go to Settings > Network & Internet > Status.
+6. Right-click on the Ethernet connection and select “Enable” from the menu.
+Figure 4.38"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 61,"61
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+7. The laptop is now connected to the Ethernet network.
+Note:
+1. To connect a Mac computer to a wired network, the steps are similar. The Ethernet 
+port on your Mac is identified by the symbol shown in Figure 4.38
+Figure 4.39
+2. If your computer doesn’t include a built-in Ethernet port, you can use an adapter 
+to connect the Ethernet cable to the USB or Thunderbolt port on your computer.
+Figure 4.40: Ethernet Adaptor
+Now that you have been able to able to create guided and unguided network connections, 
+I want us to look at some guidelines for using a computer network
+Guidelines for using a Computer Network
+Navigating a computer network effectively is key to staying connected and productive. 
+There are set of guidelines that help you understand how to use your network safely 
+and efficiently. From ensuring secure connections to maintaining smooth performance, 
+these tips are also to keep you safe and secure on computer networks all around the 
+globe.
+Now lets us take a look what to do to stay save on computer networks:
+• Acceptable IT Policy and Agreement: these are IT policy documents that set out 
+how technology can and cannot be used. IT policies on network usage are critical 
+for maintaining security, efficiency, and compliance within an organisation.
+• Data Security and Privacy: Measures that protect network users and their sensitive 
+data on a network. Data security is crucial to protecting sensitive and confidential 
+information from unauthorised access, breaches, and other cyber threats.
+• Health and Safety: Ensuring health and safety in relation to network usage involves 
+addressing both physical and psychological aspects of working with technology. It"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 62,"62
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+addresses measures that keep network user safe and secure from any health-related 
+problem while using networks.
+After reading on these three major guidelines for using computer networks, let us look 
+at what to do with regards to each of these major guidelines to make us secure and safe 
+when using computer networks based on this scenario.
+Activity 4.32
+Scenario:
+As the network administrator of a reputable company, you have been invited to 
+give a talk to newly employed workers of the company on the Guidelines for using 
+a Computer Network. (Health, Safety and Data Security and Privacy) with the 
+help of Internet, search for relevant information on the topic and create a concept 
+map to explain the ideas you intend to convey. You can create your presentation 
+with PowerPoint or Microsoft word.
+Instructions:
+1. Open any web browser of your choice and open your preferred search engine.
+2. Type the guideline you want to search on (eg.: Health and Safety with 
+Networks)
+3. Click on any hyperlink to display content of Health and Safety with Networks 
+(if the content does not reflect a good understanding of desired searched 
+result, go back and select on another hyperlink) search results.
+4. Read and make relevant notes on Health and Safety guidelines on using 
+computer networks.
+5. Create a concept map with the notes that you have made from step 4
+6. Present and discuss your findings to your peer for further understanding.
+7. Prepare your presentation and share your file with other peers using wireless 
+or wired network.
+Note: Make sure to share your files with at least five people in your class and you 
+also make sure your peers share their files with you."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 63,"63
+REVIEW QUESTIONS 
+Review Question 4.1: Computer Network
+1. Scenario
+Asamankese Senior High School is planning to upgrade its computer systems. 
+Currently, each department has stand-alone computers, and the school’s 
+administration is considering networking them. To make informed decisions, 
+the school’s IT committee has posed a few key questions to assess the benefits 
+and logistics of transitioning to a networked environment.
+a. Advise the school’s IT committee on the best system to use and why?
+b. Identify the network hardware you may use and why?
+c. why do you think the school need the network connection?
+2. Would you choose a switch or a hub to use in a school network?
+Review Question 4.2: Computer Network
+1. Create a table within MS Word to explain the differences between LAN and 
+W AN in terms of coverage area and purpose.
+2. Will you consider the internet as an example of a MAN? Give reasons to your 
+response.
+3. Explain how connectivity and security will differ between LANs, MANs and 
+W ANs.
+Review Questions 4.3: Network Types
+1. Explain why the following differences exist between a server and a client 
+computer in terms of specifications.
+a. A server has a lot more RAM
+b. A server has lot more storage space
+2. Evaluate the security implications of various network architecture designs, 
+identifying potential vulnerabilities (weaknesses) and recommending 
+mitigation (control) strategies.
+3. Explain why client-server networks are considered more secure than peer-to-
+peer networks.
+4. If a business with nine employees wants to facilitate internal communication 
+and file sharing, which network architecture do you recommend and why?
+5. Investigate the differences between a two-tiered client-server network and 
+a three-tiered client-server network. Create a short presentation on your 
+findings. Include diagrams to illustrate both architectures."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 64,"64
+Review Questions 4.4: Cloud Services
+1. Create a short report summarising the three main types of cloud computing 
+services: Infrastructure-as a-Service (IaaS), Platforms-as-a-Service (PaaS), 
+and Software-as-a-Service (SaaS).
+2. Afia uses a personal OneDrive account for her files. She accidentally deletes 
+a portion of a file and saves the changes. What does she need to do to get the 
+unmodified version of the file back?
+3. Imagine that you are a cloud readiness manager, and your job is to evaluate 
+whether organisations are ready to take up cloud services. Which of the 
+following organisations would you identify to get the most benefit from 
+moving to a cloud service? Justify your choice(s).
+a. An insurance company with a well-established, low cost and efficient IT 
+infrastructure.
+b. A retail organisation that has a history of peaks and troughs throughout 
+the year with its online shopping app.
+c. A family-run organisation that is using a limited number of productivity 
+applications.
+4. Microsoft Azure and Amazon Web Services (A WS) are two of the main cloud 
+service providers. Use the Internet to find out more about these two vendors. 
+Summarise the services that they provide and what they charge.
+Review Questions 4.5: Network Topologies
+1. Your school’s network is experiencing frequent data collisions. Based on your 
+knowledge of network topologies, which topology might the school’s network 
+be using, and how would you redesign the network to reduce collisions and 
+improve performance?
+2. A small office with 10 employees wants to set up a network. They need a 
+reliable network where data can still flow even if one device fails. Which 
+network topology would you recommend and why? What are the possible 
+challenges of implementing this topology?
+3. Your school plans to add 30 new computers to the existing network (ring) in 
+the computer lab. Which topology would be easiest to expand, and how would 
+you ensure that the network remains stable and efficient as more devices are 
+added?
+Review Questions 4.6: Transmission Media
+1. How does the design of twisted pair cables help minimise electromagnetic 
+interference, and why is this important in network communication?
+2. How is guided transmission media utilised in cellular/mobile networks, and 
+what role does it play in ensuring effective communication?"
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 65,"65
+3. What steps would you take to design a plan to upgrade an office network’s 
+cabling, considering the need to balance both cost and performance effectively?
+Review Questions 4.7: Wireless Transmission Media
+1. A home network is to be set up with internet access for all computers in the 
+house to connect and share resources. Which unguided transmission media 
+will you recommend and why?
+2. Compare and contrast the use of guided and unguided transmission media 
+in a hybrid network infrastructure, considering factors such as Data transfer 
+rates, signal interferences, Cost and application (specific requirements).
+3. As a network administrator, develop a plan for a city-wide Wi-Fi network 
+for a company. The plan should have five identify the potential benefits 
+and challenges of this proposed network, and how these challenges can be 
+addressed.
+Review questions 4.8: Connecting Devices to a Network
+1. Find solution to these scenarios to access yourself on what you have learned 
+in this unit.
+2. An employee needs to access the company network remotely to complete a 
+critical project. They are using a personal laptop that is not managed by the 
+IT department. What guidelines will you recommend for the employee to be 
+followed to ensure secure remote access?
+3. Create a step-by-step guide for connecting a device of your choosing to a 
+network, ideally this should be created in a MS Word document and include 
+images, imagine that this guide is being created for someone who is not 
+technical.
+4. You have been asked to create an acceptable use policy for a new school, 
+using the internet, research what should be included and put together a 
+presentation of the different sections and considerations."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 66,"66
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+Extended Reading
+• Types of Computer networks: https://www.youtube.com/watch?v=4_zSIXb7tLQ
+• Difference between LAN and WAN: https://www.youtube.com/watch?v=NyZWSvSj8ek
+• Computer networks: https://www.youtube.com/watch?v=tSodBEAJz9Y
+• Network device: https://www.youtube.com/watch?v=eMamgWllRFY
+• Advantages and disadvantages of network: https://www.youtube.com/
+watch?v=bY5OfBrBg1M
+• Web Technologies - Old Questions. https://www.collegenote.net/question-answer/p-1-
+differentiate-between-2-tier-3-tier-and-n-tier-p-20751
+• Use the following link to watch a YouTube video for further explanation of the concept of 
+network architecture: https://www.youtube.com/watch?v=w_LyIDAh_bY&t=149s
+• Instructions on how to restore a previous version of a file stored in OneDrive can be found 
+at: https://support.microsoft.com/en-gb/office/restore-a-previousversion-of-a-file-stored-
+in-onedrive-159cad6d-d76e-4981-88ef-de6e96c93893
+• An Investigation of Microsoft Azure and Amazon Web Services from Users’ Perspectives. 
+International Journal of Emerging Technologies in Learning (iJET): 10.3991/ijet.
+v14i10.9902
+• https://youtu.be/zbqrNg4C98U (On Network Topologies)
+• https://youtu.be/8UZlwhiWKmA
+• https://beginnersbook.com/2019/04/computer-model-network
+• https://www.wikihow.com/Create-a-Local-Area-Network-(LAN)
+References
+1. O’ Leary, T. J., & O’ Leary L. I. (2017). Computing Essentials, 26th edition. New York: 
+McGraw Hill.
+2. Wempen, F. (2014) Computing Fundamentals: Introduction to Computers. New York: 
+Wiley.
+3. Rajaraman, V . (2018). Introduction to Information Technology. PHI Learning Pvt. Ltd.
+4. Vermaat, M., E., Sebok, S., L., & Freund, S., M. (2014). Discovering Computers: Technology 
+in a World of Computers, Mobile Devices, and the Internet, Course Technology, Cengage 
+Learning."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 67,"67
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+5. Differentiate between 2-Tier, 3-Tier and n-Tier. - Old Questions https://images.app.goo.gl/
+fGnbY2XhdLGeaqjw6
+6. Geeks (2024) Difference between Client-Server and Peer-to-Peer Network https://www.
+geeksforgeeks.org/difference-between-client-server-and-peer-to-peer-network/
+7. Vulnerabilities of P2P Systems and a Critical Look at their Solutions Marling Engle & Javed 
+I. Khan (2006)
+8. Security Issues in Peer-to-Peer Networks Malinda, T. (2023). 10.13140/RG.2.2.14096.38401
+9. Firch J. (2024) Common Types of Network Security Vulnerabilities https://purplesec.us/
+learn/common-network-vulnerabilities/
+10. Lawrence C. Miller and Peter H. Gregory (2016) Client-Based Security Vulnerabilities: 
+https://www.dummies.com/article/academics-the-arts/study-skills-test-prep/cissp/client-
+based-security-vulnerabilities-225543/
+11. Al-Sayyed R., Hijawi W ., Bashiti, A. etal (2019) An Investigation of Microsoft Azure 
+and Amazon Web Services from Users’ Perspectives. International Journal of Emerging 
+Technologies in Learning (iJET): 10.3991/ijet.v14i10.9902
+12. Restore a previous version of a file stored in OneDrive: https://support.microsoft.com/en-
+gb/office/restore-a-previousversion-of-a-file-stored-in-onedrive-159cad6d-d76e-4981-88ef-
+de6e96c93893
+13. ByLeeron H. (2024) What Is Cloud Networking? Definition, Types & Benefits: https://www.
+forbes.com/advisor/business/software/what-is-cloud-networking/
+14. Kev Z. What is cloud computing? An overview of the cloud: https://www.atlassian.com/
+microservices/cloud-computing
+Glossary
+1. Amazon Web Services (AWS) and Microsoft Azure: Amazon Web Services (A WS) 
+and Microsoft Azure are two of the leading cloud-based infrastructure as a service (IaaS) 
+providers.
+2. Architecture: Network architecture is the plan for how devices are connected and 
+communicate with each other on a network. It is essential for creating efficient and reliable 
+networks.
+3. Bandwidth: is the maximum rate at which data can be transferred across a given path. In 
+simpler terms, it’s like the size of a pipe through which information flows.
+4. Bluetooth: is a short-range wireless technology that allows devices to connect and 
+communicate with each other without using wires. It uses radio waves to transmit data over a 
+short distance.
+5. Client: A computer that request for a service or resources from a host (server) computer in a 
+network or the Internet.
+6. Cloud Computing: A broader term for overall centralised computing resources that are 
+shared by numerous customers. It can also be described as the delivery of computing 
+resources over the Internet.
+7. Cloud Networking: An IT infrastructure where an organization’s network and resources 
+are hosted in a public or private cloud platform and are available on demand using only an 
+Internet connection."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 68,"68
+GUIDED AND UNGUIDED NETWORK SYSTEMSSECTION4
+8. Coaxial cable: is a type of electrical cable used to transmit high-frequency signals with 
+minimal interference.
+9. Connectivity: refers to the ability of different devices, systems, or components to 
+connect and communicate with each other. It’s the state or extent of being connected or 
+interconnected.
+10. DDoS Attack: A type of cyber-attack where multiple attackers distribute malicious activities 
+across different locations to overwhelm a system or infrastructure, causing it to become 
+inaccessible to legitimate users.
+11. Encryption: The act of crumbling data or information using algorithms in order to prevent it 
+from being read or used by an unauthorised person
+12. Ethernet: A widely used technology for local area networks (LANs) that enables devices to 
+communicate over a wired connection.
+13. Hotspot: Refers to a physical location or a technology that provides internet access, typically 
+through a wireless network.
+14. Hub: A device that links multiple computers and devices together.
+15. Loop: Instructions that is continually repeated until a certain condition is reached.
+16. Malware Attack: A malware attack is a common cyberattack whereby malware (normally 
+malicious software) designed to gain unauthorized access and cause harm or damage to a 
+computer, server, client or computer network and/or infrastructure. The malicious software 
+encompasses many specific types of attacks such as ransomware, spyware, command and 
+control, and more.
+17. Network Architecture: The physical or the logical design or structure of a computer 
+network
+18. Network Infrastructure: The hardware and software that enable network connectivity and 
+communication between users, devices.
+19. Node: A node is any physical device within a network of other tools that is able to send, 
+receive, or forward information. Also referred to as the computer node or internet node, a 
+personal computer is the most common node in a network. Modems, switches, hubs, bridges, 
+servers, and printers are also nodes, as are other devices that connect over Wi-Fi or Ethernet.
+20. Pairing: The process of establishing a connection or linking two entities so they can work 
+together or communicate with each other.
+21. Privacy: It involves protecting personal data, communications, and activities from being 
+accessed, shared, or observed by others without consent.
+22. Redundancy: The process of providing multiple paths for traffic so that data can keep 
+flowing.
+23. Server: Also known as a host computer, a server refers to a computer that houses resources 
+(information, device, applications) that users or client computers access on the Inter
+24. SSID (Service Set Identifier): The unique name of a wireless network (Wi-Fi) that 
+identifies it from other networks.
+25. Topology: the physical or logical arrangement of devices and connections in a network.
+26. Twisted pair cable: is a type of communication cable that consists of two insulated 
+conductors (usually copper) twisted together."
+Explain key concepts from ICT_LM_FINAL_SECTION_4-LV - Page 69,"Acknowledgements
+List of Contributors
+Name Institution
+Felix Tenkorang Opare  Accra Academy  
+Kwadjo Adjei  SDA SHS Asokore Koforidua  
+Millicent Heduvor Awaso STEM SHS
+Abdul Rahim Mahmud  Yeji SHS"
