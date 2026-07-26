@@ -76,7 +76,7 @@ def transcribe_audio(audio_file):
           model="whisper-large-v3-turbo",
           prompt=(
               "Ghanaian Senior High School educational context, WAEC terms,"
-              " Computing, ICT, Robotics, multiple choice letters A B C D."
+              " Computing, ICT, Robotics, multiple choice labels A B C D."
           ),
           language="en",
       )
@@ -99,7 +99,7 @@ selected_subject = st.sidebar.selectbox(
     "Select Subject", list(subjects.keys())
 )
 
-# Handle subject switch notification
+# Handle subject switch notification with clear indication
 if selected_subject != st.session_state.prev_subject:
   switch_msg = (
       f"Subject area has been switched from"
@@ -130,7 +130,7 @@ input_method = st.sidebar.radio(
 dataset_files = subjects[selected_subject]
 df_dataset = load_dataset(dataset_files)
 
-# Layout: Laptop icon -> Title -> Your picture (ONORE_AKORTIA_1.jpg)
+# Layout: Laptop icon -> Title -> User picture (ONORE_AKORTIA_1.jpg) in a single uniform column
 user_img_base64 = get_image_base64("ONORE_AKORTIA_1.jpg")
 
 st.markdown(
@@ -147,7 +147,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Initialize global session stores for progress tracking and exam session metrics
+# Initialize session state stores
 if "user_sessions" not in st.session_state:
   st.session_state.user_sessions = {}
 if "messages" not in st.session_state:
@@ -166,8 +166,6 @@ if "correct_count" not in st.session_state:
   st.session_state.correct_count = 0
 if "wrong_count" not in st.session_state:
   st.session_state.wrong_count = 0
-if "question_type" not in st.session_state:
-  st.session_state.question_type = "objective"  # objective or essay
 
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
@@ -185,7 +183,7 @@ if student_full_name and student_school:
         "messages"
     ]
 
-# Trigger initial personalized greeting only when ALL THREE fields (Subject, Name, School) are provided
+# Trigger initial personalized greeting ONLY when ALL THREE fields (Subject, Full Name, School) are provided
 if not st.session_state.greeted and student_full_name and student_school:
   user_status_label = (
       "Welcome back"
@@ -246,8 +244,8 @@ if input_method == "⌨️ Type Question":
       learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active
   ):
     prompt_label = (
-        "Type your answer (Option letter A/B/C/D for objective, or complete"
-        " response for essay)..."
+        "Type your answer (Option letter A/B/C/D, short answer, or essay"
+        " write-up)..."
     )
   else:
     prompt_label = f"Ask a question about {selected_subject}..."
@@ -289,13 +287,12 @@ if user_query:
         try:
           if learning_mode == "📝 WAEC Exam Practice":
             if not st.session_state.exam_active:
-              # Try to parse total questions from user input
               try:
                 parsed_total = int(user_query.strip())
                 if parsed_total > 0:
                   st.session_state.total_questions = parsed_total
               except ValueError:
-                pass  # Keep default if not integer
+                pass
 
               st.session_state.exam_active = True
               st.session_state.current_question_num = 1
@@ -307,9 +304,10 @@ if user_query:
                   f" {student_full_name} from {student_school}. The student"
                   f" requested an exam session of"
                   f" {st.session_state.total_questions} questions. Please"
-                  " present Question 1. Specify clearly whether it is an"
-                  " objective question (with options A, B, C, D) or an essay-type"
-                  " question."
+                  " present Question 1. Ensure you specify the question type"
+                  " explicitly as one of: (1) Multiple Choice (4 options A, B, C,"
+                  " D or 2 True/False options A and B), (2) Short Answer (sentence"
+                  " completion), or (3) Essay / Subjective."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -323,7 +321,6 @@ if user_query:
                   {"role": "assistant", "content": ai_response}
               )
             else:
-              # Active exam evaluation step
               st.session_state.current_question_num += 1
               current_q = st.session_state.current_question_num
               total_q = st.session_state.total_questions
@@ -333,18 +330,25 @@ if user_query:
                     f"You are an expert WAEC Examiner in {selected_subject} testing"
                     f" {student_full_name} from {student_school}. \n\nEvaluate"
                     f" the student's latest answer: '{user_query}' for the"
-                    " current question.\n\nRules:\n1. For Multiple Choice"
-                    " (objective) questions: Do NOT give percentage scores. Give"
-                    " a friendly remark of EXCELLENT, GREAT JOB, AMAZING,"
-                    " WONDERFUL, CONGRATULATIONS if correct, or TRY AGAIN if"
-                    " wrong. If wrong, display the correct option and answer to"
-                    " aid learning.\n2. For Essay-type questions: Evaluate the"
-                    " response thoroughly based on textbook standards.\n3."
-                    " Present the next question (Question {current_q} of"
-                    f" {total_q})."
+                    " current question.\n\nStrict Rules for Question Types &"
+                    " Evaluation:\n1. Multiple Choice Questions: Must have 4"
+                    " options (A, B, C, D) or 2 True/False options (A and B)."
+                    " Accept standalone option letters (e.g., 'A', 'B') as fully"
+                    " correct if they match the correct choice, whether the"
+                    " student provides just the label, the text, or both. Give"
+                    " friendly remarks (EXCELLENT, GREAT JOB, AMAZING,"
+                    " WONDERFUL, CONGRATULATIONS) if correct, or 'TRY AGAIN' if"
+                    " wrong.\n2. Short Answer Questions: Requires completing an"
+                    " unended sentence. Evaluate the exact word or phrase"
+                    " provided.\n3. Essay/Subjective Questions: Requires"
+                    " elaborate write-ups. Do NOT expect a 100% strict verbatim"
+                    " match; an 80% semantic/conceptual match is sufficient to"
+                    " affirm the answer as correct.\n4. If wrong, explicitly"
+                    " display the correct answer to aid learning.\n5. Present"
+                    f" the next question (Question {current_q} of {total_q})"
+                    " with its designated question type."
                 )
               else:
-                # Exam session exhausted, provide final performance rating and remark
                 exam_eval_prompt = (
                     f"You are an expert WAEC Examiner in {selected_subject} testing"
                     f" {student_full_name} from {student_school}. The student"
@@ -352,8 +356,8 @@ if user_query:
                     f" Total Correct: {st.session_state.correct_count}, Total"
                     f" Wrong: {st.session_state.wrong_count}.\n\nProvide an"
                     " overall performance rating and a final summary remark to"
-                    " help the learner prepare for WAEC. Reset exam session"
-                    " state after this."
+                    " help the learner prepare for WAEC based on essay and"
+                    " objective results. Reset exam session state after this."
                 )
                 st.session_state.exam_active = False
 
