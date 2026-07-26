@@ -277,9 +277,8 @@ if user_query:
     st.markdown(user_query)
 
   # Filter textbook dataset precisely based on user prompt keywords if available, otherwise fallback to general subject dataset
-  filtered_context = "No specific textbook context found."
+  filtered_context = "No specific textbook content found."
   if not df_dataset.empty:
-    # Look for rows matching keywords in the user query
     query_terms = [
         term.strip() for term in user_query.split() if len(term) > 3
     ]
@@ -331,10 +330,11 @@ if user_query:
                   f" specifically on topic or request: '{user_query}' and"
                   f" question type: {exam_question_type}. Please generate"
                   f" Question 1 strictly relevant to the requested topic"
-                  f" (e.g., if data types was requested, ask strictly about data"
-                  f" types). For MCQ, display the plausible answers vertically"
-                  " one after the other or cleanly formatted in a 2*2 grid"
-                  " layout."
+                  f" (e.g., if data structures was requested, ask strictly"
+                  f" about data structures). For MCQ, format options vertically"
+                  f" or in a 2*2 grid cleanly. CRITICAL RULE: DO NOT include"
+                  f" any meta-text, labels, or duplicate text like 'Plausible"
+                  f" answers:' anywhere in your output."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -367,19 +367,21 @@ if user_query:
                     f" {student_school}. \n\nEvaluate the student's latest"
                     f" answer: '{user_query}' for the current question (Type:"
                     f" {exam_question_type}).\n\nStrict Rules for"
-                    " Evaluation:\n1. MCQ: Plausible answers must be displayed"
-                    " vertically or in a 2*2 grid. ALWAYS strictly accept"
-                    " standalone option letters (A, B, C, D) as fully correct if"
-                    " they match the correct choice, whether the student"
-                    " provides just the label, the text, or both. Give"
-                    " friendly remarks (EXCELLENT, GREAT JOB, AMAZING,"
-                    " WONDERFUL, CONGRATULATIONS) if correct, or 'TRY AGAIN' if"
-                    " wrong.\n2. Short Answer: Check sentence completion"
-                    " accuracy.\n3. Essay: Require elaborate write-ups with an"
-                    " 80% semantic match threshold.\n4. If wrong, explicitly"
-                    " display the correct answer to aid learning.\n5. Present"
-                    f" the next question (Question {current_q} of {total_q})"
-                    f" adhering to the selected type: {exam_question_type}."
+                    " Evaluation:\n1. MCQ: Format options vertically or in a"
+                    " 2*2 grid cleanly. DO NOT include any heading like"
+                    " 'Plausible answers:'. ALWAYS strictly accept standalone"
+                    " option letters (A, B, C, D) as fully correct if they match"
+                    " the correct choice, whether the student provides just the"
+                    " label, the text, or both. Give friendly remarks"
+                    " (EXCELLENT, GREAT JOB, AMAZING, WONDERFUL,"
+                    " CONGRATULATIONS) if correct, or 'TRY AGAIN' if wrong.\n2."
+                    " Short Answer: Check sentence completion accuracy.\n3."
+                    " Essay: Require elaborate write-ups with an 80% semantic"
+                    " match threshold.\n4. If wrong, explicitly display the"
+                    " correct answer to aid learning.\n5. Present the next"
+                    f" question (Question {current_q} of {total_q}) adhering to"
+                    f" the selected type: {exam_question_type} without duplicate"
+                    " labels."
                 )
               else:
                 exam_eval_prompt = (
