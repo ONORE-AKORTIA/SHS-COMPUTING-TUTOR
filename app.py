@@ -200,8 +200,8 @@ if not st.session_state.greeted and student_full_name and student_school:
   )
   initial_greeting = (
       f"Hello {student_full_name} from {student_school}! ({user_status_label})."
-      f" I am Sir O.K, your AI tutor ready to help you master {selected_subject} for"
-      " WAEC. How can I assist you today?"
+      f" I am Sir O.K, your AI tutor ready to help you master {selected_subject}"
+      " for WAEC. How can I assist you today?"
   )
   st.session_state.messages.append(
       {"role": "assistant", "content": initial_greeting}
@@ -276,18 +276,33 @@ if user_query:
   with st.chat_message("user"):
     st.markdown(user_query)
 
-  # Retrieve context from dataset
-  retrieved_context = (
-      "No specific textbook context found. Answer based on general knowledge."
-  )
+  # Filter textbook dataset precisely based on user prompt keywords if available, otherwise fallback to general subject dataset
+  filtered_context = "No specific textbook context found."
   if not df_dataset.empty:
-    matches = df_dataset[
-        df_dataset["answer_text"].str.contains(
-            user_query, case=False, na=False, regex=False
-        )
+    # Look for rows matching keywords in the user query
+    query_terms = [
+        term.strip() for term in user_query.split() if len(term) > 3
     ]
-    if not matches.empty:
-      retrieved_context = matches.iloc[0]["answer_text"]
+    if query_terms:
+      pattern = "|".join(query_terms)
+      matched_rows = df_dataset[
+          df_dataset["question_text"].str.contains(
+              pattern, case=False, na=False, regex=True
+          )
+          | df_dataset["answer_text"].str.contains(
+              pattern, case=False, na=False, regex=True
+          )
+      ]
+      if not matched_rows.empty:
+        filtered_context = "\n".join(
+            matched_rows["answer_text"].head(3).tolist()
+        )
+      else:
+        filtered_context = "\n".join(
+            df_dataset["answer_text"].head(3).tolist()
+        )
+    else:
+      filtered_context = "\n".join(df_dataset["answer_text"].head(3).tolist())
 
   client = get_groq_client()
   if client:
@@ -309,18 +324,29 @@ if user_query:
               st.session_state.wrong_count = 0
 
               start_prompt = (
-                  f"You are an expert WAEC Examiner in {selected_subject} testing"
-                  f" {student_full_name} from {student_school}. The student"
-                  f" requested an exam session of"
-                  f" {st.session_state.total_questions} questions focusing"
-                  f" specifically on question type: {exam_question_type}. Please"
-                  " present Question 1. For MCQ, display the plausible answers"
-                  " either vertically one after the other or cleanly formatted"
-                  " in a 2*2 grid layout."
+                  f"You are Sir O.K, an expert WAEC Examiner in"
+                  f" {selected_subject} testing {student_full_name} from"
+                  f" {student_school}. The student requested an exam session"
+                  f" of {st.session_state.total_questions} questions focusing"
+                  f" specifically on topic or request: '{user_query}' and"
+                  f" question type: {exam_question_type}. Please generate"
+                  f" Question 1 strictly relevant to the requested topic"
+                  f" (e.g., if data types was requested, ask strictly about data"
+                  f" types). For MCQ, display the plausible answers vertically"
+                  " one after the other or cleanly formatted in a 2*2 grid"
+                  " layout."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
-                  messages=[{"role": "user", "content": start_prompt}],
+                  messages=[
+                      {
+                          "role": "system",
+                          "content": (
+                              f"Relevant Textbook Content:\n{filtered_context}"
+                          ),
+                      },
+                      {"role": "user", "content": start_prompt},
+                  ],
                   max_tokens=400,
                   temperature=0.3,
               )
@@ -336,15 +362,16 @@ if user_query:
 
               if current_q <= total_q:
                 exam_eval_prompt = (
-                    f"You are an expert WAEC Examiner in {selected_subject} testing"
-                    f" {student_full_name} from {student_school}. \n\nEvaluate"
-                    f" the student's latest answer: '{user_query}' for the"
-                    f" current question (Type: {exam_question_type}).\n\nStrict"
-                    " Rules for Evaluation:\n1. MCQ: Plausible answers must be"
-                    " displayed vertically or in a 2*2 grid. ALWAYS strictly"
-                    " accept standalone option letters (A, B, C, D) as fully"
-                    " correct if they match the correct choice, whether the"
-                    " student provides just the label, the text, or both. Give"
+                    f"You are Sir O.K, an expert WAEC Examiner in"
+                    f" {selected_subject} testing {student_full_name} from"
+                    f" {student_school}. \n\nEvaluate the student's latest"
+                    f" answer: '{user_query}' for the current question (Type:"
+                    f" {exam_question_type}).\n\nStrict Rules for"
+                    " Evaluation:\n1. MCQ: Plausible answers must be displayed"
+                    " vertically or in a 2*2 grid. ALWAYS strictly accept"
+                    " standalone option letters (A, B, C, D) as fully correct if"
+                    " they match the correct choice, whether the student"
+                    " provides just the label, the text, or both. Give"
                     " friendly remarks (EXCELLENT, GREAT JOB, AMAZING,"
                     " WONDERFUL, CONGRATULATIONS) if correct, or 'TRY AGAIN' if"
                     " wrong.\n2. Short Answer: Check sentence completion"
@@ -356,11 +383,11 @@ if user_query:
                 )
               else:
                 exam_eval_prompt = (
-                    f"You are an expert WAEC Examiner in {selected_subject} testing"
-                    f" {student_full_name} from {student_school}. The student"
-                    f" has completed all {total_q} questions in this session"
-                    f" ({exam_question_type}). Total Correct:"
-                    f" {st.session_state.correct_count}, Total Wrong:"
+                    f"You are Sir O.K, an expert WAEC Examiner in"
+                    f" {selected_subject} testing {student_full_name} from"
+                    f" {student_school}. The student has completed all {total_q}"
+                    f" questions in this session ({exam_question_type}). Total"
+                    f" Correct: {st.session_state.correct_count}, Total Wrong:"
                     f" {st.session_state.wrong_count}.\n\nProvide an overall"
                     " performance rating and a final summary remark to help the"
                     " learner prepare for WAEC. Reset exam session state after"
@@ -371,13 +398,16 @@ if user_query:
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
                   messages=[
+                      {
+                          "role": "system",
+                          "content": (
+                              f"Relevant Textbook Content:\n{filtered_context}"
+                          ),
+                      },
                       {"role": "system", "content": exam_eval_prompt},
                       {
                           "role": "user",
-                          "content": (
-                              f"Textbook Context:\n{retrieved_context}\n\nStudent"
-                              f" Response: {user_query}"
-                          ),
+                          "content": f"Student Response: {user_query}",
                       },
                   ],
                   max_tokens=450,
@@ -390,23 +420,23 @@ if user_query:
               )
           else:
             persona_prompt = (
-                f"You are an expert SHS AI Tutor helping {student_full_name}"
-                f" from {student_school} in {selected_subject}. Provide"
-                " precise, concise, and direct answers based on the provided"
-                " textbook context."
+                f"You are Sir O.K, an expert SHS AI Tutor helping"
+                f" {student_full_name} from {student_school} in"
+                f" {selected_subject}. Provide precise, concise, and direct"
+                " answers based on the provided textbook context."
             )
 
             completion = client.chat.completions.create(
                 model="llama-3.1-8b-instant",
                 messages=[
-                    {"role": "system", "content": persona_prompt},
                     {
-                        "role": "user",
+                        "role": "system",
                         "content": (
-                            f"Textbook Context:\n{retrieved_context}\n\nStudent"
-                            f" Input: {user_query}"
+                            f"Relevant Textbook Content:\n{filtered_context}"
                         ),
                     },
+                    {"role": "system", "content": persona_prompt},
+                    {"role": "user", "content": f"Student Input: {user_query}"},
                 ],
                 max_tokens=400,
                 temperature=0.3,
