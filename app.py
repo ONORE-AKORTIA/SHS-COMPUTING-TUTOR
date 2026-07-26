@@ -6,7 +6,7 @@ import streamlit as st
 
 # Set page configuration
 st.set_page_config(
-    page_title="SHS Computing AI Tutor", page_icon="💻", layout="centered"
+    page_title="SHS Academic AI Tutor", page_icon="💻", layout="centered"
 )
 
 
@@ -27,7 +27,7 @@ st.markdown(
     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
         <span style="font-size: 2.5em;">💻</span>
         <div style="flex-grow: 1;">
-            <h1 style="margin: 0; font-size: 1.8em; line-height: 1.2;">SHS Computing AI Tutor</h1>
+            <h1 style="margin: 0; font-size: 1.8em; line-height: 1.2;">SHS Academic AI Tutor</h1>
             <p style="margin: 0; color: #666; font-size: 0.95em;">Your personal WAEC & NaCCA curriculum study assistant.</p>
         </div>
         <img src="data:image/jpeg;base64,{img_base64}" width="75" style="border-radius: 8px; object-fit: cover;">
@@ -47,14 +47,26 @@ except Exception as e:
   st.stop()
 
 
-# Load dataset cached for performance
+# Load datasets cached for performance
 @st.cache_data
-def load_data():
-  df = pd.read_csv("waec_qa_dataset.csv")
-  return df
+def load_data(subject):
+  if subject == "ICT":
+    filename = "ict_qa_dataset.csv"
+  else:
+    filename = "waec_qa_dataset.csv"
 
-
-df = load_data()
+  if os.path.exists(filename):
+    return pd.read_csv(filename)
+  else:
+    # Fallback dummy dataset if specific CSV is missing
+    return pd.DataFrame(
+        {
+            "question_text": ["General curriculum overview"],
+            "answer_text": [
+                "Standard curriculum guidelines apply for this subject."
+            ],
+        }
+    )
 
 
 # Function to transcribe audio using Groq's Whisper model
@@ -68,8 +80,8 @@ def transcribe_audio(audio_file):
           file=("temp_audio.wav", file.read()),
           model="whisper-large-v3-turbo",
           prompt=(
-              "Ghanaian Senior High School computing context, WAEC terms, IT,"
-              " programming, algorithms."
+              "Ghanaian Senior High School educational context, WAEC terms,"
+              " Computing, ICT."
           ),
           language="en",
       )
@@ -82,7 +94,9 @@ def transcribe_audio(audio_file):
 
 
 # Function to query the Groq LLM
-def ask_ai_tutor(query, dataset, student_name, student_school, previous_themes=None):
+def ask_ai_tutor(
+    query, dataset, student_name, student_school, subject, previous_themes=None
+):
   context_text = "\n".join(
       [
           f"Q: {row['question_text']}\nA: {row['answer_text']}"
@@ -94,16 +108,16 @@ def ask_ai_tutor(query, dataset, student_name, student_school, previous_themes=N
   if previous_themes:
     theme_instruction = f"""
     The user is selecting or referring to one of these previously suggested themes: {previous_themes}.
-    If the user's input is a number (like 1, 2, 3) or matches one of these themes, provide a detailed explanation of that specific theme aligned with the WAEC/NaCCA curriculum.
+    If the user's input is a number (like 1, 2, 3) or matches one of these themes, provide a detailed explanation of that specific theme aligned with the WAEC/NaCCA curriculum for {subject}.
     """
 
   prompt = f"""
-    You are Sir O.K., an expert, friendly AI tutor for Ghanaian Senior High School (SHS) Computing students (created by Mr. Onore Akortia from OLA SHS, Ho).
-    You are currently speaking with a student named {student_name} from {student_school}.
+    You are Sir O.K., an expert, friendly AI tutor for Ghanaian Senior High School (SHS) students (created by Mr. Onore Akortia from OLA SHS, Ho).
+    You are currently teaching {subject} to a student named {student_name} from {student_school}.
 
     CRITICAL INSTRUCTIONS:
     - Do NOT re-introduce yourself, mention who created you, or state your aims in your response. Jump straight into answering the student's question directly.
-    - Keep your tone concise, encouraging, clear, and strictly educational aligned with WAEC/NaCCA standards.
+    - Keep your tone concise, encouraging, clear, and strictly educational aligned with WAEC/NaCCA standards for {subject}.
     - Use the provided context to answer accurately. If it's not in the context, use standard curriculum knowledge.
     - After your answer, provide a numbered list of exactly 3 suggested follow-up sub-themes related to the topic for further exploration.
     
@@ -144,23 +158,33 @@ if "messages" not in st.session_state:
 if "last_themes" not in st.session_state:
   st.session_state.last_themes = None
 
+if "selected_subject" not in st.session_state:
+  st.session_state.selected_subject = "Computing"
+
 # Step 1: Capture Student Name and School if not already provided
 if not st.session_state.user_name or not st.session_state.user_school:
   st.subheader("Welcome! Let's get started.")
   with st.form("student_info_form"):
     name_input = st.text_input("Please enter your full name:")
     school_input = st.text_input("Please enter your school name:")
+    
+    # Subject selection right at the registration form
+    subject_input = st.selectbox(
+        "Select your primary subject:", ["Computing", "ICT"]
+    )
+    
     submit_button = st.form_submit_button("Start Learning")
 
     if submit_button:
       if name_input.strip() and school_input.strip():
         st.session_state.user_name = name_input.strip()
         st.session_state.user_school = school_input.strip()
+        st.session_state.selected_subject = subject_input
 
         initial_welcome = (
             f"Hello {st.session_state.user_name} from"
             f" {st.session_state.user_school}! I am Sir O.K., your SHS"
-            " Computing tutor. What computing topic would you like to explore"
+            f" {st.session_state.selected_subject} tutor. What topic would you like to explore"
             " today?"
         )
         st.session_state.messages.append(
@@ -170,15 +194,34 @@ if not st.session_state.user_name or not st.session_state.user_school:
       else:
         st.warning("Please fill in both your name and school to continue.")
 else:
-  # Display active student info banner in the sidebar
+  # Display active student info and subject switcher in the sidebar
   st.sidebar.markdown(f"**Student:** {st.session_state.user_name}")
   st.sidebar.markdown(f"**School:** {st.session_state.user_school}")
+  
+  # Allow switching subjects dynamically
+  current_subject = st.sidebar.selectbox(
+      "Switch Subject:",
+      ["Computing", "ICT"],
+      index=0 if st.session_state.selected_subject == "Computing" else 1,
+  )
+  
+  if current_subject != st.session_state.selected_subject:
+    st.session_state.selected_subject = current_subject
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": f"Switched context to **{current_subject}**. How can I help you in this subject?"
+    })
+    st.rerun()
+
   if st.sidebar.button("Log out / Change Details"):
     st.session_state.user_name = None
     st.session_state.user_school = None
     st.session_state.messages = []
     st.session_state.last_themes = None
     st.rerun()
+
+  # Load the dataset corresponding to the currently selected subject
+  df = load_data(st.session_state.selected_subject)
 
   # Display chat history cleanly
   for message in st.session_state.messages:
@@ -193,7 +236,7 @@ else:
   user_query = None
 
   if input_method == "⌨️ Type Question":
-    user_query = st.chat_input("Ask a computing question or type a theme number (e.g. 1, 2)...")
+    user_query = st.chat_input("Ask a question or type a theme number (e.g. 1, 2)...")
   else:
     st.markdown("### Record your question:")
     audio_value = st.audio_input("Click to record your voice question")
@@ -222,6 +265,7 @@ else:
             df,
             st.session_state.user_name,
             st.session_state.user_school,
+            st.session_state.selected_subject,
             previous_themes=st.session_state.last_themes,
         )
         st.markdown(answer)
@@ -229,6 +273,5 @@ else:
             {"role": "assistant", "content": answer}
         )
         
-        # Simple extraction or holding of the context for the next turn
         st.session_state.last_themes = answer
         st.rerun()
