@@ -88,17 +88,37 @@ def transcribe_audio(audio_file):
     return None
 
 
-# Sidebar setup for Subject Selection, Student Details, and Input Method
+# Sidebar setup for Subject Selection, Student Details, and Mode
 st.sidebar.title("Navigation & Profile")
 subjects = get_available_subjects()
+
+# Track previous subject to detect changes
+if "prev_subject" not in st.session_state:
+  st.session_state.prev_subject = "Computing"
+
 selected_subject = st.sidebar.selectbox(
     "Select Subject", list(subjects.keys())
 )
+
+# Handle subject switch notification
+if selected_subject != st.session_state.prev_subject:
+  switch_msg = (
+      f"Subject area has been switched from"
+      f" **{st.session_state.prev_subject}** to **{selected_subject}**."
+  )
+  if "messages" in st.session_state:
+    st.session_state.messages.append({"role": "assistant", "content": switch_msg})
+  st.session_state.prev_subject = selected_subject
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Student Details")
 student_name = st.sidebar.text_input("Full Name", value="")
 student_school = st.sidebar.text_input("School Name", value="")
+
+st.sidebar.markdown("---")
+learning_mode = st.sidebar.radio(
+    "Select Mode", ["💬 Study & Chat", "📝 WAEC Exam Practice"]
+)
 
 st.sidebar.markdown("---")
 input_method = st.sidebar.radio(
@@ -132,11 +152,12 @@ if "messages" not in st.session_state:
 if "greeted" not in st.session_state:
   st.session_state.greeted = False
 
-# Trigger initial personalized greeting once
-if not st.session_state.greeted and student_name:
+# Trigger initial personalized greeting only when ALL THREE fields (Subject, Name, School) are provided
+if not st.session_state.greeted and student_name and student_school:
   initial_greeting = (
-      f"Hello {student_name} from {student_school}! I am Sir O.K, your AI tutor ready"
-      f" to help you master {selected_subject}. How can I assist you today?"
+      f"Hello {student_name} from {student_school}! I am your AI tutor ready"
+      f" to help you master {selected_subject} for WAEC. How can I assist you"
+      " today?"
   )
   st.session_state.messages.append(
       {"role": "assistant", "content": initial_greeting}
@@ -152,10 +173,15 @@ for message in st.session_state.messages:
 user_query = None
 
 if input_method == "⌨️ Type Question":
-  user_query = st.chat_input(f"Ask a question about {selected_subject}...")
+  prompt_label = (
+      f"Answer/Ask a question about {selected_subject}..."
+      if learning_mode == "💬 Study & Chat"
+      else "Type your answer to the exam question..."
+  )
+  user_query = st.chat_input(prompt_label)
 else:
-  st.markdown("### Record your question:")
-  audio_value = st.audio_input("Click to record your voice question")
+  st.markdown("### Record your input:")
+  audio_value = st.audio_input("Click to record your voice")
   if audio_value:
     with st.spinner("Transcribing your voice..."):
       transcribed_text = transcribe_audio(audio_value)
@@ -163,18 +189,14 @@ else:
         st.success(f'Transcribed: "{transcribed_text}"')
         user_query = transcribed_text
       else:
-        st.error(
-            "Could not transcribe audio. Please try speaking again or type"
-            " your question."
-        )
+        st.error("Could not transcribe audio. Please try again.")
 
 if user_query:
-  # Append user message
   st.session_state.messages.append({"role": "user", "content": user_query})
   with st.chat_message("user"):
     st.markdown(user_query)
 
-  # Retrieve context from the dataset using standard keyword matching
+  # Retrieve context from dataset
   retrieved_context = (
       "No specific textbook context found. Answer based on general knowledge."
   )
@@ -187,18 +209,35 @@ if user_query:
     if not matches.empty:
       retrieved_context = matches.iloc[0]["answer_text"]
 
-  # Generate precise AI response using Groq with controlled response token size
   client = get_groq_client()
   if client:
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
         try:
-          persona_prompt = (
-              f"You are an expert SHS AI Tutor helping {student_name} from"
-              f" {student_school}. Provide precise, concise, and direct answers"
-              " based on the provided textbook context."
-              F"If answer does not appear in the textbook, use your knowledge"
-          )
+          if learning_mode == "📝 WAEC Exam Practice":
+            persona_prompt = (
+                f"You are an expert WAEC Examiner in {selected_subject} testing"
+                f" {student_name} from {student_school} based on textbook"
+                " materials. If the user input looks like an answer to a"
+                " previous exam question, evaluate it, assign a percentage score"
+                " (0-100), and give a remark based strictly on this grading scale:\n"
+                "- 90 and above: Distinction\n- 80 and above: Excellent\n- 70"
+                " and above: Very Good\n- 60 and above: Good\n- 50 and above:"
+                " Pass\n- 40 and above: Nice work, keep trying\n- 30 and above:"
+                " Can do better\n- Below 30: You have to sit up\n\nIf the user"
+                " is asking to start an exam, generate a challenging WAEC-style"
+                " exam question from the context."
+            )
+          else:
+            persona_prompt = (
+                f"You are an expert SHS AI Tutor helping {student_name} from"
+                f" {student_school} in {selected_subject}. Provide precise,"
+                " concise, and direct answers based on the provided textbook"
+                " context or your knowledge if reponse not found in textbook."
+                f"your name is Sir O.K"
+                f"only upon asking for the name of your creator, reply his name is Mr. ONORE K. AKORTIA"
+            )
+
           completion = client.chat.completions.create(
               model="llama-3.1-8b-instant",
               messages=[
@@ -207,11 +246,11 @@ if user_query:
                       "role": "user",
                       "content": (
                           f"Textbook Context:\n{retrieved_context}\n\nStudent"
-                          f" Question: {user_query}"
+                          f" Input: {user_query}"
                       ),
                   },
               ],
-              max_tokens=300,  # Reduced token limit for precise responses
+              max_tokens=400,
               temperature=0.3,
           )
           ai_response = completion.choices[0].message.content
