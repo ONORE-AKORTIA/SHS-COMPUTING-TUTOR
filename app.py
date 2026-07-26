@@ -1,53 +1,25 @@
 import base64
 import os
 import pandas as pd
-from groq import Groq
 import streamlit as st
+from groq import Groq
 
-# Set page configuration
+# Page configuration
 st.set_page_config(
-    page_title="SHS Academic AI Tutor", page_icon="💻", layout="centered"
+    page_title="SHS Computing AI Tutor", page_icon="💻", layout="centered"
 )
 
 
-# Function to load local image for HTML display
-def img_to_base64(image_path):
-  if os.path.exists(image_path):
-    with open(image_path, "rb") as img_file:
-      return base64.b64encode(img_file.read()).decode()
-  return ""
+# Initialize Groq client securely using Streamlit Secrets
+def get_groq_client():
+  api_key = st.secrets.get("GROQ_API_KEY")
+  if not api_key:
+    st.error("Groq API key not found in Streamlit Secrets!")
+    return None
+  return Groq(api_key=api_key)
 
 
-# Convert your picture to base64
-img_base64 = img_to_base64("ONORE_AKORTIA_1.jpg")
-
-# Single inline header layout
-st.markdown(
-    f"""
-    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-        <span style="font-size: 2.5em;">💻</span>
-        <div style="flex-grow: 1;">
-            <h1 style="margin: 0; font-size: 1.8em; line-height: 1.2;">SHS Academic AI Tutor</h1>
-            <p style="margin: 0; color: #666; font-size: 0.95em;">Your personal WAEC & NaCCA curriculum study assistant.</p>
-        </div>
-        <img src="data:image/jpeg;base64,{img_base64}" width="75" style="border-radius: 8px; object-fit: cover;">
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Initialize Groq client using Streamlit Secrets
-try:
-  api_key = st.secrets["GROQ_API_KEY"]
-  client = Groq(api_key=api_key)
-except Exception as e:
-  st.error(
-      "Groq API key not found. Please configure it in your Streamlit Secrets."
-  )
-  st.stop()
-
-
-# Define categorized subject mapping to groups of CSV files
+# Available subjects and their consolidated datasets
 def get_available_subjects():
   return {
       "Computing": ["waec_qa_dataset.csv"],
@@ -59,37 +31,41 @@ def get_available_subjects():
           "ICT_LM_FINAL_SECTION_5-LV_qa_dataset.csv",
           "LM ICT Sections 1-5_qa_dataset.csv",
       ],
+      "Robotics": ["robotics_qa_dataset.csv"],
   }
 
 
-available_subjects = get_available_subjects()
-
-
-# Load and combine datasets cached for performance
 @st.cache_data
-def load_subject_data(filenames):
-  dfs = []
+def load_dataset(filenames):
+  """Loads and combines dataset CSV files from the textbooks directory."""
+  all_dfs = []
   for filename in filenames:
-    if os.path.exists(filename):
-      df_temp = pd.read_csv(filename)
-      dfs.append(df_temp)
+    file_path = os.path.join("textbooks", filename)
+    if os.path.exists(file_path):
+      try:
+        df = pd.read_csv(file_path)
+        all_dfs.append(df)
+      except Exception as e:
+        st.warning(f"Error loading {filename}: {e}")
+  if all_dfs:
+    return pd.concat(all_dfs, ignore_index=True)
+  return pd.DataFrame(columns=["question_text", "answer_text"])
 
-  if dfs:
-    return pd.concat(dfs, ignore_index=True)
-  else:
-    # Fallback dummy dataset if files are missing
-    return pd.DataFrame(
-        {
-            "question_text": ["General curriculum overview"],
-            "answer_text": [
-                "Standard curriculum guidelines apply for this subject."
-            ],
-        }
-    )
+
+# Helper function to convert local image to base64
+def get_image_base64(path):
+  if os.path.exists(path):
+    with open(path, "rb") as f:
+      data = f.read()
+    return base64.b64encode(data).decode()
+  return None
 
 
 # Function to transcribe audio using Groq's Whisper model
 def transcribe_audio(audio_file):
+  client = get_groq_client()
+  if not client:
+    return None
   try:
     with open("temp_audio.wav", "wb") as f:
       f.write(audio_file.getbuffer())
@@ -100,7 +76,7 @@ def transcribe_audio(audio_file):
           model="whisper-large-v3-turbo",
           prompt=(
               "Ghanaian Senior High School educational context, WAEC terms,"
-              " Computing, ICT."
+              " Computing, ICT, Robotics."
           ),
           language="en",
       )
@@ -112,191 +88,136 @@ def transcribe_audio(audio_file):
     return None
 
 
-# Function to query the Groq LLM
-def ask_ai_tutor(
-    query, dataset, student_name, student_school, subject, previous_themes=None
-):
-  context_text = "\n".join(
-      [
-          f"Q: {row['question_text']}\nA: {row['answer_text']}"
-          for _, row in dataset.head(15).iterrows()
-      ]
-  )
+# Sidebar setup for Subject Selection, Student Details, and Input Method
+st.sidebar.title("Navigation & Profile")
+subjects = get_available_subjects()
+selected_subject = st.sidebar.selectbox(
+    "Select Subject", list(subjects.keys())
+)
 
-  theme_instruction = ""
-  if previous_themes:
-    theme_instruction = f"""
-    The user is selecting or referring to one of these previously suggested themes: {previous_themes}.
-    If the user's input is a number (like 1, 2, 3) or matches one of these themes, provide a detailed explanation of that specific theme aligned with the WAEC/NaCCA curriculum for {subject}.
-    """
+st.sidebar.markdown("---")
+st.sidebar.subheader("Student Details")
+student_name = st.sidebar.text_input("Full Name", value="")
+student_school = st.sidebar.text_input("School Name", value="")
 
-  prompt = f"""
-    You are Sir O.K., an expert, friendly AI tutor for Ghanaian Senior High School (SHS) students (created by Mr. Onore Akortia from OLA SHS, Ho).
-    You are currently teaching {subject} to a student named {student_name} from {student_school}.
+st.sidebar.markdown("---")
+input_method = st.sidebar.radio(
+    "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"]
+)
 
-    CRITICAL INSTRUCTIONS:
-    - Do NOT re-introduce yourself, mention who created you, or state your aims in your response. Jump straight into answering the student's question directly.
-    - Keep your tone concise, encouraging, clear, and strictly educational aligned with WAEC/NaCCA standards for {subject}.
-    - Use the provided context to answer accurately. If it's not in the context, use standard curriculum knowledge.
-    - After your answer, provide a numbered list of exactly 3 suggested follow-up sub-themes related to the topic for further exploration.
-    
-    {theme_instruction}
+# Load data for selected subject
+dataset_files = subjects[selected_subject]
+df_dataset = load_dataset(dataset_files)
 
-    Context:
-    {context_text}
+# Single inline header layout with computer icon and user picture side-by-side on the left of the title
+laptop_img_base64 = get_image_base64("laptop.png")
+user_img_base64 = get_image_base64("ONORE_AKORTIA_1.jpg")
 
-    Student's Input: {query}
-    """
+st.markdown(
+    f"""
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <span style="font-size: 2.5em;">💻</span>
+        {f"<img src='data:image/jpeg;base64,{user_img_base64}' width='60' style='border-radius: 8px; object-fit: cover;'>" if user_img_base64 else ""}
+        <div style="flex-grow: 1;">
+            <h1 style="margin: 0; font-size: 1.8em; line-height: 1.2;">SHS Computing AI Tutor</h1>
+            <p style="margin: 0; color: #666; font-size: 0.95em;">Your intelligent companion for <b>{selected_subject}</b>.</p>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
-  try:
-    chat_completion = client.chat.completions.create(
-        messages=[{
-            "role": "user",
-            "content": prompt,
-        }],
-        model="llama-3.1-8b-instant",
-    )
-    return chat_completion.choices[0].message.content
-  except Exception as e:
-    return (
-        f"Sorry {student_name}, I encountered an error connecting to the AI"
-        f" service: {e}"
-    )
-
-
-# --- Session State Initialization ---
-if "user_name" not in st.session_state:
-  st.session_state.user_name = None
-
-if "user_school" not in st.session_state:
-  st.session_state.user_school = None
-
+# Initialize chat history and greeting state
 if "messages" not in st.session_state:
   st.session_state.messages = []
+if "greeted" not in st.session_state:
+  st.session_state.greeted = False
 
-if "last_themes" not in st.session_state:
-  st.session_state.last_themes = None
+# Trigger initial personalized greeting once
+if not st.session_state.greeted and student_name:
+  initial_greeting = (
+      f"Hello {student_name} from {student_school}! I am your AI tutor ready"
+      f" to help you master {selected_subject}. How can I assist you today?"
+  )
+  st.session_state.messages.append(
+      {"role": "assistant", "content": initial_greeting}
+  )
+  st.session_state.greeted = True
 
-if "selected_subject_name" not in st.session_state:
-  st.session_state.selected_subject_name = "Computing"
+# Display chat history
+for message in st.session_state.messages:
+  with st.chat_message(message["role"]):
+    st.markdown(message["content"])
 
-# Step 1: Capture Student Name and School if not already provided
-if not st.session_state.user_name or not st.session_state.user_school:
-  st.subheader("Welcome! Let's get started.")
-  with st.form("student_info_form"):
-    name_input = st.text_input("Please enter your full name:")
-    school_input = st.text_input("Please enter your school name:")
-    
-    subject_input = st.selectbox(
-        "Select your primary subject:", list(available_subjects.keys())
-    )
-    
-    submit_button = st.form_submit_button("Start Learning")
+# Handle user input based on sidebar choice (Text or Voice)
+user_query = None
 
-    if submit_button:
-      if name_input.strip() and school_input.strip():
-        st.session_state.user_name = name_input.strip()
-        st.session_state.user_school = school_input.strip()
-        st.session_state.selected_subject_name = subject_input
-
-        initial_welcome = (
-            f"Hello {st.session_state.user_name} from"
-            f" {st.session_state.user_school}! I am Sir O.K., your SHS"
-            f" {st.session_state.selected_subject_name} tutor. What topic would you like to explore"
-            " today?"
-        )
-        st.session_state.messages.append(
-            {"role": "assistant", "content": initial_welcome}
-        )
-        st.rerun()
-      else:
-        st.warning("Please fill in both your name and school to continue.")
+if input_method == "⌨️ Type Question":
+  user_query = st.chat_input(f"Ask a question about {selected_subject}...")
 else:
-  # Display active student info and subject switcher in the sidebar
-  st.sidebar.markdown(f"**Student:** {st.session_state.user_name}")
-  st.sidebar.markdown(f"**School:** {st.session_state.user_school}")
-  
-  subject_keys = list(available_subjects.keys())
-  current_index = (
-      subject_keys.index(st.session_state.selected_subject_name)
-      if st.session_state.selected_subject_name in subject_keys
-      else 0
+  st.markdown("### Record your question:")
+  audio_value = st.audio_input("Click to record your voice question")
+  if audio_value:
+    with st.spinner("Transcribing your voice..."):
+      transcribed_text = transcribe_audio(audio_value)
+      if transcribed_text:
+        st.success(f'Transcribed: "{transcribed_text}"')
+        user_query = transcribed_text
+      else:
+        st.error(
+            "Could not transcribe audio. Please try speaking again or type"
+            " your question."
+        )
+
+if user_query:
+  # Append user message
+  st.session_state.messages.append({"role": "user", "content": user_query})
+  with st.chat_message("user"):
+    st.markdown(user_query)
+
+  # Retrieve context from the dataset using standard keyword matching
+  retrieved_context = (
+      "No specific textbook context found. Answer based on general knowledge."
   )
+  if not df_dataset.empty:
+    matches = df_dataset[
+        df_dataset["answer_text"].str.contains(
+            user_query, case=False, na=False, regex=False
+        )
+    ]
+    if not matches.empty:
+      retrieved_context = matches.iloc[0]["answer_text"]
 
-  current_subject = st.sidebar.selectbox(
-      "Switch Subject:",
-      subject_keys,
-      index=current_index,
-  )
-  
-  if current_subject != st.session_state.selected_subject_name:
-    st.session_state.selected_subject_name = current_subject
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": f"Switched context to **{current_subject}**. How can I help you in this subject?"
-    })
-    st.rerun()
-
-  if st.sidebar.button("Log out / Change Details"):
-    st.session_state.user_name = None
-    st.session_state.user_school = None
-    st.session_state.messages = []
-    st.session_state.last_themes = None
-    st.rerun()
-
-  # Load and combine all files associated with the chosen subject group
-  target_files = available_subjects[st.session_state.selected_subject_name]
-  df = load_subject_data(target_files)
-
-  # Display chat history cleanly
-  for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-      st.markdown(message["content"])
-
-  # Input selection tabs for Voice vs Text
-  input_method = st.radio(
-      "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"], horizontal=True
-  )
-
-  user_query = None
-
-  if input_method == "⌨️ Type Question":
-    user_query = st.chat_input("Ask a question or type a theme number (e.g. 1, 2)...")
-  else:
-    st.markdown("### Record your question:")
-    audio_value = st.audio_input("Click to record your voice question")
-    if audio_value:
-      with st.spinner("Transcribing your voice..."):
-        transcribed_text = transcribe_audio(audio_value)
-        if transcribed_text:
-          st.success(f"Transcribed: \"{transcribed_text}\"")
-          user_query = transcribed_text
-        else:
-          st.error(
-              "Could not transcribe audio. Please try speaking again or type"
-              " your question."
-          )
-
-  # Process the query if received
-  if user_query:
-    st.session_state.messages.append({"role": "user", "content": user_query})
-    with st.chat_message("user"):
-      st.markdown(user_query)
-
+  # Generate precise AI response using Groq with controlled response token size
+  client = get_groq_client()
+  if client:
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
-        answer = ask_ai_tutor(
-            user_query,
-            df,
-            st.session_state.user_name,
-            st.session_state.user_school,
-            st.session_state.selected_subject_name,
-            previous_themes=st.session_state.last_themes,
-        )
-        st.markdown(answer)
-        st.session_state.messages.append(
-            {"role": "assistant", "content": answer}
-        )
-        
-        st.session_state.last_themes = answer
-        st.rerun()
+        try:
+          persona_prompt = (
+              f"You are an expert SHS AI Tutor helping {student_name} from"
+              f" {student_school}. Provide precise, concise, and direct answers"
+              " based on the provided textbook context."
+          )
+          completion = client.chat.completions.create(
+              model="llama-3.1-8b-instant",
+              messages=[
+                  {"role": "system", "content": persona_prompt},
+                  {
+                      "role": "user",
+                      "content": (
+                          f"Textbook Context:\n{retrieved_context}\n\nStudent"
+                          f" Question: {user_query}"
+                      ),
+                  },
+              ],
+              max_tokens=300,  # Reduced token limit for precise responses
+              temperature=0.3,
+          )
+          ai_response = completion.choices[0].message.content
+          st.markdown(ai_response)
+          st.session_state.messages.append(
+              {"role": "assistant", "content": ai_response}
+          )
+        except Exception as e:
+          st.error(f"Error connecting to AI service: {e}")
