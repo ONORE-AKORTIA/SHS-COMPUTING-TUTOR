@@ -1,4 +1,5 @@
 import base64
+import glob
 import os
 import pandas as pd
 from groq import Groq
@@ -47,18 +48,31 @@ except Exception as e:
   st.stop()
 
 
+# Dynamically discover all generated dataset CSV files
+def get_available_subjects():
+  csv_files = glob.glob("*_qa_dataset.csv")
+  subjects = {}
+  for f in csv_files:
+    # Clean up filename to create a readable subject name
+    # e.g., 'ICT_LM_FINAL_SECTION_1_LV_qa_dataset.csv' -> 'ICT LM Final Section 1 LV'
+    name_part = f.replace("_qa_dataset.csv", "").replace("_", " ").title()
+    subjects[name_part] = f
+  return subjects
+
+
+available_subjects = get_available_subjects()
+
+# Fallback if no datasets are found yet
+if not available_subjects:
+  available_subjects = {"Default Curriculum": "waec_qa_dataset.csv"}
+
+
 # Load datasets cached for performance
 @st.cache_data
-def load_data(subject):
-  if subject == "ICT":
-    filename = "ict_qa_dataset.csv"
-  else:
-    filename = "waec_qa_dataset.csv"
-
+def load_data(filename):
   if os.path.exists(filename):
     return pd.read_csv(filename)
   else:
-    # Fallback dummy dataset if specific CSV is missing
     return pd.DataFrame(
         {
             "question_text": ["General curriculum overview"],
@@ -158,8 +172,8 @@ if "messages" not in st.session_state:
 if "last_themes" not in st.session_state:
   st.session_state.last_themes = None
 
-if "selected_subject" not in st.session_state:
-  st.session_state.selected_subject = "Computing"
+if "selected_subject_name" not in st.session_state:
+  st.session_state.selected_subject_name = list(available_subjects.keys())[0]
 
 # Step 1: Capture Student Name and School if not already provided
 if not st.session_state.user_name or not st.session_state.user_school:
@@ -168,9 +182,8 @@ if not st.session_state.user_name or not st.session_state.user_school:
     name_input = st.text_input("Please enter your full name:")
     school_input = st.text_input("Please enter your school name:")
     
-    # Subject selection right at the registration form
     subject_input = st.selectbox(
-        "Select your primary subject:", ["Computing", "ICT"]
+        "Select your primary subject/textbook:", list(available_subjects.keys())
     )
     
     submit_button = st.form_submit_button("Start Learning")
@@ -179,12 +192,12 @@ if not st.session_state.user_name or not st.session_state.user_school:
       if name_input.strip() and school_input.strip():
         st.session_state.user_name = name_input.strip()
         st.session_state.user_school = school_input.strip()
-        st.session_state.selected_subject = subject_input
+        st.session_state.selected_subject_name = subject_input
 
         initial_welcome = (
             f"Hello {st.session_state.user_name} from"
             f" {st.session_state.user_school}! I am Sir O.K., your SHS"
-            f" {st.session_state.selected_subject} tutor. What topic would you like to explore"
+            f" {st.session_state.selected_subject_name} tutor. What topic would you like to explore"
             " today?"
         )
         st.session_state.messages.append(
@@ -198,18 +211,25 @@ else:
   st.sidebar.markdown(f"**Student:** {st.session_state.user_name}")
   st.sidebar.markdown(f"**School:** {st.session_state.user_school}")
   
-  # Allow switching subjects dynamically
+  # Allow switching subjects dynamically from any of the converted textbook files
+  subject_keys = list(available_subjects.keys())
+  current_index = (
+      subject_keys.index(st.session_state.selected_subject_name)
+      if st.session_state.selected_subject_name in subject_keys
+      else 0
+  )
+
   current_subject = st.sidebar.selectbox(
-      "Switch Subject:",
-      ["Computing", "ICT"],
-      index=0 if st.session_state.selected_subject == "Computing" else 1,
+      "Switch Subject / Textbook:",
+      subject_keys,
+      index=current_index,
   )
   
-  if current_subject != st.session_state.selected_subject:
-    st.session_state.selected_subject = current_subject
+  if current_subject != st.session_state.selected_subject_name:
+    st.session_state.selected_subject_name = current_subject
     st.session_state.messages.append({
         "role": "assistant",
-        "content": f"Switched context to **{current_subject}**. How can I help you in this subject?"
+        "content": f"Switched context to **{current_subject}**. How can I help you in this textbook?"
     })
     st.rerun()
 
@@ -220,8 +240,9 @@ else:
     st.session_state.last_themes = None
     st.rerun()
 
-  # Load the dataset corresponding to the currently selected subject
-  df = load_data(st.session_state.selected_subject)
+  # Load the specific CSV dataset corresponding to the selected textbook
+  target_csv = available_subjects[st.session_state.selected_subject_name]
+  df = load_data(target_csv)
 
   # Display chat history cleanly
   for message in st.session_state.messages:
@@ -265,7 +286,7 @@ else:
             df,
             st.session_state.user_name,
             st.session_state.user_school,
-            st.session_state.selected_subject,
+            st.session_state.selected_subject_name,
             previous_themes=st.session_state.last_themes,
         )
         st.markdown(answer)
