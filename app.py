@@ -121,6 +121,14 @@ learning_mode = st.sidebar.radio(
     "Select Mode", ["💬 Study & Chat", "📝 WAEC Exam Practice"]
 )
 
+# Sub-dropdown for WAEC Exam Practice question types
+exam_question_type = "MCQ"
+if learning_mode == "📝 WAEC Exam Practice":
+  st.sidebar.markdown("---")
+  exam_question_type = st.sidebar.selectbox(
+      "Select Question Type", ["MCQ", "Short Answer", "Essay"]
+  )
+
 st.sidebar.markdown("---")
 input_method = st.sidebar.radio(
     "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"]
@@ -221,8 +229,9 @@ if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
   st.progress(
       progress_val,
       text=(
-          f"Progress Dashboard | Answered: {answered}/{total} | Left:"
-          f" {left} | Correct: {correct} | Wrong: {wrong}"
+          f"Progress Dashboard ({exam_question_type}) | Answered:"
+          f" {answered}/{total} | Left: {left} | Correct: {correct} | Wrong:"
+          f" {wrong}"
       ),
   )
 
@@ -244,8 +253,8 @@ if input_method == "⌨️ Type Question":
       learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active
   ):
     prompt_label = (
-        "Type your answer (Option letter A/B/C/D, short answer, or essay"
-        " write-up)..."
+        f"Type your answer for {exam_question_type} (e.g., option letter A/B/C/D"
+        " for MCQ, short answer phrase, or essay write-up)..."
     )
   else:
     prompt_label = f"Ask a question about {selected_subject}..."
@@ -303,11 +312,11 @@ if user_query:
                   f"You are an expert WAEC Examiner in {selected_subject} testing"
                   f" {student_full_name} from {student_school}. The student"
                   f" requested an exam session of"
-                  f" {st.session_state.total_questions} questions. Please"
-                  " present Question 1. Ensure you specify the question type"
-                  " explicitly as one of: (1) Multiple Choice (4 options A, B, C,"
-                  " D or 2 True/False options A and B), (2) Short Answer (sentence"
-                  " completion), or (3) Essay / Subjective."
+                  f" {st.session_state.total_questions} questions focusing"
+                  f" specifically on question type: {exam_question_type}. Please"
+                  " present Question 1. For MCQ, display the plausible answers"
+                  " either vertically one after the other or cleanly formatted"
+                  " in a 2*2 grid layout."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -330,34 +339,32 @@ if user_query:
                     f"You are an expert WAEC Examiner in {selected_subject} testing"
                     f" {student_full_name} from {student_school}. \n\nEvaluate"
                     f" the student's latest answer: '{user_query}' for the"
-                    " current question.\n\nStrict Rules for Question Types &"
-                    " Evaluation:\n1. Multiple Choice Questions: Must have 4"
-                    " options (A, B, C, D) or 2 True/False options (A and B)."
-                    " Accept standalone option letters (e.g., 'A', 'B') as fully"
+                    f" current question (Type: {exam_question_type}).\n\nStrict"
+                    " Rules for Evaluation:\n1. MCQ: Plausible answers must be"
+                    " displayed vertically or in a 2*2 grid. ALWAYS strictly"
+                    " accept standalone option letters (A, B, C, D) as fully"
                     " correct if they match the correct choice, whether the"
                     " student provides just the label, the text, or both. Give"
                     " friendly remarks (EXCELLENT, GREAT JOB, AMAZING,"
                     " WONDERFUL, CONGRATULATIONS) if correct, or 'TRY AGAIN' if"
-                    " wrong.\n2. Short Answer Questions: Requires completing an"
-                    " unended sentence. Evaluate the exact word or phrase"
-                    " provided.\n3. Essay/Subjective Questions: Requires"
-                    " elaborate write-ups. Do NOT expect a 100% strict verbatim"
-                    " match; an 80% semantic/conceptual match is sufficient to"
-                    " affirm the answer as correct.\n4. If wrong, explicitly"
+                    " wrong.\n2. Short Answer: Check sentence completion"
+                    " accuracy.\n3. Essay: Require elaborate write-ups with an"
+                    " 80% semantic match threshold.\n4. If wrong, explicitly"
                     " display the correct answer to aid learning.\n5. Present"
                     f" the next question (Question {current_q} of {total_q})"
-                    " with its designated question type."
+                    f" adhering to the selected type: {exam_question_type}."
                 )
               else:
                 exam_eval_prompt = (
                     f"You are an expert WAEC Examiner in {selected_subject} testing"
                     f" {student_full_name} from {student_school}. The student"
-                    f" has completed all {total_q} questions in this session."
-                    f" Total Correct: {st.session_state.correct_count}, Total"
-                    f" Wrong: {st.session_state.wrong_count}.\n\nProvide an"
-                    " overall performance rating and a final summary remark to"
-                    " help the learner prepare for WAEC based on essay and"
-                    " objective results. Reset exam session state after this."
+                    f" has completed all {total_q} questions in this session"
+                    f" ({exam_question_type}). Total Correct:"
+                    f" {st.session_state.correct_count}, Total Wrong:"
+                    f" {st.session_state.wrong_count}.\n\nProvide an overall"
+                    " performance rating and a final summary remark to help the"
+                    " learner prepare for WAEC. Reset exam session state after"
+                    " this."
                 )
                 st.session_state.exam_active = False
 
