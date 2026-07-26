@@ -57,6 +57,32 @@ def load_data():
 df = load_data()
 
 
+# Function to transcribe audio using Groq's Whisper model
+def transcribe_audio(audio_file):
+  try:
+    # Save uploaded audio file temporarily
+    with open("temp_audio.wav", "wb") as f:
+      f.write(audio_file.getbuffer())
+
+    with open("temp_audio.wav", "rb") as file:
+      transcription = client.audio.transcriptions.create(
+          file=("temp_audio.wav", file.read()),
+          model="whisper-large-v3-turbo",
+          prompt=(
+              "Ghanaian Senior High School computing context, WAEC terms, IT,"
+              " programming, algorithms."
+          ),
+          language="en",
+      )
+    # Cleanup temporary file
+    if os.path.exists("temp_audio.wav"):
+      os.remove("temp_audio.wav")
+
+    return transcription.text
+  except Exception as e:
+    return None
+
+
 # Function to query the Groq LLM
 def ask_ai_tutor(query, dataset, student_name, student_school):
   # Build context from dataset rows
@@ -77,6 +103,7 @@ def ask_ai_tutor(query, dataset, student_name, student_school):
     - Keep your tone concise, encouraging, clear, and strictly educational aligned with WAEC/NaCCA standards.
     - Use the provided context to answer accurately. If it's not in the context, use standard curriculum knowledge.
     - After answering, concisely ask the student if they would like further explanations based on specific sub-themes related to the topic.
+    - If the student reply with a number of the various themes suggested, take that theme and provide a response based on it.
 
     Context:
     {context_text}
@@ -122,11 +149,13 @@ if not st.session_state.user_name or not st.session_state.user_school:
       if name_input.strip() and school_input.strip():
         st.session_state.user_name = name_input.strip()
         st.session_state.user_school = school_input.strip()
-        
+
         # Initial greeting happens ONCE
         initial_welcome = (
-            f"Hello {st.session_state.user_name} from {st.session_state.user_school}! "
-            "I am Sir O.K., your SHS Computing tutor. What computing topic would you like to explore today?"
+            f"Hello {st.session_state.user_name} from"
+            f" {st.session_state.user_school}! I am Sir O.K., your SHS"
+            " Computing tutor. What computing topic would you like to explore"
+            " today?"
         )
         st.session_state.messages.append(
             {"role": "assistant", "content": initial_welcome}
@@ -149,8 +178,32 @@ else:
     with st.chat_message(message["role"]):
       st.markdown(message["content"])
 
-  # Handle user input from chat box
-  if user_query := st.chat_input("Ask a computing question..."):
+  # Input selection tabs or expander for Voice vs Text
+  input_method = st.radio(
+      "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"], horizontal=True
+  )
+
+  user_query = None
+
+  if input_method == "⌨️ Type Question":
+    user_query = st.chat_input("Ask a computing question...")
+  else:
+    st.markdown("### Record your question:")
+    audio_value = st.audio_input("Click to record your voice question")
+    if audio_value:
+      with st.spinner("Transcribing your voice..."):
+        transcribed_text = transcribe_audio(audio_value)
+        if transcribed_text:
+          st.success(f"Transcribed: \"{transcribed_text}\"")
+          user_query = transcribed_text
+        else:
+          st.error(
+              "Could not transcribe audio. Please try speaking again or type"
+              " your question."
+          )
+
+  # Process the query if received from either text box or voice transcription
+  if user_query:
     st.session_state.messages.append({"role": "user", "content": user_query})
     with st.chat_message("user"):
       st.markdown(user_query)
@@ -158,9 +211,14 @@ else:
     with st.chat_message("assistant"):
       with st.spinner("Thinking..."):
         answer = ask_ai_tutor(
-            user_query, df, st.session_state.user_name, st.session_state.user_school
+            user_query,
+            df,
+            st.session_state.user_name,
+            st.session_state.user_school,
         )
         st.markdown(answer)
         st.session_state.messages.append(
             {"role": "assistant", "content": answer}
         )
+        # Rerun to clear the active input state cleanly
+        st.rerun()
