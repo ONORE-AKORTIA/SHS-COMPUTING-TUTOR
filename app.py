@@ -111,7 +111,6 @@ if selected_subject != st.session_state.prev_subject:
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Student Details")
-# Encouraging full name including first, middle (if any), and last name in a single field
 student_full_name = st.sidebar.text_input(
     "Full Name (First, Middle, Last)", value=""
 )
@@ -148,24 +147,32 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Initialize global session stores for progress tracking and multi-session persistence simulation
+# Initialize global session stores for progress tracking and exam session metrics
 if "user_sessions" not in st.session_state:
   st.session_state.user_sessions = {}
 if "messages" not in st.session_state:
   st.session_state.messages = []
 if "greeted" not in st.session_state:
   st.session_state.greeted = False
-if "exam_question_count" not in st.session_state:
-  st.session_state.exam_question_count = 0
-if "max_exam_questions" not in st.session_state:
-  st.session_state.max_exam_questions = 5  # Standard session length
 
-# Check for returning vs first-time user profile based on full name and school
+# Exam session state variables
+if "exam_active" not in st.session_state:
+  st.session_state.exam_active = False
+if "total_questions" not in st.session_state:
+  st.session_state.total_questions = 5
+if "current_question_num" not in st.session_state:
+  st.session_state.current_question_num = 0
+if "correct_count" not in st.session_state:
+  st.session_state.correct_count = 0
+if "wrong_count" not in st.session_state:
+  st.session_state.wrong_count = 0
+if "question_type" not in st.session_state:
+  st.session_state.question_type = "objective"  # objective or essay
+
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
 if student_full_name and student_school:
   if user_key not in st.session_state.user_sessions and st.session_state.greeted:
-    # Initialize profile storage
     st.session_state.user_sessions[user_key] = {
         "messages": st.session_state.messages,
         "is_returning": True,
@@ -174,7 +181,6 @@ if student_full_name and student_school:
       user_key in st.session_state.user_sessions
       and not st.session_state.greeted
   ):
-    # Load previous history for continuing user
     st.session_state.messages = st.session_state.user_sessions[user_key][
         "messages"
     ]
@@ -188,7 +194,7 @@ if not st.session_state.greeted and student_full_name and student_school:
   )
   initial_greeting = (
       f"Hello {student_full_name} from {student_school}! ({user_status_label})."
-      f" I am Sir O.K, your AI tutor ready to help you master {selected_subject} for"
+      f" I am your AI tutor ready to help you master {selected_subject} for"
       " WAEC. How can I assist you today?"
   )
   st.session_state.messages.append(
@@ -201,15 +207,24 @@ if not st.session_state.greeted and student_full_name and student_school:
         "is_returning": False,
     }
 
-# Display progress bar if in WAEC Exam Practice mode
-if learning_mode == "📝 WAEC Exam Practice" and student_full_name:
-  answered = st.session_state.exam_question_count
-  total = st.session_state.max_exam_questions
+# Display progress dashboard if in WAEC Exam Practice mode and exam is active
+if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
+  answered = (
+      st.session_state.current_question_num - 1
+      if st.session_state.current_question_num > 0
+      else 0
+  )
+  total = st.session_state.total_questions
+  left = max(total - answered, 0)
+  correct = st.session_state.correct_count
+  wrong = st.session_state.wrong_count
+
   progress_val = min(float(answered) / float(total), 1.0)
   st.progress(
       progress_val,
       text=(
-          f"Exam Session Progress: Question {answered} of {total} answered"
+          f"Progress Dashboard | Answered: {answered}/{total} | Left:"
+          f" {left} | Correct: {correct} | Wrong: {wrong}"
       ),
   )
 
@@ -222,14 +237,20 @@ for message in st.session_state.messages:
 user_query = None
 
 if input_method == "⌨️ Type Question":
-  prompt_label = (
-      f"Answer/Ask a question about {selected_subject}..."
-      if learning_mode == "💬 Study & Chat"
-      else (
-          "Type your answer (e.g. option letter A/B/C/D for objective, or"
-          " detailed text for essay)..."
-      )
-  )
+  if learning_mode == "📝 WAEC Exam Practice" and not st.session_state.exam_active:
+    prompt_label = (
+        "Type the total number of questions you want for this session (e.g.,"
+        " 5):"
+    )
+  elif (
+      learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active
+  ):
+    prompt_label = (
+        "Type your answer (Option letter A/B/C/D for objective, or complete"
+        " response for essay)..."
+    )
+  else:
+    prompt_label = f"Ask a question about {selected_subject}..."
   user_query = st.chat_input(prompt_label)
 else:
   st.markdown("### Record your input:")
@@ -247,9 +268,6 @@ if user_query:
   st.session_state.messages.append({"role": "user", "content": user_query})
   with st.chat_message("user"):
     st.markdown(user_query)
-
-  if learning_mode == "📝 WAEC Exam Practice":
-    st.session_state.exam_question_count += 1
 
   # Retrieve context from dataset
   retrieved_context = (
@@ -270,26 +288,95 @@ if user_query:
       with st.spinner("Thinking..."):
         try:
           if learning_mode == "📝 WAEC Exam Practice":
-            persona_prompt = (
-                f"You are an expert WAEC Examiner in {selected_subject} testing"
-                f" {student_full_name} from {student_school} based on textbook"
-                " materials. \n\nRules for Examiner Mode:\n1. If the question"
-                " has multiple-choice options (A, B, C, D), accept the single"
-                " letter response as complete representation.\n2. If the"
-                " question is an essay-type instruction (containing Differentiate,"
-                " Describe, Explain, Analyse, Examine, etc.), expect a complete"
-                " descriptive text response.\n3. Evaluate the student's"
-                " response, assign a percentage score (0-100), and provide a"
-                " strict remark based on this scale:\n   - 90 and above:"
-                " Distinction\n   - 80 and above: Excellent\n   - 70 and above:"
-                " Very Good\n   - 60 and above: Good\n   - 50 and above: Pass\n  "
-                " - 40 and above: Nice work, keep trying\n   - 30 and above: Can"
-                " do better\n   - Below 30: You have to sit up\n4. If the"
-                " student's answer is wrong, you MUST explicitly display the"
-                " correct answer to aid learning.\n5. If the user is requesting"
-                " a new question, generate a fresh WAEC-style question (either"
-                " objective with A, B, C, D options or essay-type)."
-            )
+            if not st.session_state.exam_active:
+              # Try to parse total questions from user input
+              try:
+                parsed_total = int(user_query.strip())
+                if parsed_total > 0:
+                  st.session_state.total_questions = parsed_total
+              except ValueError:
+                pass  # Keep default if not integer
+
+              st.session_state.exam_active = True
+              st.session_state.current_question_num = 1
+              st.session_state.correct_count = 0
+              st.session_state.wrong_count = 0
+
+              start_prompt = (
+                  f"You are an expert WAEC Examiner in {selected_subject} testing"
+                  f" {student_full_name} from {student_school}. The student"
+                  f" requested an exam session of"
+                  f" {st.session_state.total_questions} questions. Please"
+                  " present Question 1. Specify clearly whether it is an"
+                  " objective question (with options A, B, C, D) or an essay-type"
+                  " question."
+              )
+              completion = client.chat.completions.create(
+                  model="llama-3.1-8b-instant",
+                  messages=[{"role": "user", "content": start_prompt}],
+                  max_tokens=400,
+                  temperature=0.3,
+              )
+              ai_response = completion.choices[0].message.content
+              st.markdown(ai_response)
+              st.session_state.messages.append(
+                  {"role": "assistant", "content": ai_response}
+              )
+            else:
+              # Active exam evaluation step
+              st.session_state.current_question_num += 1
+              current_q = st.session_state.current_question_num
+              total_q = st.session_state.total_questions
+
+              if current_q <= total_q:
+                exam_eval_prompt = (
+                    f"You are an expert WAEC Examiner in {selected_subject} testing"
+                    f" {student_full_name} from {student_school}. \n\nEvaluate"
+                    f" the student's latest answer: '{user_query}' for the"
+                    " current question.\n\nRules:\n1. For Multiple Choice"
+                    " (objective) questions: Do NOT give percentage scores. Give"
+                    " a friendly remark of EXCELLENT, GREAT JOB, AMAZING,"
+                    " WONDERFUL, CONGRATULATIONS if correct, or TRY AGAIN if"
+                    " wrong. If wrong, display the correct option and answer to"
+                    " aid learning.\n2. For Essay-type questions: Evaluate the"
+                    " response thoroughly based on textbook standards.\n3."
+                    " Present the next question (Question {current_q} of"
+                    f" {total_q})."
+                )
+              else:
+                # Exam session exhausted, provide final performance rating and remark
+                exam_eval_prompt = (
+                    f"You are an expert WAEC Examiner in {selected_subject} testing"
+                    f" {student_full_name} from {student_school}. The student"
+                    f" has completed all {total_q} questions in this session."
+                    f" Total Correct: {st.session_state.correct_count}, Total"
+                    f" Wrong: {st.session_state.wrong_count}.\n\nProvide an"
+                    " overall performance rating and a final summary remark to"
+                    " help the learner prepare for WAEC. Reset exam session"
+                    " state after this."
+                )
+                st.session_state.exam_active = False
+
+              completion = client.chat.completions.create(
+                  model="llama-3.1-8b-instant",
+                  messages=[
+                      {"role": "system", "content": exam_eval_prompt},
+                      {
+                          "role": "user",
+                          "content": (
+                              f"Textbook Context:\n{retrieved_context}\n\nStudent"
+                              f" Response: {user_query}"
+                          ),
+                      },
+                  ],
+                  max_tokens=450,
+                  temperature=0.3,
+              )
+              ai_response = completion.choices[0].message.content
+              st.markdown(ai_response)
+              st.session_state.messages.append(
+                  {"role": "assistant", "content": ai_response}
+              )
           else:
             persona_prompt = (
                 f"You are an expert SHS AI Tutor helping {student_full_name}"
@@ -298,28 +385,27 @@ if user_query:
                 " textbook context."
             )
 
-          completion = client.chat.completions.create(
-              model="llama-3.1-8b-instant",
-              messages=[
-                  {"role": "system", "content": persona_prompt},
-                  {
-                      "role": "user",
-                      "content": (
-                          f"Textbook Context:\n{retrieved_context}\n\nStudent"
-                          f" Input: {user_query}"
-                      ),
-                  },
-              ],
-              max_tokens=450,
-              temperature=0.3,
-          )
-          ai_response = completion.choices[0].message.content
-          st.markdown(ai_response)
-          st.session_state.messages.append(
-              {"role": "assistant", "content": ai_response}
-          )
+            completion = client.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[
+                    {"role": "system", "content": persona_prompt},
+                    {
+                        "role": "user",
+                        "content": (
+                            f"Textbook Context:\n{retrieved_context}\n\nStudent"
+                            f" Input: {user_query}"
+                        ),
+                    },
+                ],
+                max_tokens=400,
+                temperature=0.3,
+            )
+            ai_response = completion.choices[0].message.content
+            st.markdown(ai_response)
+            st.session_state.messages.append(
+                {"role": "assistant", "content": ai_response}
+            )
 
-          # Update persistent user session state history
           if user_key in st.session_state.user_sessions:
             st.session_state.user_sessions[user_key]["messages"] = (
                 st.session_state.messages
