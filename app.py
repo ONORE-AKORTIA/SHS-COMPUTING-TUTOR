@@ -1,5 +1,4 @@
 import base64
-import glob
 import os
 import pandas as pd
 from groq import Groq
@@ -48,31 +47,37 @@ except Exception as e:
   st.stop()
 
 
-# Dynamically discover all generated dataset CSV files
+# Define categorized subject mapping to groups of CSV files
 def get_available_subjects():
-  csv_files = glob.glob("*_qa_dataset.csv")
-  subjects = {}
-  for f in csv_files:
-    # Clean up filename to create a readable subject name
-    # e.g., 'ICT_LM_FINAL_SECTION_1_LV_qa_dataset.csv' -> 'ICT LM Final Section 1 LV'
-    name_part = f.replace("_qa_dataset.csv", "").replace("_", " ").title()
-    subjects[name_part] = f
-  return subjects
+  return {
+      "Computing": ["waec_qa_dataset.csv"],
+      "ICT": [
+          "ICT_LM_FINAL_SECTION_1_LV_qa_dataset.csv",
+          "ICT_LM_FINAL_SECTION_2-LV_qa_dataset.csv",
+          "ICT_LM_FINAL_SECTION_3-LV_qa_dataset.csv",
+          "ICT_LM_FINAL_SECTION_4-LV_qa_dataset.csv",
+          "ICT_LM_FINAL_SECTION_5-LV_qa_dataset.csv",
+          "LM ICT Sections 1-5_qa_dataset.csv",
+      ],
+  }
 
 
 available_subjects = get_available_subjects()
 
-# Fallback if no datasets are found yet
-if not available_subjects:
-  available_subjects = {"Default Curriculum": "waec_qa_dataset.csv"}
 
-
-# Load datasets cached for performance
+# Load and combine datasets cached for performance
 @st.cache_data
-def load_data(filename):
-  if os.path.exists(filename):
-    return pd.read_csv(filename)
+def load_subject_data(filenames):
+  dfs = []
+  for filename in filenames:
+    if os.path.exists(filename):
+      df_temp = pd.read_csv(filename)
+      dfs.append(df_temp)
+
+  if dfs:
+    return pd.concat(dfs, ignore_index=True)
   else:
+    # Fallback dummy dataset if files are missing
     return pd.DataFrame(
         {
             "question_text": ["General curriculum overview"],
@@ -173,7 +178,7 @@ if "last_themes" not in st.session_state:
   st.session_state.last_themes = None
 
 if "selected_subject_name" not in st.session_state:
-  st.session_state.selected_subject_name = list(available_subjects.keys())[0]
+  st.session_state.selected_subject_name = "Computing"
 
 # Step 1: Capture Student Name and School if not already provided
 if not st.session_state.user_name or not st.session_state.user_school:
@@ -183,7 +188,7 @@ if not st.session_state.user_name or not st.session_state.user_school:
     school_input = st.text_input("Please enter your school name:")
     
     subject_input = st.selectbox(
-        "Select your primary subject/textbook:", list(available_subjects.keys())
+        "Select your primary subject:", list(available_subjects.keys())
     )
     
     submit_button = st.form_submit_button("Start Learning")
@@ -211,7 +216,6 @@ else:
   st.sidebar.markdown(f"**Student:** {st.session_state.user_name}")
   st.sidebar.markdown(f"**School:** {st.session_state.user_school}")
   
-  # Allow switching subjects dynamically from any of the converted textbook files
   subject_keys = list(available_subjects.keys())
   current_index = (
       subject_keys.index(st.session_state.selected_subject_name)
@@ -220,7 +224,7 @@ else:
   )
 
   current_subject = st.sidebar.selectbox(
-      "Switch Subject / Textbook:",
+      "Switch Subject:",
       subject_keys,
       index=current_index,
   )
@@ -229,7 +233,7 @@ else:
     st.session_state.selected_subject_name = current_subject
     st.session_state.messages.append({
         "role": "assistant",
-        "content": f"Switched context to **{current_subject}**. How can I help you in this textbook?"
+        "content": f"Switched context to **{current_subject}**. How can I help you in this subject?"
     })
     st.rerun()
 
@@ -240,9 +244,9 @@ else:
     st.session_state.last_themes = None
     st.rerun()
 
-  # Load the specific CSV dataset corresponding to the selected textbook
-  target_csv = available_subjects[st.session_state.selected_subject_name]
-  df = load_data(target_csv)
+  # Load and combine all files associated with the chosen subject group
+  target_files = available_subjects[st.session_state.selected_subject_name]
+  df = load_subject_data(target_files)
 
   # Display chat history cleanly
   for message in st.session_state.messages:
