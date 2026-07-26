@@ -109,19 +109,18 @@ input_method = st.sidebar.radio(
 dataset_files = subjects[selected_subject]
 df_dataset = load_dataset(dataset_files)
 
-# Single inline header layout with computer icon and user picture side-by-side on the left of the title
-laptop_img_base64 = get_image_base64("laptop.png")
+# Layout: Laptop icon -> Title -> Your picture (ONORE_AKORTIA_1.jpg)
 user_img_base64 = get_image_base64("ONORE_AKORTIA_1.jpg")
 
 st.markdown(
     f"""
     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
         <span style="font-size: 2.5em;">💻</span>
-        {f"<img src='data:image/jpeg;base64,{user_img_base64}' width='60' style='border-radius: 8px; object-fit: cover;'>" if user_img_base64 else ""}
         <div style="flex-grow: 1;">
             <h1 style="margin: 0; font-size: 1.8em; line-height: 1.2;">SHS Computing AI Tutor</h1>
             <p style="margin: 0; color: #666; font-size: 0.95em;">Your intelligent companion for <b>{selected_subject}</b>.</p>
         </div>
+        {f"<img src='data:image/jpeg;base64,{user_img_base64}' width='75' style='border-radius: 8px; object-fit: cover;'>" if user_img_base64 else ""}
     </div>
     """,
     unsafe_allow_html=True,
