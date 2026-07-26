@@ -155,7 +155,7 @@ if "greeted" not in st.session_state:
 # Trigger initial personalized greeting only when ALL THREE fields (Subject, Name, School) are provided
 if not st.session_state.greeted and student_name and student_school:
   initial_greeting = (
-      f"Hello {student_name} from {student_school}! I am your AI tutor ready"
+      f"Hello {student_name} from {student_school}! I am Sir O.K, your AI tutor ready"
       f" to help you master {selected_subject} for WAEC. How can I assist you"
       " today?"
   )
