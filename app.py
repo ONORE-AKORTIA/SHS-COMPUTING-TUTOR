@@ -200,7 +200,7 @@ if not st.session_state.greeted and student_full_name and student_school:
   )
   initial_greeting = (
       f"Hello {student_full_name} from {student_school}! ({user_status_label})."
-      f" I am your AI tutor ready to help you master {selected_subject} for"
+      f" I am Sir O.K, your AI tutor ready to help you master {selected_subject} for"
       " WAEC. How can I assist you today?"
   )
   st.session_state.messages.append(
