@@ -59,6 +59,7 @@ def get_available_subjects():
           "ICT_LM_FINAL_SECTION_5-LV_qa_dataset.csv",
           "LM ICT Sections 1-5_qa_dataset.csv",
       ],
+      "Robotics": ["robotics_qa_dataset.csv"],
   }
 
 
