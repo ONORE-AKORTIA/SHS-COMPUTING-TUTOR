@@ -1,5 +1,6 @@
 import base64
 import os
+import random
 import pandas as pd
 import streamlit as st
 from groq import Groq
@@ -174,6 +175,8 @@ if "correct_count" not in st.session_state:
   st.session_state.correct_count = 0
 if "wrong_count" not in st.session_state:
   st.session_state.wrong_count = 0
+if "asked_questions" not in st.session_state:
+  st.session_state.asked_questions = []
 
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
@@ -276,7 +279,6 @@ if user_query:
   with st.chat_message("user"):
     st.markdown(user_query)
 
-  # Filter textbook dataset precisely based on user prompt keywords if available, otherwise fallback to general subject dataset
   filtered_context = "No specific textbook content found."
   if not df_dataset.empty:
     query_terms = [
@@ -294,14 +296,14 @@ if user_query:
       ]
       if not matched_rows.empty:
         filtered_context = "\n".join(
-            matched_rows["answer_text"].head(3).tolist()
+            matched_rows["answer_text"].head(5).tolist()
         )
       else:
         filtered_context = "\n".join(
-            df_dataset["answer_text"].head(3).tolist()
+            df_dataset["answer_text"].head(5).tolist()
         )
     else:
-      filtered_context = "\n".join(df_dataset["answer_text"].head(3).tolist())
+      filtered_context = "\n".join(df_dataset["answer_text"].head(5).tolist())
 
   client = get_groq_client()
   if client:
@@ -321,6 +323,7 @@ if user_query:
               st.session_state.current_question_num = 1
               st.session_state.correct_count = 0
               st.session_state.wrong_count = 0
+              st.session_state.asked_questions = []
 
               start_prompt = (
                   f"You are Sir O.K, an expert WAEC Examiner in"
@@ -329,14 +332,19 @@ if user_query:
                   f" of {st.session_state.total_questions} questions focusing"
                   f" specifically on topic or request: '{user_query}' and"
                   f" question type: {exam_question_type}. Please generate"
-                  f" Question 1 strictly relevant to the requested topic."
-                  f" CRITICAL FORMATTING RULES:\n1. For MCQ, display options"
-                  f" inside a Markdown table (either 1 column by 4 rows or 2"
-                  f" columns by 2 rows).\n2. ABSOLUTELY DO NOT output the"
-                  f" correct answer or solution key at this stage. Only output"
-                  f" the question and options.\n3. NEVER output introductory"
-                  f" meta-text explaining your evaluation process or reasoning."
-                  f" Start your output directly with the question."
+                  f" Question 1 strictly relevant to the requested topic.\n\n"
+                  f"CRITICAL FORMATTING RULES:\n"
+                  f"1. The question number and the actual question text MUST"
+                  f" be on separate lines (e.g., 'Question 1\n\nWhat is...').\n"
+                  f"2. Every question must include a complete, explicit question"
+                  f" statement—never output only options or plausible"
+                  f" answers.\n"
+                  f"3. For MCQ, display options clearly (in a Markdown table"
+                  f" or clean vertical layout).\n"
+                  f"4. ABSOLUTELY DO NOT output the correct answer or solution"
+                  f" key at this stage. Only output the question and options.\n"
+                  f"5. NEVER output introductory meta-text explaining your"
+                  f" evaluation process."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -353,53 +361,70 @@ if user_query:
                   temperature=0.3,
               )
               ai_response = completion.choices[0].message.content
+              st.session_state.asked_questions.append(ai_response)
               st.markdown(ai_response)
               st.session_state.messages.append(
                   {"role": "assistant", "content": ai_response}
               )
             else:
-              st.session_state.current_question_num += 1
+              # Evaluate previous answer first, then present next question or final score
               current_q = st.session_state.current_question_num
               total_q = st.session_state.total_questions
 
-              if current_q <= total_q:
-                exam_eval_prompt = (
-                    f"You are Sir O.K, an expert WAEC Examiner in"
-                    f" {selected_subject} testing {student_full_name} from"
-                    f" {student_school}. \n\nEvaluate the student's latest"
-                    f" answer: '{user_query}' for the current question (Type:"
-                    f" {exam_question_type}).\n\nStrict Rules for"
-                    f" Evaluation:\n1. ABSOLUTELY FORBIDDEN: Do not output any"
-                    f" internal reasoning or explanatory text such as 'Since the"
-                    f" student has chosen option...' or 'The correct answer is"
-                    f" indeed...'.\n2. REQUIRED EVALUATION FORMAT: Start your"
-                    f" response directly with a friendly remark addressing the"
-                    f" student by name, e.g., 'GREAT JOB, {student_full_name},"
-                    f" YOU ARE ON THE RIGHT TRACK!' (or 'EXCELLENT', 'AMAZING',"
-                    f" 'WONDERFUL', 'CONGRATULATIONS' if correct, or 'TRY AGAIN'"
-                    f" if wrong).\n3. If wrong, explicitly display the correct"
-                    f" answer.\n4. MCQ OPTIONS FORMAT: Present options cleanly"
-                    f" in a Markdown table (1 column by 4 rows or 2 columns by"
-                    f" 2 rows depending on text length). No duplicate labels"
-                    f" or headings like 'Plausible answers:'.\n5. Present the"
-                    f" next question (Question {current_q} of {total_q})"
-                    f" adhering to type: {exam_question_type}, ensuring the"
-                    f" correct answer is NOT revealed until the student"
-                    f" answers."
+              # Simple heuristic check or evaluation prompt to determine correct/wrong for score tracking
+              # We can instruct model to output a distinct marker or parse correctness, or evaluate via LLM.
+              # Let's ask the model to evaluate and include a hidden tag or clear text we can parse, or update counters.
+              # To make it robust, we evaluate via prompt and update counters based on response keywords or dedicated evaluation.
+
+              # Let's run evaluation and next step generation in one call
+              is_last_question = current_q >= total_q
+
+              eval_and_next_prompt = (
+                  f"You are Sir O.K, an expert WAEC Examiner in"
+                  f" {selected_subject} testing {student_full_name} from"
+                  f" {student_school}.\n\n"
+                  f"The student's latest answer for Question {current_q} of"
+                  f" {total_q} is: '{user_query}'.\n\n"
+                  f"PREVIOUSLY ASKED QUESTIONS (DO NOT REPEAT THESE TOPICS OR"
+                  f" QUESTIONS):\n"
+                  f"{chr(10).join(st.session_state.asked_questions)}\n\n"
+                  f"Strict Rules:\n"
+                  f"1. Evaluate if the student's answer is correct or wrong."
+                  f" Based on correctness, update internal scores.\n"
+                  f"2. Start your response with a randomized, enthusiastic"
+                  f" remark addressing the student by name. VARY the remark"
+                  f" every time (e.g. if correct: 'FANTASTIC WORK, {student_full_name}!'"
+                  f" or 'BRILLIANT EFFORT, {student_full_name}!'; if wrong: 'GOOD"
+                  f" TRY, {student_full_name}, LET'S REVIEW THIS CONCEPT' or"
+                  f" 'NOT QUITE, {student_full_name}, BUT KEEP PUSHING'). NEVER"
+                  f" repeat the exact same phrase always.\n"
+                  f"3. If wrong, explicitly state and display the correct"
+                  f" answer.\n"
+                  f"4. DO NOT display the options of the previous question"
+                  f" again.\n"
+              )
+
+              if not is_last_question:
+                next_q_num = current_q + 1
+                eval_and_next_prompt += (
+                    f"5. Since this is NOT the final question, present"
+                    f" Question {next_q_num} of {total_q} on the topic"
+                    f" requested by the user, ensuring it is entirely NEW and"
+                    f" unrepeated.\n"
+                    f"6. Format rules for the new question: Question number"
+                    f" and question text MUST be on separate lines. Every"
+                    f" question must include a full question statement. For"
+                    f" MCQ, present options cleanly without revealing the"
+                    f" correct answer."
                 )
               else:
-                exam_eval_prompt = (
-                    f"You are Sir O.K, an expert WAEC Examiner in"
-                    f" {selected_subject} testing {student_full_name} from"
-                    f" {student_school}. The student has completed all {total_q}"
-                    f" questions in this session ({exam_question_type}). Total"
-                    f" Correct: {st.session_state.correct_count}, Total Wrong:"
-                    f" {st.session_state.wrong_count}.\n\nProvide an overall"
-                    " performance rating and a final summary remark to help the"
-                    " learner prepare for WAEC. Reset exam session state after"
-                    " this."
+                eval_and_next_prompt += (
+                    f"5. Since this was the FINAL question (Question {current_q}"
+                    f" of {total_q}), DO NOT present any new questions. Instead,"
+                    f" display the OVERALL FINAL SCORE and performance summary"
+                    f" for {student_full_name} immediately after the"
+                    f" evaluation remark."
                 )
-                st.session_state.exam_active = False
 
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -410,16 +435,36 @@ if user_query:
                               f"Relevant Textbook Content:\n{filtered_context}"
                           ),
                       },
-                      {"role": "system", "content": exam_eval_prompt},
+                      {"role": "system", "content": eval_and_next_prompt},
                       {
                           "role": "user",
-                          "content": f"Student Response: {user_query}",
+                          "content": f"Evaluate student response: {user_query}",
                       },
                   ],
-                  max_tokens=450,
-                  temperature=0.3,
+                  max_tokens=500,
+                  temperature=0.4,
               )
               ai_response = completion.choices[0].message.content
+
+              # Simple heuristic to update counters based on LLM output or user input matching
+              # Let's inspect response or use a simple check. To be extremely precise with dashboard updates:
+              response_lower = ai_response.lower()
+              if (
+                  "correct" in response_lower
+                  or "excellent" in response_lower
+                  or "fantastic" in response_lower
+                  or "brilliant" in response_lower
+                  or "right" in response_lower
+              ) and "not correct" not in response_lower:
+                st.session_state.correct_count += 1
+              else:
+                st.session_state.wrong_count += 1
+
+              st.session_state.current_question_num += 1
+              if is_last_question:
+                st.session_state.exam_active = False
+
+              st.session_state.asked_questions.append(ai_response)
               st.markdown(ai_response)
               st.session_state.messages.append(
                   {"role": "assistant", "content": ai_response}
