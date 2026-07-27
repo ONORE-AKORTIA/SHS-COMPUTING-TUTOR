@@ -177,6 +177,8 @@ if "wrong_count" not in st.session_state:
   st.session_state.wrong_count = 0
 if "asked_questions" not in st.session_state:
   st.session_state.asked_questions = []
+if "current_correct_option" not in st.session_state:
+  st.session_state.current_correct_option = None
 
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
@@ -324,6 +326,7 @@ if user_query:
               st.session_state.correct_count = 0
               st.session_state.wrong_count = 0
               st.session_state.asked_questions = []
+              st.session_state.current_correct_option = None
 
               start_prompt = (
                   f"You are Sir O.K, an expert WAEC Examiner in"
@@ -339,12 +342,14 @@ if user_query:
                   f"2. Every question must include a complete, explicit question"
                   f" statement—never output only options or plausible"
                   f" answers.\n"
-                  f"3. For MCQ, display options clearly (in a Markdown table"
-                  f" or clean vertical layout).\n"
+                  f"3. For MCQ, options MUST be explicitly labeled with letters"
+                  f" A, B, C, and D (e.g., 'A) Option text').\n"
                   f"4. ABSOLUTELY DO NOT output the correct answer or solution"
                   f" key at this stage. Only output the question and options.\n"
-                  f"5. NEVER output introductory meta-text explaining your"
-                  f" evaluation process."
+                  f"5. In your internal reasoning or at the very end of your"
+                  f" generation (or formatted clearly), identify the correct"
+                  f" option letter (e.g., [CORRECT: A]). Make sure this is"
+                  f" captured so we can validate the learner's response."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -361,69 +366,114 @@ if user_query:
                   temperature=0.3,
               )
               ai_response = completion.choices[0].message.content
-              st.session_state.asked_questions.append(ai_response)
-              st.markdown(ai_response)
+
+              # Extract correct option if provided in response tag like [CORRECT: A]
+              # If not explicitly tagged, default or parse
+              correct_letter = "A"
+              if "[correct:" in ai_response.lower():
+                try:
+                  parts = ai_response.lower().split("[correct:")
+                  correct_letter = parts[1].strip()[0].upper()
+                except Exception:
+                  pass
+              st.session_state.current_correct_option = correct_letter
+
+              # Clean tag from displayed output
+              display_response = ai_response
+              if "[correct:" in display_response.lower():
+                display_response = (
+                    display_response.split("[CORRECT:")[0]
+                    .split("[correct:")[0]
+                    .strip()
+                )
+
+              st.session_state.asked_questions.append(display_response)
+              st.markdown(display_response)
               st.session_state.messages.append(
-                  {"role": "assistant", "content": ai_response}
+                  {"role": "assistant", "content": display_response}
               )
             else:
-              # Evaluate previous answer first, then present next question or final score
               current_q = st.session_state.current_question_num
               total_q = st.session_state.total_questions
-
-              # Simple heuristic check or evaluation prompt to determine correct/wrong for score tracking
-              # We can instruct model to output a distinct marker or parse correctness, or evaluate via LLM.
-              # Let's ask the model to evaluate and include a hidden tag or clear text we can parse, or update counters.
-              # To make it robust, we evaluate via prompt and update counters based on response keywords or dedicated evaluation.
-
-              # Let's run evaluation and next step generation in one call
               is_last_question = current_q >= total_q
+
+              # Evaluate student response against expected correct option letter
+              user_ans_clean = user_query.strip().upper()
+              expected_letter = st.session_state.current_correct_option or "A"
+
+              is_correct = False
+              if (
+                  user_ans_clean == expected_letter
+                  or user_ans_clean.startswith(expected_letter)
+              ):
+                is_correct = True
+
+              if is_correct:
+                st.session_state.correct_count += 1
+                eval_remark = random.choice([
+                    f"EXCELLENT WORK, {student_full_name}! YOU NAILED IT!",
+                    f"BRILLIANT EFFORT, {student_full_name}! THAT IS SPOT ON!",
+                    (
+                        f"FANTASTIC, {student_full_name}! YOU'RE MAKING GREAT"
+                        " PROGRESS!"
+                    ),
+                ])
+              else:
+                st.session_state.wrong_count += 1
+                eval_remark = random.choice([
+                    (
+                        f"GOOD TRY, {student_full_name}, BUT NOT QUITE RIGHT."
+                        f" THE CORRECT ANSWER WAS OPTION {expected_letter}."
+                    ),
+                    (
+                        f"NOT TO WORRY, {student_full_name}, LET'S LEARN FROM"
+                        f" THIS. THE CORRECT ANSWER IS OPTION"
+                        f" {expected_letter}."
+                    ),
+                    (
+                        f"KEEP PUSHING, {student_full_name}! THE CORRECT OPTION"
+                        f" FOR THE PREVIOUS QUESTION WAS {expected_letter}."
+                    ),
+                ])
 
               eval_and_next_prompt = (
                   f"You are Sir O.K, an expert WAEC Examiner in"
                   f" {selected_subject} testing {student_full_name} from"
                   f" {student_school}.\n\n"
-                  f"The student's latest answer for Question {current_q} of"
-                  f" {total_q} is: '{user_query}'.\n\n"
+                  f"Evaluation Result for Question {current_q}: Student"
+                  f" answered '{user_query}'. Evaluation is"
+                  f" {'CORRECT' if is_correct else 'INCORRECT'} (Correct option"
+                  f" was {expected_letter}).\n\n"
                   f"PREVIOUSLY ASKED QUESTIONS (DO NOT REPEAT THESE TOPICS OR"
                   f" QUESTIONS):\n"
                   f"{chr(10).join(st.session_state.asked_questions)}\n\n"
-                  f"Strict Rules:\n"
-                  f"1. Evaluate if the student's answer is correct or wrong."
-                  f" Based on correctness, update internal scores.\n"
-                  f"2. Start your response with a randomized, enthusiastic"
-                  f" remark addressing the student by name. VARY the remark"
-                  f" every time (e.g. if correct: 'FANTASTIC WORK, {student_full_name}!'"
-                  f" or 'BRILLIANT EFFORT, {student_full_name}!'; if wrong: 'GOOD"
-                  f" TRY, {student_full_name}, LET'S REVIEW THIS CONCEPT' or"
-                  f" 'NOT QUITE, {student_full_name}, BUT KEEP PUSHING'). NEVER"
-                  f" repeat the exact same phrase always.\n"
-                  f"3. If wrong, explicitly state and display the correct"
-                  f" answer.\n"
-                  f"4. DO NOT display the options of the previous question"
+                  f"Instructions:\n"
+                  f"1. Start your response with the evaluation remark:"
+                  f" '{eval_remark}'\n"
+                  f"2. DO NOT display the options of the previous question"
                   f" again.\n"
               )
 
               if not is_last_question:
                 next_q_num = current_q + 1
                 eval_and_next_prompt += (
-                    f"5. Since this is NOT the final question, present"
-                    f" Question {next_q_num} of {total_q} on the topic"
-                    f" requested by the user, ensuring it is entirely NEW and"
-                    f" unrepeated.\n"
-                    f"6. Format rules for the new question: Question number"
-                    f" and question text MUST be on separate lines. Every"
-                    f" question must include a full question statement. For"
-                    f" MCQ, present options cleanly without revealing the"
-                    f" correct answer."
+                    f"3. Present Question {next_q_num} of {total_q} on the"
+                    f" topic requested by the user, ensuring it is entirely NEW"
+                    f" and unrepeated.\n"
+                    f"4. Format rules: Question number and question text MUST"
+                    f" be on separate lines. Every question must include a full"
+                    f" question statement. For MCQ, options MUST be labeled"
+                    f" with A, B, C, D.\n"
+                    f"5. Include the correct option tag at the very end in the"
+                    f" format [CORRECT: X]."
                 )
               else:
                 eval_and_next_prompt += (
-                    f"5. Since this was the FINAL question (Question {current_q}"
+                    f"3. Since this was the FINAL question (Question {current_q}"
                     f" of {total_q}), DO NOT present any new questions. Instead,"
-                    f" display the OVERALL FINAL SCORE and performance summary"
-                    f" for {student_full_name} immediately after the"
-                    f" evaluation remark."
+                    f" display the OVERALL FINAL SCORE and a comprehensive"
+                    f" performance summary for {student_full_name} immediately"
+                    f" following the evaluation remark."
                 )
 
               completion = client.chat.completions.create(
@@ -438,7 +488,7 @@ if user_query:
                       {"role": "system", "content": eval_and_next_prompt},
                       {
                           "role": "user",
-                          "content": f"Evaluate student response: {user_query}",
+                          "content": f"Proceed with evaluation and next step.",
                       },
                   ],
                   max_tokens=500,
@@ -446,28 +496,32 @@ if user_query:
               )
               ai_response = completion.choices[0].message.content
 
-              # Simple heuristic to update counters based on LLM output or user input matching
-              # Let's inspect response or use a simple check. To be extremely precise with dashboard updates:
-              response_lower = ai_response.lower()
-              if (
-                  "correct" in response_lower
-                  or "excellent" in response_lower
-                  or "fantastic" in response_lower
-                  or "brilliant" in response_lower
-                  or "right" in response_lower
-              ) and "not correct" not in response_lower:
-                st.session_state.correct_count += 1
-              else:
-                st.session_state.wrong_count += 1
+              # Extract correct option for the new question if generated
+              if not is_last_question and "[correct:" in ai_response.lower():
+                try:
+                  parts = ai_response.lower().split("[correct:")
+                  st.session_state.current_correct_option = (
+                      parts[1].strip()[0].upper()
+                  )
+                except Exception:
+                  pass
+
+              display_response = ai_response
+              if "[correct:" in display_response.lower():
+                display_response = (
+                    display_response.split("[CORRECT:")[0]
+                    .split("[correct:")[0]
+                    .strip()
+                )
 
               st.session_state.current_question_num += 1
               if is_last_question:
                 st.session_state.exam_active = False
 
-              st.session_state.asked_questions.append(ai_response)
-              st.markdown(ai_response)
+              st.session_state.asked_questions.append(display_response)
+              st.markdown(display_response)
               st.session_state.messages.append(
-                  {"role": "assistant", "content": ai_response}
+                  {"role": "assistant", "content": display_response}
               )
           else:
             persona_prompt = (
