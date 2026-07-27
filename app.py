@@ -332,10 +332,11 @@ if user_query:
                   f" Question 1 strictly relevant to the requested topic."
                   f" CRITICAL FORMATTING RULES:\n1. For MCQ, display options"
                   f" inside a Markdown table (either 1 column by 4 rows or 2"
-                  f" columns by 2 rows).\n2. NEVER output introductory meta-text"
-                  f" explaining your evaluation process, reasoning, or phrases"
-                  f" like 'Since the student has chosen...'.\n3. Start your"
-                  f" output directly with the question and options."
+                  f" columns by 2 rows).\n2. ABSOLUTELY DO NOT output the"
+                  f" correct answer or solution key at this stage. Only output"
+                  f" the question and options.\n3. NEVER output introductory"
+                  f" meta-text explaining your evaluation process or reasoning."
+                  f" Start your output directly with the question."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -382,7 +383,9 @@ if user_query:
                     f" 2 rows depending on text length). No duplicate labels"
                     f" or headings like 'Plausible answers:'.\n5. Present the"
                     f" next question (Question {current_q} of {total_q})"
-                    f" adhering to type: {exam_question_type}."
+                    f" adhering to type: {exam_question_type}, ensuring the"
+                    f" correct answer is NOT revealed until the student"
+                    f" answers."
                 )
               else:
                 exam_eval_prompt = (
