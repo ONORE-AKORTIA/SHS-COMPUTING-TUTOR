@@ -337,19 +337,20 @@ if user_query:
                   f" question type: {exam_question_type}. Please generate"
                   f" Question 1 strictly relevant to the requested topic.\n\n"
                   f"CRITICAL FORMATTING RULES:\n"
-                  f"1. The question number and the actual question text MUST"
-                  f" be on separate lines (e.g., 'Question 1\n\nWhat is...').\n"
+                  f"1. The question number (e.g., 'Question 1') and the actual"
+                  f" question text MUST be on separate lines using double"
+                  f" newlines.\n"
                   f"2. Every question must include a complete, explicit question"
                   f" statement—never output only options or plausible"
                   f" answers.\n"
-                  f"3. For MCQ, options MUST be explicitly labeled with letters"
-                  f" A, B, C, and D (e.g., 'A) Option text').\n"
+                  f"3. For MCQ, options MUST be presented in a nicely formatted"
+                  f" Markdown table with columns 'Option' and 'Description', labeled"
+                  f" A, B, C, and D.\n"
                   f"4. ABSOLUTELY DO NOT output the correct answer or solution"
-                  f" key at this stage. Only output the question and options.\n"
-                  f"5. In your internal reasoning or at the very end of your"
-                  f" generation (or formatted clearly), identify the correct"
-                  f" option letter (e.g., [CORRECT: A]). Make sure this is"
-                  f" captured so we can validate the learner's response."
+                  f" key at this stage. Only output the question and options"
+                  f" table.\n"
+                  f"5. Include the correct option tag at the very end in the"
+                  f" hidden format [CORRECT: X] (e.g. [CORRECT: B])."
               )
               completion = client.chat.completions.create(
                   model="llama-3.1-8b-instant",
@@ -367,8 +368,6 @@ if user_query:
               )
               ai_response = completion.choices[0].message.content
 
-              # Extract correct option if provided in response tag like [CORRECT: A]
-              # If not explicitly tagged, default or parse
               correct_letter = "A"
               if "[correct:" in ai_response.lower():
                 try:
@@ -378,7 +377,6 @@ if user_query:
                   pass
               st.session_state.current_correct_option = correct_letter
 
-              # Clean tag from displayed output
               display_response = ai_response
               if "[correct:" in display_response.lower():
                 display_response = (
@@ -397,7 +395,6 @@ if user_query:
               total_q = st.session_state.total_questions
               is_last_question = current_q >= total_q
 
-              # Evaluate student response against expected correct option letter
               user_ans_clean = user_query.strip().upper()
               expected_letter = st.session_state.current_correct_option or "A"
 
@@ -450,8 +447,8 @@ if user_query:
                   f"Instructions:\n"
                   f"1. Start your response with the evaluation remark:"
                   f" '{eval_remark}'\n"
-                  f"2. DO NOT display the options of the previous question"
-                  f" again.\n"
+                  f"2. DO NOT display the options or table of the previous"
+                  f" question again.\n"
               )
 
               if not is_last_question:
@@ -462,8 +459,9 @@ if user_query:
                     f" and unrepeated.\n"
                     f"4. Format rules: Question number and question text MUST"
                     f" be on separate lines. Every question must include a full"
-                    f" question statement. For MCQ, options MUST be labeled"
-                    f" with A, B, C, D.\n"
+                    f" question statement. For MCQ, options MUST be presented"
+                    f" in a nicely formatted Markdown table with columns"
+                    f" 'Option' and 'Description', labeled A, B, C, D.\n"
                     f"5. Include the correct option tag at the very end in the"
                     f" format [CORRECT: X]."
                 )
@@ -496,7 +494,6 @@ if user_query:
               )
               ai_response = completion.choices[0].message.content
 
-              # Extract correct option for the new question if generated
               if not is_last_question and "[correct:" in ai_response.lower():
                 try:
                   parts = ai_response.lower().split("[correct:")
@@ -541,7 +538,7 @@ if user_query:
                         ),
                     },
                     {"role": "system", "content": persona_prompt},
-                    {"role": "user", "content": f"Student Input: {user_query}"},
+                    {"role": "user", "content": student_query},
                 ],
                 max_tokens=400,
                 temperature=0.3,
