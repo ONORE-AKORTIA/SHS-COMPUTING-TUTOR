@@ -538,7 +538,7 @@ if user_query:
                         ),
                     },
                     {"role": "system", "content": persona_prompt},
-                    {"role": "user", "content": student_query},
+                    {"role": "user", "content": user_query},
                 ],
                 max_tokens=400,
                 temperature=0.3,
