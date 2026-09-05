@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 from groq import Groq
 
-# Centralized model configuration updated to active model
+# Centralized model configuration
 ACTIVE_MODEL = "openai/gpt-oss-20b"
 
 # Page configuration
@@ -159,7 +159,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Initialize session state stores
+# Initialize session state stores & Cognitive Student Model variables
 if "user_sessions" not in st.session_state:
     st.session_state.user_sessions = {}
 if "messages" not in st.session_state:
@@ -167,7 +167,7 @@ if "messages" not in st.session_state:
 if "greeted" not in st.session_state:
     st.session_state.greeted = False
 
-# Exam session state variables
+# Exam session & Knowledge Tracing state variables
 if "exam_active" not in st.session_state:
     st.session_state.exam_active = False
 if "total_questions" not in st.session_state:
@@ -182,6 +182,10 @@ if "asked_questions" not in st.session_state:
     st.session_state.asked_questions = []
 if "current_correct_option" not in st.session_state:
     st.session_state.current_correct_option = None
+if "current_topic" not in st.session_state:
+    st.session_state.current_topic = "General Concept"
+if "topic_performance" not in st.session_state:
+    st.session_state.topic_performance = {}  # {topic: {"correct": x, "total": y}}
 
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
@@ -199,7 +203,7 @@ if student_full_name and student_school:
             "messages"
         ]
 
-# Trigger initial personalized greeting ONLY when ALL THREE fields (Subject, Full Name, School) are provided
+# Trigger initial personalized greeting ONLY when ALL THREE fields are provided
 if not st.session_state.greeted and student_full_name and student_school:
     user_status_label = (
         "Welcome back"
@@ -237,9 +241,9 @@ if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
     st.progress(
         progress_val,
         text=(
-            f"Progress Dashboard ({exam_question_type}) | Answered:"
-            f" {answered}/{total} | Left: {left} | Correct: {correct} | Wrong:"
-            f" {wrong}"
+            f"Progress Dashboard ({exam_question_type}) | Current Topic:"
+            f" {st.session_state.current_topic} | Answered: {answered}/{total} |"
+            f" Correct: {correct} | Wrong: {wrong}"
         ),
     )
 
@@ -330,6 +334,7 @@ if user_query:
                             st.session_state.wrong_count = 0
                             st.session_state.asked_questions = []
                             st.session_state.current_correct_option = None
+                            st.session_state.topic_performance = {}
 
                             start_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner in"
@@ -338,22 +343,19 @@ if user_query:
                                 f" of {st.session_state.total_questions} questions focusing"
                                 f" specifically on topic or request: '{user_query}' and"
                                 f" question type: {exam_question_type}. Please generate"
-                                f" Question 1 strictly relevant to the requested topic.\n\n"
-                                f"CRITICAL FORMATTING RULES:\n"
+                                f" Question 1 strictly relevant toграмм the requested topic.\n\n"
+                                f"CRITICAL FORMATTING & METADATA RULES:\n"
                                 f"1. The question number (e.g., 'Question 1') and the actual"
                                 f" question text MUST be on separate lines using double"
                                 f" newlines.\n"
                                 f"2. Every question must include a complete, explicit question"
-                                f" statement—never output only options or plausible"
-                                f" answers.\n"
+                                f" statement.\n"
                                 f"3. For MCQ, options MUST be presented in a nicely formatted"
                                 f" Markdown table with columns 'Option' and 'Description', labeled"
                                 f" A, B, C, and D.\n"
-                                f"4. ABSOLUTELY DO NOT output the correct answer or solution"
-                                f" key at this stage. Only output the question and options"
-                                f" table.\n"
-                                f"5. Include the correct option tag at the very end in the"
-                                f" hidden format [CORRECT: X] (e.g. [CORRECT: B])."
+                                f"4. ABSOLUTELY DO NOT output the correct answer key in the main text.\n"
+                                f"5. Include the specific syllabus topic name at the very end in format [TOPIC: Name of Topic].\n"
+                                f"6. Include the correct option tag at the very end in format [CORRECT: X] (e.g. [CORRECT: B])."
                             )
                             completion = client.chat.completions.create(
                                 model=ACTIVE_MODEL,
@@ -371,22 +373,38 @@ if user_query:
                             )
                             ai_response = completion.choices[0].message.content
 
+                            # Parse Topic metadata
+                            topic_name = "General Concept"
+                            if "[topic:" in ai_response.lower():
+                                try:
+                                    parts = ai_response.lower().split("[topic:")
+                                    topic_name = (
+                                        parts[1].split("]")[0].strip().title()
+                                    )
+                                except Exception:
+                                    pass
+                            st.session_state.current_topic = topic_name
+
+                            # Parse Correct Option metadata
                             correct_letter = "A"
                             if "[correct:" in ai_response.lower():
                                 try:
                                     parts = ai_response.lower().split("[correct:")
-                                    correct_letter = parts[1].strip()[0].upper()
+                                    correct_letter = (
+                                        parts[1].split("]")[0].strip()[0].upper()
+                                    )
                                 except Exception:
                                     pass
                             st.session_state.current_correct_option = correct_letter
 
+                            # Clean display response by stripping hidden tags
                             display_response = ai_response
-                            if "[correct:" in display_response.lower():
-                                display_response = (
-                                    display_response.split("[CORRECT:")[0]
-                                    .split("[correct:")[0]
-                                    .strip()
-                                )
+                            for tag in ["[correct:", "[topic:"]:
+                                if tag in display_response.lower():
+                                    display_response = display_response.split(
+                                        tag.upper()
+                                    )[0].split(tag)[0]
+                            display_response = display_response.strip()
 
                             st.session_state.asked_questions.append(display_response)
                             st.markdown(display_response)
@@ -399,7 +417,10 @@ if user_query:
                             is_last_question = current_q >= total_q
 
                             user_ans_clean = user_query.strip().upper()
-                            expected_letter = st.session_state.current_correct_option or "A"
+                            expected_letter = (
+                                st.session_state.current_correct_option or "A"
+                            )
+                            active_topic = st.session_state.current_topic
 
                             is_correct = False
                             if (
@@ -407,6 +428,23 @@ if user_query:
                                 or user_ans_clean.startswith(expected_letter)
                             ):
                                 is_correct = True
+
+                            # Update Cognitive Model Knowledge Tracing Tracker
+                            if (
+                                active_topic
+                                not in st.session_state.topic_performance
+                            ):
+                                st.session_state.topic_performance[active_topic] = {
+                                    "correct": 0,
+                                    "total": 0,
+                                }
+                            st.session_state.topic_performance[active_topic][
+                                "total"
+                            ] += 1
+                            if is_correct:
+                                st.session_state.topic_performance[active_topic][
+                                    "correct"
+                                ] += 1
 
                             if is_correct:
                                 st.session_state.correct_count += 1
@@ -436,22 +474,39 @@ if user_query:
                                     ),
                                 ])
 
+                            # Build cognitive diagnostic breakdown if last question
+                            cognitive_summary_text = ""
+                            if is_last_question:
+                                cognitive_summary_text = (
+                                    "\n\n### 🧠 Cognitive Knowledge Tracing Report\n"
+                                )
+                                for top, stats in st.session_state.topic_performance.items():
+                                    pct = (
+                                        (stats["correct"] / stats["total"]) * 100
+                                        if stats["total"] > 0
+                                        else 0
+                                    )
+                                    status_emoji = (
+                                        "🟢 Mastered"
+                                        if pct >= 70
+                                        else "🔴 Needs Revision"
+                                    )
+                                    cognitive_summary_text += f"- **{top}**: {stats['correct']}/{stats['total']} correct ({pct:.0f}%) — {status_emoji}\n"
+
                             eval_and_next_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner in"
                                 f" {selected_subject} testing {student_full_name} from"
                                 f" {student_school}.\n\n"
-                                f"Evaluation Result for Question {current_q}: Student"
-                                f" answered '{user_query}'. Evaluation is"
+                                f"Evaluation Result for Question {current_q} (Topic: {active_topic}):"
+                                f" Student answered '{user_query}'. Evaluation is"
                                 f" {'CORRECT' if is_correct else 'INCORRECT'} (Correct option"
                                 f" was {expected_letter}).\n\n"
-                                f"PREVIOUSLY ASKED QUESTIONS (DO NOT REPEAT THESE TOPICS OR"
-                                f" QUESTIONS):\n"
+                                f"PREVIOUSLY ASKED QUESTIONS (DO NOT REPEAT):\n"
                                 f"{chr(10).join(st.session_state.asked_questions)}\n\n"
                                 f"Instructions:\n"
                                 f"1. Start your response with the evaluation remark:"
                                 f" '{eval_remark}'\n"
-                                f"2. DO NOT display the options or table of the previous"
-                                f" question again.\n"
+                                f"2. DO NOT display the options or table of the previous question.\n"
                             )
 
                             if not is_last_question:
@@ -460,21 +515,16 @@ if user_query:
                                     f"3. Present Question {next_q_num} of {total_q} on the"
                                     f" topic requested by the user, ensuring it is entirely NEW"
                                     f" and unrepeated.\n"
-                                    f"4. Format rules: Question number and question text MUST"
-                                    f" be on separate lines. Every question must include a full"
-                                    f" question statement. For MCQ, options MUST be presented"
-                                    f" in a nicely formatted Markdown table with columns"
-                                    f" 'Option' and 'Description', labeled A, B, C, D.\n"
-                                    f"5. Include the correct option tag at the very end in the"
-                                    f" format [CORRECT: X]."
+                                    f"4. Format rules: Question number and text on separate lines. Provide MCQ table options A, B, C, D.\n"
+                                    f"5. Include topic tag [TOPIC: Topic Name] and correct option tag [CORRECT: X] at the very end."
                                 )
                             else:
                                 eval_and_next_prompt += (
                                     f"3. Since this was the FINAL question (Question {current_q}"
-                                    f" of {total_q}), DO NOT present any new questions. Instead,"
-                                    f" display the OVERALL FINAL SCORE and a comprehensive"
+                                    f" of {total_q}), display the OVERALL FINAL SCORE and comprehensive"
                                     f" performance summary for {student_full_name} immediately"
-                                    f" following the evaluation remark."
+                                    f" following the evaluation remark, including this exact cognitive knowledge tracing report:\n"
+                                    f"{cognitive_summary_text}"
                                 )
 
                             completion = client.chat.completions.create(
@@ -492,27 +542,38 @@ if user_query:
                                         "content": f"Proceed with evaluation and next step.",
                                     },
                                 ],
-                                max_tokens=500,
+                                max_tokens=600,
                                 temperature=0.4,
                             )
                             ai_response = completion.choices[0].message.content
 
-                            if not is_last_question and "[correct:" in ai_response.lower():
-                                try:
-                                    parts = ai_response.lower().split("[correct:")
-                                    st.session_state.current_correct_option = (
-                                        parts[1].strip()[0].upper()
-                                    )
-                                except Exception:
-                                    pass
+                            # Parse next question metadata if not last question
+                            if not is_last_question:
+                                if "[topic:" in ai_response.lower():
+                                    try:
+                                        parts = ai_response.lower().split("[topic:")
+                                        st.session_state.current_topic = (
+                                            parts[1].split("]")[0].strip().title()
+                                        )
+                                    except Exception:
+                                        pass
+
+                                if "[correct:" in ai_response.lower():
+                                    try:
+                                        parts = ai_response.lower().split("[correct:")
+                                        st.session_state.current_correct_option = (
+                                            parts[1].split("]")[0].strip()[0].upper()
+                                        )
+                                    except Exception:
+                                        pass
 
                             display_response = ai_response
-                            if "[correct:" in display_response.lower():
-                                display_response = (
-                                    display_response.split("[CORRECT:")[0]
-                                    .split("[correct:")[0]
-                                    .strip()
-                                )
+                            for tag in ["[correct:", "[topic:"]:
+                                if tag in display_response.lower():
+                                    display_response = display_response.split(
+                                        tag.upper()
+                                    )[0].split(tag)[0]
+                            display_response = display_response.strip()
 
                             st.session_state.current_question_num += 1
                             if is_last_question:
