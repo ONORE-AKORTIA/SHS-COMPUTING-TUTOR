@@ -185,7 +185,7 @@ if "current_correct_option" not in st.session_state:
 if "current_topic" not in st.session_state:
     st.session_state.current_topic = "General Concept"
 if "topic_performance" not in st.session_state:
-    st.session_state.topic_performance = {}  # {topic: {"correct": x, "total": y}}
+    st.session_state.topic_performance = {}
 
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
@@ -343,7 +343,7 @@ if user_query:
                                 f" of {st.session_state.total_questions} questions focusing"
                                 f" specifically on topic or request: '{user_query}' and"
                                 f" question type: {exam_question_type}. Please generate"
-                                f" Question 1 strictly relevant toграмм the requested topic.\n\n"
+                                f" Question 1 strictly relevant to the requested topic.\n\n"
                                 f"CRITICAL FORMATTING & METADATA RULES:\n"
                                 f"1. The question number (e.g., 'Question 1') and the actual"
                                 f" question text MUST be on separate lines using double"
@@ -474,12 +474,14 @@ if user_query:
                                     ),
                                 ])
 
-                            # Build cognitive diagnostic breakdown if last question
+                            # Build cognitive report & targeted revision learning materials if last question
                             cognitive_summary_text = ""
+                            remediation_materials = ""
                             if is_last_question:
                                 cognitive_summary_text = (
                                     "\n\n### 🧠 Cognitive Knowledge Tracing Report\n"
                                 )
+                                weak_topics = []
                                 for top, stats in st.session_state.topic_performance.items():
                                     pct = (
                                         (stats["correct"] / stats["total"]) * 100
@@ -492,10 +494,23 @@ if user_query:
                                         else "🔴 Needs Revision"
                                     )
                                     cognitive_summary_text += f"- **{top}**: {stats['correct']}/{stats['total']} correct ({pct:.0f}%) — {status_emoji}\n"
+                                    if pct < 70:
+                                        weak_topics.append(top)
+
+                                if weak_topics:
+                                    remediation_materials = (
+                                        f"\n\n### 📚 Tailored Revision Materials & Guided Walkthrough\n"
+                                        f"Since you need extra practice on **{', '.join(weak_topics)}**, here is your custom guide:\n"
+                                    )
+                                else:
+                                    remediation_materials = (
+                                        f"\n\n### 📚 Tailored Revision Materials & Guided Walkthrough\n"
+                                        f"Fantastic job mastering all topics! Here is a quick advanced tip to keep your edge sharp across {selected_subject}.\n"
+                                    )
 
                             eval_and_next_prompt = (
-                                f"You are Sir O.K, an expert WAEC Examiner in"
-                                f" {selected_subject} testing {student_full_name} from"
+                                f"You are Sir O.K, an expert WAEC Examiner and Tutor in"
+                                f" {selected_subject} guiding {student_full_name} from"
                                 f" {student_school}.\n\n"
                                 f"Evaluation Result for Question {current_q} (Topic: {active_topic}):"
                                 f" Student answered '{user_query}'. Evaluation is"
@@ -521,10 +536,9 @@ if user_query:
                             else:
                                 eval_and_next_prompt += (
                                     f"3. Since this was the FINAL question (Question {current_q}"
-                                    f" of {total_q}), display the OVERALL FINAL SCORE and comprehensive"
-                                    f" performance summary for {student_full_name} immediately"
-                                    f" following the evaluation remark, including this exact cognitive knowledge tracing report:\n"
-                                    f"{cognitive_summary_text}"
+                                    f" of {total_q}), display the OVERALL FINAL SCORE and performance summary for {student_full_name}.\n"
+                                    f"4. Immediately append this exact cognitive report header:\n{cognitive_summary_text}\n"
+                                    f"5. Following that, write detailed, practical revision notes, core definitions, and step-by-step guided explanations specifically targeting any weak topics identified above to help the student thoroughly master them for WAEC."
                                 )
 
                             completion = client.chat.completions.create(
@@ -542,7 +556,7 @@ if user_query:
                                         "content": f"Proceed with evaluation and next step.",
                                     },
                                 ],
-                                max_tokens=600,
+                                max_tokens=800,
                                 temperature=0.4,
                             )
                             ai_response = completion.choices[0].message.content
@@ -568,11 +582,12 @@ if user_query:
                                         pass
 
                             display_response = ai_response
-                            for tag in ["[correct:", "[topic:"]:
-                                if tag in display_response.lower():
-                                    display_response = display_response.split(
-                                        tag.upper()
-                                    )[0].split(tag)[0]
+                            if not is_last_question:
+                                for tag in ["[correct:", "[topic:"]:
+                                    if tag in display_response.lower():
+                                        display_response = display_response.split(
+                                            tag.upper()
+                                        )[0].split(tag)[0]
                             display_response = display_response.strip()
 
                             st.session_state.current_question_num += 1
