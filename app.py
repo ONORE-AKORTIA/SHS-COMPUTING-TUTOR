@@ -5,8 +5,8 @@ import pandas as pd
 import streamlit as st
 from groq import Groq
 
-# Centralized model configuration (Change this if you ever need to update the model again)
-ACTIVE_MODEL = "llama3-8b-8192"
+# Centralized model configuration updated to active model
+ACTIVE_MODEL = "openai/gpt-oss-20b"
 
 # Page configuration
 st.set_page_config(
