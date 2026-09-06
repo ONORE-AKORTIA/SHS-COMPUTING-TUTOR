@@ -16,7 +16,7 @@ st.set_page_config(
     page_title="SHS Computing AI Tutor", page_icon="💻", layout="wide"
 )
 
-# Inject custom CSS to maximize width, responsiveness across all modes, and eliminate scroll traps
+# Inject custom CSS to maximize width, responsiveness, and clean layout
 st.markdown("""
     <style>
     .block-container {
@@ -32,6 +32,16 @@ st.markdown("""
     iframe {
         width: 100% !important;
         max-width: 100% !important;
+    }
+    .timer-card {
+        background: #1e1e1e;
+        border: 1px solid #00ffcc;
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: #00ffcc;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -206,7 +216,7 @@ selected_subject = st.sidebar.selectbox(
     "Select Subject", list(subjects.keys())
 )
 
-# Handle subject switch notification with clear indication
+# Handle subject switch notification
 if selected_subject != st.session_state.prev_subject:
     switch_msg = (
         f"Subject area has been switched from"
@@ -267,7 +277,7 @@ if learning_mode == "📝 WAEC Exam Practice":
 dataset_files = subjects[selected_subject]
 df_dataset = load_dataset(dataset_files)
 
-# Layout: Laptop icon -> Title -> User picture (ONORE_AKORTIA_1.jpg)
+# Layout: Laptop icon -> Title -> User picture
 user_img_base64 = get_image_base64("ONORE_AKORTIA_1.jpg")
 
 st.markdown(
@@ -382,6 +392,34 @@ if (
     )
 
 # ==========================================================
+# ⏱️ ACTIVE SESSION TIMER WIDGET (ALL MODES)
+# ==========================================================
+current_time_epoch = int(datetime.datetime.now().timestamp() * 1000)
+login_epoch = int(st.session_state.session_login_time.timestamp() * 1000)
+
+timer_html = f"""
+<div class="timer-card">
+    ⏱️ Session Timer: <span id="sessionTimer">00:00:00</span> | Logged In: {st.session_state.session_login_time.strftime('%H:%M:%S')}
+</div>
+<script>
+    const loginTime = {login_epoch};
+    function updateTimer() {{
+        const now = new Date().getTime();
+        const diff = Math.floor((now - loginTime) / 1000);
+        const hrs = String(Math.floor(diff / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+        const secs = String(diff % 60).padStart(2, '0');
+        const el = document.getElementById('sessionTimer');
+        if (el) el.innerText = `${{hrs}}:${{mins}}:${{secs}}`;
+    }}
+    setInterval(updateTimer, 1000);
+    updateTimer();
+</script>
+"""
+components.html(timer_html, height=45, scrolling=False)
+
+
+# ==========================================================
 # 🎨 WHITEBOARD CONCEPT STUDIO (FULLY RESPONSIVE & LIVE AUDIO-TO-TEXT TRANSCRIPTION)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
@@ -436,7 +474,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                     text = "The Bus Network Topology utilizes a single shared communication line known as the backbone. Data broadcasted travels along the entire cable length until it reaches the intended recipient workstation."
                 else:
                     use_video_fallback = True
-                    yt_video_id = "fZW_qA8c3Gg"  # Curated computing video <121s
+                    yt_video_id = "fZW_qA8c3Gg"
                     text = "Curated WAEC educational video explaining network topology architectural layouts under 121 seconds with live audio-to-text transcript sync."
             elif "Database Systems" in topic:
                 if "Entity-Relationship" in subtopic:
@@ -459,11 +497,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                     text = "Entity-Relationship (ER) Diagrams visually map database architecture. Rectangles represent entity types like Student and Course, diamonds indicate relationships, and ellipses define attributes."
                 else:
                     use_video_fallback = True
-                    yt_video_id = "HWD904aX5bs"  # Curated database video <121s
+                    yt_video_id = "HWD904aX5bs"
                     text = "Database normalization and SQL constraints explained via curated WAEC instructional video with live audio transcription."
             else:
                 use_video_fallback = True
-                yt_video_id = "9Q6isjw02Us"  # Cybersecurity overview <121s
+                yt_video_id = "9Q6isjw02Us"
                 text = "Cybersecurity fundamentals and data protection principles explained in under 121 seconds with live speech transcript."
         elif subject == "ICT":
             if "Computer Architecture" in topic:
@@ -482,11 +520,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 text = "The CPU Fetch-Decode-Execute cycle is the fundamental operational process where instructions are retrieved from memory, decoded by the control unit, and executed by the ALU."
             else:
                 use_video_fallback = True
-                yt_video_id = "GcDshWEDDHM"  # ICT hardware video <121s
+                yt_video_id = "GcDshWEDDHM"
                 text = "Curated video explaining ICT hardware components and peripherals under 121 seconds with live speech transcription."
         else:
             use_video_fallback = True
-            yt_video_id = "8HYvFejdGSQ"  # Robotics video <121s
+            yt_video_id = "8HYvFejdGSQ"
             text = "Robotic sensors and microcontrollers explained in under 121 seconds with live active transcription."
 
         return svg, text, use_video_fallback, yt_video_id
@@ -738,22 +776,64 @@ else:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-# Export and Print controls side-by-side if report card / revision guide exists (WAEC Exams Mode Only)
-if learning_mode == "📝 WAEC Exam Practice" and st.session_state.last_revision_guide:
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("📥 WAEC Report Card & Study Tools")
-    
-    col_exp1, col_exp2 = st.sidebar.columns(2)
-    with col_exp1:
-        st.download_button(
-            label="📥 Download PDF",
-            data=st.session_state.last_revision_guide,
-            file_name=f"SirOK_{selected_subject}_WAEC_ReportCard.txt",
-            mime="text/plain",
-        )
-    with col_exp2:
-        if st.button("🖨️ Print Report"):
-            st.toast("Report ready for printing! Use your browser print menu (Ctrl+P).")
+# ==========================================================
+# 📥 PROMINENT EXPORTABLE WAEC REPORT CARD (ALWAYS AVAILABLE IN SIDEBAR)
+# ==========================================================
+st.sidebar.markdown("---")
+st.sidebar.subheader("📥 Export WAEC Report Card")
+
+report_generation_time = datetime.datetime.now()
+session_duration_td = report_generation_time - st.session_state.session_login_time
+duration_mins = int(session_duration_td.total_seconds() // 60)
+duration_secs = int(session_duration_td.total_seconds() % 60)
+
+total_qs = len(st.session_state.exam_question_logs)
+correct_ans = sum(1 for log in st.session_state.exam_question_logs if log['result'] == 'CORRECT')
+wrong_ans = total_qs - correct_ans
+score_pct = (correct_ans / total_qs * 100) if total_qs > 0 else 0.0
+
+test_items_formatted = "DETAILED TEST ITEMS & ACTIVITIES LOG:\n"
+for log in st.session_state.exam_question_logs:
+    test_items_formatted += f"Q{log['q_num']} | Topic: {log['topic']} | Item: {log['item_desc']} | Student Ans: {log['user_answer']} | Correct: {log['correct_answer']} | Status: {log['result']} | Time: {log['timestamp']}\n"
+
+default_report_content = f"""SIR OK AI TUTOR - OFFICIAL WAEC REPORT CARD & TIME LOG
+==================================================
+STUDENT DETAILS:
+- Student Name: {student_full_name if student_full_name else 'Not Specified'}
+- School: {student_school if student_school else 'Not Specified'}
+- Subject: {selected_subject}
+
+SESSION & TIME LOG:
+- Session Date: {st.session_state.session_login_time.strftime('%Y-%m-%d')}
+- Login Time: {st.session_state.session_login_time.strftime('%H:%M:%S')}
+- Report Export Time: {report_generation_time.strftime('%Y-%m-%d %H:%M:%S')}
+- Total Time Spent: {duration_mins} minutes {duration_secs} seconds
+
+WAEC EXAM PRACTICE SUMMARY:
+- Total Questions Attempted: {total_qs}
+- Correct Answers: {correct_ans}
+- Wrong Answers: {wrong_ans}
+- Overall Score Performance: {score_pct:.1f}%
+
+{test_items_formatted}
+==================================================
+Generated by Sir OK AI Tutor for parental & academic review.
+"""
+
+export_report_text = st.session_state.last_revision_guide if st.session_state.last_revision_guide else default_report_content
+
+col_exp1, col_exp2 = st.sidebar.columns(2)
+with col_exp1:
+    st.download_button(
+        label="📥 Export PDF Report",
+        data=export_report_text,
+        file_name=f"SirOK_{selected_subject}_WAEC_ReportCard_{report_generation_time.strftime('%Y%m%d_%H%M%S')}.txt",
+        mime="text/plain",
+        help="Export complete report card including time login, report time, summary of activities, and attempted exam items scores."
+    )
+with col_exp2:
+    if st.button("🖨️ Print Report"):
+        st.toast("Report ready for printing! Use your browser print menu (Ctrl+P).")
 
 user_query = None
 
@@ -1044,7 +1124,7 @@ if user_query:
                                     f"- **School:** {student_school}\n"
                                     f"- **Session Date:** {st.session_state.session_login_time.strftime('%Y-%m-%d')}\n"
                                     f"- **Login Time:** {st.session_state.session_login_time.strftime('%H:%M:%S')}\n"
-                                    f"- **Logout Time:** {session_logout_time.strftime('%H:%M:%S')}\n"
+                                    f"- **Report Time:** {report_generation_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
                                     f"- **Total Time Spent:** {duration_mins} minutes {duration_secs} seconds\n"
                                     f"- **Total Questions:** {total_q}\n"
                                     f"- **Correct Answers:** {st.session_state.correct_count}\n"
@@ -1125,7 +1205,7 @@ if user_query:
                                     f"Subject: {selected_subject}\n"
                                     f"Session Date: {st.session_state.session_login_time.strftime('%Y-%m-%d')}\n"
                                     f"Login Time: {st.session_state.session_login_time.strftime('%H:%M:%S')}\n"
-                                    f"Logout Time: {session_logout_time.strftime('%H:%M:%S')}\n"
+                                    f"Report Time: {report_generation_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
                                     f"Total Time Spent: {duration_mins} mins {duration_secs} secs\n"
                                     f"Overall Score: {(st.session_state.correct_count / total_q) * 100:.1f}% ({st.session_state.correct_count}/{total_q})\n"
                                     f"--------------------------------------------------\n\n"
