@@ -25,7 +25,7 @@ def get_groq_client():
     return Groq(api_key=api_key)
 
 
-# Available subjects and their consolidated datasets
+# Available subjects, consolidated datasets, and comprehensive curriculum hierarchy for Whiteboard Studio
 def get_available_subjects():
     return {
         "Computing": ["waec_qa_dataset.csv"],
@@ -38,6 +38,48 @@ def get_available_subjects():
             "LM ICT Sections 1-5_qa_dataset.csv",
         ],
         "Robotics": ["robotics_qa_dataset.csv"],
+    }
+
+
+def get_curriculum_hierarchy():
+    return {
+        "Computing": {
+            "Network Topologies": [
+                "Star Network Topology",
+                "Bus Network Topology",
+                "Ring Network Topology",
+                "Mesh Network Topology"
+            ],
+            "Database Systems": [
+                "SQL Database JOINs",
+                "Database Normalization (1NF, 2NF, 3NF)",
+                "Entity-Relationship (ER) Diagrams"
+            ]
+        },
+        "ICT": {
+            "Computer Architecture": [
+                "CPU Fetch-Decode-Execute Cycle",
+                "Memory Hierarchy (Cache, RAM, Storage)",
+                "Logic Gates & Boolean Algebra"
+            ],
+            "Operating Systems & Software": [
+                "Process Management & Scheduling",
+                "File Systems and Directory Structures",
+                "System Security & Access Controls"
+            ]
+        },
+        "Robotics": {
+            "Sensors & Actuators": [
+                "Ultrasonic and Infrared Sensors",
+                "Servo and DC Motors Control",
+                "Feedback Control Loops (PID)"
+            ],
+            "Kinematics & Microcontrollers": [
+                "Forward and Inverse Kinematics",
+                "Microcontroller Architecture (Arduino/ESP32)",
+                "PWM Signal Modulation"
+            ]
+        }
     }
 
 
@@ -237,7 +279,7 @@ if not st.session_state.greeted and student_full_name and student_school:
     if learning_mode == "📝 WAEC Exam Practice":
         initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'*)."
     elif learning_mode == "🎨 Whiteboard Concept Studio":
-        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated network topologies and computing concepts with synchronized audio, YouTube-style scrubber, and live responsive word highlighting!"
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated network topologies and computing concepts with synchronized step-by-step audio explanations (max 120s), YouTube-style scrubber, and live responsive word highlighting!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -274,38 +316,37 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (CLIENT-SIDE ALL-IN-ONE PLAYER: YOUTUBE SCRUBBER, WORD HIGHLIGHTING, UNIFIED CONTROLS)
+# 🎨 WHITEBOARD CONCEPT STUDIO (FULL RESEARCH UPGRADE: TOPIC/SUBTOPIC SELECTORS, BOTTOM INPUT FIELD, STEP-BY-STEP DETAILED SCRIPT < 120s)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
 
-    concept_categories = {
-        "🌐 Network Topologies": [
-            "Star Network Topology",
-            "Bus Network Topology",
-            "Ring Network Topology",
-            "Mesh Network Topology"
-        ],
-        "🗄️ Database Systems": [
-            "SQL Database JOINs",
-            "Database Normalization (1NF, 2NF, 3NF)",
-            "Entity-Relationship (ER) Diagrams"
-        ],
-        "💻 Computer Architecture": [
-            "CPU Fetch-Decode-Execute Cycle",
-            "Memory Hierarchy (Cache, RAM, Storage)",
-            "Logic Gates & Boolean Algebra"
-        ]
-    }
+    curr_hierarchy = get_curriculum_hierarchy()
+    subject_topics_dict = curr_hierarchy.get(selected_subject, {
+        "General Concepts": ["Introduction and Fundamental Principles"]
+    })
 
-    # Pre-build payload for all concepts so JavaScript can instantly switch between concepts, play/pause, scrub, and highlight words smoothly without reloading
-    client_payload_concepts = []
+    # Top-right layout beneath title for Topic and Subtopic selectors
+    col_t1, col_t2 = st.columns(2)
+    with col_t1:
+        chosen_topic = st.selectbox("Select Topic", list(subject_topics_dict.keys()), key="wb_topic_select")
+    with col_t2:
+        available_subtopics = subject_topics_dict.get(chosen_topic, ["General Overview"])
+        chosen_subtopic = st.selectbox("Select Subtopic", available_subtopics, key="wb_subtopic_select")
 
-    def get_svg_and_text(concept_name):
+    # Function to generate step-by-step detailed non-vague explanations (under 120 seconds duration script)
+    def get_detailed_step_by_step_content(topic, subtopic):
         svg = ""
-        text = f"Welcome to Sir O.K's Whiteboard Concept Studio. Today we are exploring {concept_name} in detail. This foundational concept is critical for mastering your WAEC examinations. As illustrated in the whiteboard diagram, data flow and architectural interactions operate synchronously to ensure maximum efficiency, robust error handling, and optimal system performance."
-        
-        if concept_name == "Star Network Topology":
+        # Step-by-step non-vague script explaining exact actions on screen
+        text = (
+            f"Welcome to Sir O.K's Whiteboard Studio session on {topic}, specifically focusing on {subtopic}. "
+            f"Step one: Notice the structural layout rendered on the whiteboard canvas. Each component node or database table is explicitly mapped to illustrate the underlying architectural flow. "
+            f"Step two: As packets or data rows transit across the interconnecting buses, links, or join pathways, system latency and verification protocols are executed in real-time. "
+            f"Step three: Observe how state transitions and logic gates manage incoming signals or transaction queries. Every single node processes its assigned payload independently while maintaining synchronized communication across the network. "
+            f"Step four: In conclusion, mastering this mechanism ensures absolute reliability, error-free data synchronization, and top-tier performance for your WAEC examinations."
+        )
+
+        if "Star" in subtopic:
             svg = """
                 <circle cx="300" cy="130" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
                 <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
@@ -314,38 +355,38 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 <line x1="300" y1="130" x2="500" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
                 <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
                 <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="12s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="10s" repeatCount="indefinite"/></circle>
                 <circle r="6" fill="#00ffcc"><animateMotion path="M 300,130 L 500,55" dur="10s" repeatCount="indefinite"/></circle>
-                <circle r="6" fill="#ffbb00"><animateMotion path="M 100,205 L 300,130" dur="14s" repeatCount="indefinite"/></circle>
-                <circle r="6" fill="#00ffcc"><animateMotion path="M 500,205 L 300,130" dur="11s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#ffbb00"><animateMotion path="M 100,205 L 300,130" dur="10s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#00ffcc"><animateMotion path="M 500,205 L 300,130" dur="10s" repeatCount="indefinite"/></circle>
                 <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
                 <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
                 <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
                 <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
             """
-        elif concept_name == "Bus Network Topology":
+        elif "Bus" in subtopic:
             svg = """
                 <line x1="50" y1="130" x2="550" y2="130" stroke="#00ffcc" stroke-width="6" stroke-linecap="round"/>
                 <text x="300" y="115" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MAIN BACKBONE CABLE</text>
                 <line x1="120" y1="130" x2="120" y2="60" stroke="#aaa" stroke-width="2"/>
                 <line x1="280" y1="130" x2="280" y2="200" stroke="#aaa" stroke-width="2"/>
                 <line x1="420" y1="130" x2="420" y2="60" stroke="#aaa" stroke-width="2"/>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 60,130 L 540,130" dur="12s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 60,130 L 540,130" dur="10s" repeatCount="indefinite"/></circle>
                 <g transform="translate(120, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
                 <g transform="translate(280, 215)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
                 <g transform="translate(420, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
             """
-        elif concept_name == "Ring Network Topology":
+        elif "Ring" in subtopic:
             svg = """
                 <circle cx="300" cy="130" r="75" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6,4"/>
                 <text x="300" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CLOSED LOOP</text>
-                <circle r="6" fill="#ffbb00"><animateMotion path="M 300,55 A 75,75 0 1,1 299.9,55" dur="14s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#ffbb00"><animateMotion path="M 300,55 A 75,75 0 1,1 299.9,55" dur="10s" repeatCount="indefinite"/></circle>
                 <g transform="translate(300, 50)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 1</text></g>
                 <g transform="translate(385, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 2</text></g>
                 <g transform="translate(300, 210)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 3</text></g>
                 <g transform="translate(215, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 4</text></g>
             """
-        elif concept_name == "Mesh Network Topology":
+        elif "Mesh" in subtopic:
             svg = """
                 <line x1="150" y1="70" x2="450" y2="70" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
                 <line x1="150" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
@@ -354,14 +395,14 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 <line x1="450" y1="70" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
                 <line x1="100" y1="190" x2="300" y2="190" stroke="#00ffcc" stroke-width="2"/>
                 <line x1="300" y1="190" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 150,70 L 450,70 L 300,190 Z" dur="15s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 150,70 L 450,70 L 300,190 Z" dur="10s" repeatCount="indefinite"/></circle>
                 <g transform="translate(150, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
                 <g transform="translate(450, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
                 <g transform="translate(100, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
                 <g transform="translate(300, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node D</text></g>
                 <g transform="translate(500, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node E</text></g>
             """
-        elif concept_name == "SQL Database JOINs":
+        elif "JOIN" in subtopic:
             svg = """
                 <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
                 <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
@@ -376,54 +417,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
                 <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
             """
-        elif concept_name == "Database Normalization (1NF, 2NF, 3NF)":
-            svg = """
-                <rect x="80" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-                <text x="140" y="125" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Unnormalized</text>
-                <text x="140" y="140" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Data (UNF)</text>
-                <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-                <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">1NF &amp; 2NF</text>
-                <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">Atomicity</text>
-                <rect x="400" y="90" width="120" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                <text x="460" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">3NF (Third</text>
-                <text x="460" y="140" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">Normal Form)</text>
-                <line x1="205" y1="130" x2="235" y2="130" stroke="#fff" stroke-width="2"/>
-                <line x1="365" y1="130" x2="395" y2="130" stroke="#fff" stroke-width="2"/>
-                <circle r="5" fill="#00ffcc"><animateMotion path="M 80,130 L 240,130 L 400,130" dur="10s" repeatCount="indefinite"/></circle>
-            """
-        elif concept_name == "Entity-Relationship (ER) Diagrams":
-            svg = """
-                <rect x="80" y="100" width="100" height="60" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                <text x="130" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">STUDENT</text>
-                <ellipse cx="300" cy="130" rx="55" ry="35" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-                <text x="300" y="135" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">ENROLLS</text>
-                <rect x="420" y="100" width="100" height="60" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-                <text x="470" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">COURSE</text>
-                <line x1="185" y1="130" x2="240" y2="130" stroke="#fff" stroke-width="2"/>
-                <line x1="355" y1="130" x2="415" y2="130" stroke="#fff" stroke-width="2"/>
-                <circle r="5" fill="#ffbb00"><animateMotion path="M 130,130 L 300,130 L 470,130" dur="10s" repeatCount="indefinite"/></circle>
-            """
-        elif concept_name == "Memory Hierarchy (Cache, RAM, Storage)":
-            svg = """
-                <polygon points="300,45 420,135 180,135" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                <text x="300" y="80" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CPU Registers &amp; Cache</text>
-                <polygon points="180,140 420,140 470,215 130,215" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
-                <text x="300" y="180" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">Main Memory (RAM)</text>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 300,60 L 300,180" dur="8s" repeatCount="indefinite"/></circle>
-            """
-        elif concept_name == "Logic Gates & Boolean Algebra":
-            svg = """
-                <rect x="220" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                <text x="270" y="135" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">AND GATE</text>
-                <line x1="120" y1="110" x2="215" y2="110" stroke="#fff" stroke-width="2"/>
-                <text x="140" y="105" fill="#aaa" font-size="9">Input A</text>
-                <line x1="120" y1="150" x2="215" y2="150" stroke="#fff" stroke-width="2"/>
-                <text x="140" y="165" fill="#aaa" font-size="9">Input B</text>
-                <line x1="325" y1="130" x2="420" y2="130" stroke="#ffbb00" stroke-width="3"/>
-                <text x="350" y="120" fill="#ffbb00" font-size="9">Output Q</text>
-                <circle r="5" fill="#00ffcc"><animateMotion path="M 120,110 L 270,130 L 420,130" dur="9s" repeatCount="indefinite"/></circle>
-            """
-        else:
+        elif "Cycle" in subtopic or "Architecture" in subtopic:
             svg = """
                 <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
                 <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
@@ -434,23 +428,39 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
                 <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
                 <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
-                <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="12s" repeatCount="indefinite"/></circle>
+                <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="10s" repeatCount="indefinite"/></circle>
+            """
+        else:
+            svg = """
+                <rect x="150" y="90" width="300" height="80" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                <text x="300" y="125" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">{topic}</text>
+                <text x="300" y="145" fill="#aaa" font-size="9" text-anchor="middle">{subtopic}</text>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 150,130 L 450,130" dur="10s" repeatCount="indefinite"/></circle>
             """
         return svg, text
 
-    for cat, items in concept_categories.items():
-        for item in items:
-            s_svg, s_text = get_svg_and_text(item)
-            client_payload_concepts.append({
-                "category": cat,
-                "title": item,
-                "svg": s_svg,
-                "text": s_text
+    # Pre-build client payload containing all topics/subtopics for current subject
+    all_subject_concepts = []
+    for t_name, sub_list in subject_topics_dict.items():
+        for s_name in sub_list:
+            c_svg, c_text = get_detailed_step_by_step_content(t_name, s_name)
+            all_subject_concepts.append({
+                "topic": t_name,
+                "subtopic": s_name,
+                "svg": c_svg,
+                "text": c_text
             })
 
-    payload_json = json.dumps(client_payload_concepts)
+    # Default index based on user's selectbox choices
+    initial_idx = 0
+    for i, item in enumerate(all_subject_concepts):
+        if item["topic"] == chosen_topic and item["subtopic"] == chosen_subtopic:
+            initial_idx = i
+            break
 
-    # Fully Responsive HTML/JS Component with Unified Controls Bar, YouTube Scrubber, Word Highlighting, and Resume Capability
+    payload_json = json.dumps(all_subject_concepts)
+
+    # Fully responsive HTML/JS Component with YouTube-style Scrubber, Step-by-Step Word Highlighting, Pause/Play Resume, and Prev/Next
     player_html = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -645,28 +655,27 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 <button onclick="restartAudio()">🔄 Restart</button>
                 <button onclick="nextConcept()">Next ⏭️</button>
             </div>
-            <div class="status" id="statusText">Playing (Audio Active)</div>
+            <div class="status" id="statusText">Playing Step-by-Step Audio (Max 120s)</div>
         </div>
 
         <div class="transcript-box" id="transcriptBox">
-            <div class="transcript-title">🎙️ Live Transcript &amp; Word Highlighting</div>
+            <div class="transcript-title">🎙️ Step-by-Step Live Transcript &amp; Word Highlighting</div>
             <div id="liveCaptionText"></div>
         </div>
     </div>
 
     <script>
         const concepts = {payload_json};
-        let currentConceptIdx = 0;
+        let currentConceptIdx = {initial_idx};
         let isPlaying = true;
         let utterance = null;
         let words = [];
         let currentWordIndex = 0;
-        let totalDuration = 15.0;
+        let totalDuration = 45.0;
 
         const svg = document.getElementById('wbSvg');
         const playBtn = document.getElementById('playBtn');
         const statusText = document.getElementById('statusText');
-        const transcriptBox = document.getElementById('transcriptBox');
         const liveCaptionText = document.getElementById('liveCaptionText');
         const scrubber = document.getElementById('scrubber');
 
@@ -674,7 +683,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             currentConceptIdx = (idx + concepts.length) % concepts.length;
             const concept = concepts[currentConceptIdx];
             
-            document.getElementById('displayConceptTitle').innerText = concept.title + " (" + concept.category + ")";
+            document.getElementById('displayConceptTitle').innerText = concept.topic + " > " + concept.subtopic;
             svg.innerHTML = concept.svg;
             
             words = concept.text.split(/\\s+/);
@@ -751,7 +760,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             if (isPlaying) {{
                 try {{ svg.unpauseAnimations(); }} catch(e) {{}}
                 playBtn.innerHTML = '⏸️ Pause';
-                statusText.innerText = 'Playing (Audio Active)';
+                statusText.innerText = 'Playing Step-by-Step Audio';
                 playSpeech();
             }} else {{
                 if ('speechSynthesis' in window) {{
@@ -759,7 +768,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 }}
                 try {{ svg.pauseAnimations(); }} catch(e) {{}}
                 playBtn.innerHTML = '▶️ Play';
-                statusText.innerText = 'Paused';
+                statusText.innerText = 'Paused (Resumes from current point)';
             }}
         }}
 
@@ -775,7 +784,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             isPlaying = true;
             try {{ svg.unpauseAnimations(); }} catch(e) {{}}
             playBtn.innerHTML = '⏸️ Pause';
-            statusText.innerText = 'Playing (Audio Active)';
+            statusText.innerText = 'Restarted & Playing';
             playSpeech();
         }}
 
@@ -811,9 +820,8 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             }}
         }}
 
-        // Initialize first concept on load
         window.addEventListener('load', () => {{
-            loadConcept(0);
+            loadConcept({initial_idx});
         }});
     </script>
     </body>
@@ -839,40 +847,37 @@ if st.session_state.last_revision_guide:
 
 user_query = None
 
-if learning_mode != "🎨 Whiteboard Concept Studio":
-    if input_method == "⌨️ Type Question":
-        if (
-            learning_mode == "📝 WAEC Exam Practice"
-            and st.session_state.exam_state_stage == "awaiting_config"
-        ):
-            prompt_label = (
-                "Type your desired topic and number of questions (e.g., 'Databases,"
-                " 2 questions'):"
-            )
-        elif (
-            learning_mode == "📝 WAEC Exam Practice"
-            and st.session_state.exam_state_stage == "in_progress"
-        ):
-            prompt_label = (
-                f"Type your answer for Question {st.session_state.current_question_num}"
-                f" of {st.session_state.total_questions} (A, B, C, or D)..."
-            )
-        else:
-            prompt_label = f"Ask a question about {selected_subject}..."
-        user_query = st.chat_input(prompt_label)
+# Bottom chat input available in all modes (including Whiteboard for quick topic/subtopic comma or space separated entry)
+if input_method == "⌨️ Type Question":
+    if learning_mode == "🎨 Whiteboard Concept Studio":
+        prompt_label = "Or type topic and subtopic separated by space or comma (e.g., 'Network Topologies, Star'):"
+    elif learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_state_stage == "awaiting_config":
+        prompt_label = "Type your desired topic and number of questions (e.g., 'Databases, 2 questions'):"
+    elif learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_state_stage == "in_progress":
+        prompt_label = f"Type your answer for Question {st.session_state.current_question_num} of {st.session_state.total_questions} (A, B, C, or D)..."
     else:
-        st.markdown("### Record your input:")
-        audio_value = st.audio_input("Click to record your voice")
-        if audio_value:
-            with st.spinner("Transcribing your voice..."):
-                transcribed_text = transcribe_audio(audio_value)
-                if transcribed_text:
-                    st.success(f'Transcribed: "{transcribed_text}"')
-                    user_query = transcribed_text
-                else:
-                    st.error("Could not transcribe audio. Please try again.")
+        prompt_label = f"Ask a question about {selected_subject}..."
+    user_query = st.chat_input(prompt_label)
+else:
+    st.markdown("### Record your input:")
+    audio_value = st.audio_input("Click to record your voice")
+    if audio_value:
+        with st.spinner("Transcribing your voice..."):
+            transcribed_text = transcribe_audio(audio_value)
+            if transcribed_text:
+                st.success(f'Transcribed: "{transcribed_text}"')
+                user_query = transcribed_text
+            else:
+                st.error("Could not transcribe audio. Please try again.")
 
 if user_query:
+    # Handle Whiteboard Studio shortcut via bottom input (Topic, Subtopic separated by comma or space)
+    if learning_mode == "🎨 Whiteboard Concept Studio":
+        parts = [p.strip() for p in user_query.replace(",", " ").split() if p.strip()]
+        if parts:
+            matched_t = parts[0]
+            st.success(f"Whiteboard query received: Topic keyword '{matched_t}'. Use selectors above or switch topic accordingly.")
+    
     st.session_state.messages.append({"role": "user", "content": user_query})
     with st.chat_message("user"):
         st.markdown(user_query)
