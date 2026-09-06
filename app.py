@@ -225,7 +225,7 @@ if not st.session_state.greeted and student_full_name and student_school:
             "is_returning": False,
         }
 
-# Display progress dashboard if in WAEC Exam Practice mode and exam is active
+# Display progress dashboard immediately if in WAEC Exam Practice mode and exam is active
 if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
     answered = (
         st.session_state.current_question_num - 1
@@ -233,7 +233,6 @@ if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
         else 0
     )
     total = st.session_state.total_questions
-    left = max(total - answered, 0)
     correct = st.session_state.correct_count
     wrong = st.session_state.wrong_count
 
@@ -321,7 +320,6 @@ if user_query:
                 try:
                     if learning_mode == "📝 WAEC Exam Practice":
                         if not st.session_state.exam_active:
-                            # Parse total questions safely
                             try:
                                 parsed_total = int(user_query.strip())
                                 if parsed_total > 0:
@@ -409,6 +407,7 @@ if user_query:
                             st.session_state.messages.append(
                                 {"role": "assistant", "content": display_response}
                             )
+                            st.rerun()
                         else:
                             current_q = st.session_state.current_question_num
                             total_q = st.session_state.total_questions
@@ -536,11 +535,11 @@ if user_query:
                                     f"3. Since this was the FINAL question (Question {current_q}"
                                     f" of {total_q}), display this exact score summary:\n{evaluation_summary_score}\n"
                                     f"4. Followed by this exact cognitive knowledge tracing report:\n{cognitive_summary_text}\n"
-                                    f"5. **COMPREHENSIVE GUIDED REVISION MODULE REQUIREMENT:** Write a thorough, highly detailed, and structured revision study guide targeting **{weak_topics_str}**. Include:\n"
-                                    f"   - **Core Definitions & Principles:** Clear technical breakdowns of the concepts.\n"
-                                    f"   - **WAEC Exam Highlights & Examiner Tips:** Crucial points students often miss in exams.\n"
-                                    f"   - **Step-by-Step Guided Walkthrough / Real-World Example:** Concrete illustrations to clear up any misconceptions.\n"
-                                    f"Make this material comprehensive, rich, and extensive to fully empower the student."
+                                    f"5. **COMPREHENSIVE GUIDED REVISION MODULE REQUIREMENT:** Write a thorough, highly detailed, textbook-quality study guide targeting **{weak_topics_str}**. Structure your explanation with:\n"
+                                    f"   - **In-Depth Conceptual Breakdown:** Comprehensive definitions and theoretical foundations.\n"
+                                    f"   - **WAEC Core Syllabus Highlights & Examiner Traps:** Specific pitfalls students encounter on this topic in WAEC exams.\n"
+                                    f"   - **Real-World Examples & Step-by-Step Guided Walkthroughs:** Clear illustrative scenarios that make the concept intuitive and easy to apply.\n"
+                                    f"Make this material exhaustive, professional, and fully complete."
                                 )
 
                             completion = client.chat.completions.create(
@@ -558,7 +557,7 @@ if user_query:
                                         "content": f"Proceed with evaluation and next step.",
                                     },
                                 ],
-                                max_tokens=1000,
+                                max_tokens=1500,
                                 temperature=0.4,
                             )
                             ai_response = completion.choices[0].message.content
