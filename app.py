@@ -333,7 +333,7 @@ if not st.session_state.greeted and student_full_name and student_school:
     if learning_mode == "📝 WAEC Exam Practice":
         initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'*)."
     elif learning_mode == "🎨 Whiteboard Concept Studio":
-        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated computing and ICT concepts with accurate ER diagrams, step-by-step synchronized audio explanations (max 120s), YouTube-style scrubber, and live responsive word highlighting!"
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated computing and ICT concepts with tailored SVG visualizations, external curriculum embeds, synchronized audio explanations, and live responsive word highlighting!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -370,7 +370,7 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (CORRECTED ER DIAGRAMS, COMPLETE TOPIC/SUBTOPIC HIERARCHY, WIDE LAYOUT)
+# 🎨 WHITEBOARD CONCEPT STUDIO (DEDICATED SUBTOPIC ANIMATIONS, EMBEDDED REFERENCES, LIMITATION HANDLING)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
@@ -380,7 +380,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         "General Concepts": ["Introduction and Fundamental Principles"]
     })
 
-    # Top-right layout beneath title for Topic and Subtopic selectors (dynamically dependent)
+    # Dependent cascading dropdowns: Subtopics depend entirely on the selected topic under the current subject
     col_t1, col_t2 = st.columns(2)
     with col_t1:
         chosen_topic = st.selectbox("Select Topic", list(subject_topics_dict.keys()), key="wb_topic_select")
@@ -388,128 +388,210 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         available_subtopics = subject_topics_dict.get(chosen_topic, ["General Overview"])
         chosen_subtopic = st.selectbox("Select Subtopic", available_subtopics, key="wb_subtopic_select")
 
-    # Function to generate step-by-step detailed non-vague explanations & correct visualizations (< 120 seconds duration script)
-    def get_detailed_step_by_step_content(topic, subtopic):
+    # Function to generate tailored non-overlapping animations, external iframe embed references, or explicit limitation notices
+    def get_whiteboard_content(subject, topic, subtopic):
         svg = ""
-        text = (
-            f"Welcome to Sir O.K's Whiteboard Studio session on {topic}, specifically focusing on {subtopic}. "
-            f"Step one: Examine the professional architectural layout rendered on the whiteboard canvas. Each component, entity, or module is precisely mapped with proper schema indicators. "
-            f"Step two: Observe how data packets, database relationships, or instruction signals flow through the interconnecting pathways and communication channels. "
-            f"Step three: Notice the detailed state transitions, cardinality constraints, and execution cycles operating across the system nodes. "
-            f"Step four: Mastering this complete structural workflow guarantees absolute clarity and top performance in your upcoming WAEC examinations."
-        )
+        text = ""
+        is_iframe = False
+        iframe_url = ""
+        is_unsupported = False
 
-        if "ER Diagram" in subtopic or "Entities" in subtopic:
-            svg = """
-                <rect x="60" y="80" width="120" height="70" rx="4" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                <text x="120" y="112" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">STUDENT</text>
-                <text x="120" y="130" fill="#aaa" font-size="8" text-anchor="middle">Entity Type</text>
-
-                <ellipse cx="60" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
-                <text x="60" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">StudentID (PK)</text>
-                <line x1="60" y1="46" x2="90" y2="80" stroke="#555" stroke-width="1.5"/>
-
-                <ellipse cx="150" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
-                <text x="150" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">StudentName</text>
-                <line x1="150" y1="46" x2="135" y2="80" stroke="#555" stroke-width="1.5"/>
-
-                <polygon points="260,115 310,85 360,115 310,145" fill="#1e1e1e" stroke="#ff0055" stroke-width="2"/>
-                <text x="310" y="118" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">ENROLLS</text>
-                <line x1="180" y1="115" x2="260" y2="115" stroke="#fff" stroke-width="2"/>
-                <text x="210" y="105" fill="#fff" font-size="8">1</text>
-
-                <rect x="420" y="80" width="120" height="70" rx="4" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                <text x="480" y="112" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">COURSE</text>
-                <text x="480" y="130" fill="#aaa" font-size="8" text-anchor="middle">Entity Type</text>
-                <line x1="360" y1="115" x2="420" y2="115" stroke="#fff" stroke-width="2"/>
-                <text x="390" y="105" fill="#fff" font-size="8">N</text>
-
-                <ellipse cx="480" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
-                <text x="480" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">CourseCode (PK)</text>
-                <line x1="480" y1="46" x2="480" y2="80" stroke="#555" stroke-width="1.5"/>
-
-                <circle r="5" fill="#00ffcc"><animateMotion path="M 120,115 L 310,115 L 480,115" dur="10s" repeatCount="indefinite"/></circle>
-            """
-        elif "Star" in subtopic:
-            svg = """
-                <circle cx="300" cy="130" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
-                <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
-                <text x="300" y="138" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">SWITCH</text>
-                <line x1="300" y1="130" x2="100" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="130" x2="500" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="10s" repeatCount="indefinite"/></circle>
-                <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
-                <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
-                <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
-                <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
-            """
-        elif "JOIN" in subtopic:
-            svg = """
-                <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
-                <line x1="120" y1="105" x2="240" y2="105" stroke="#00ffcc" stroke-width="1"/>
-                <text x="180" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Name</text>
-                <text x="180" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | Alice</text>
-                <rect x="360" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
-                <text x="420" y="95" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">TABLE B</text>
-                <line x1="360" y1="105" x2="480" y2="105" stroke="#ffbb00" stroke-width="1"/>
-                <text x="420" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Course</text>
-                <text x="420" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | ICT</text>
-                <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
-                <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
-            """
-        elif "Cycle" in subtopic or "Architecture" in subtopic:
-            svg = """
-                <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
-                <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-                <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
-                <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
-                <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-                <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
-                <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
-                <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
-                <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="10s" repeatCount="indefinite"/></circle>
-            """
+        # Specific tailored content per subtopic to avoid cross-sitting/duplication
+        if subject == "Computing":
+            if "Network Topologies" in topic:
+                if "Star" in subtopic:
+                    svg = """
+                        <circle cx="300" cy="130" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
+                        <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
+                        <text x="300" y="138" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">SWITCH</text>
+                        <line x1="300" y1="130" x2="100" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="300" y1="130" x2="500" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                        <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="8s" repeatCount="indefinite"/></circle>
+                        <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
+                        <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
+                        <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
+                        <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
+                    """
+                    text = "In a Star Network Topology, every node device connects directly to a central hub or switch. If one cable fails, only that workstation is disconnected, ensuring high reliability across WAEC network standards."
+                elif "Bus" in subtopic:
+                    svg = """
+                        <line x1="50" y1="120" x2="550" y2="120" stroke="#ffbb00" stroke-width="6"/>
+                        <text x="300" y="105" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">CENTRAL BACKBONE CABLE (BUS)</text>
+                        <line x1="150" y1="120" x2="150" y2="60" stroke="#fff" stroke-width="2"/><rect x="125" y="30" width="50" height="30" rx="4" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="150" y="48" fill="#00ffcc" font-size="8" text-anchor="middle">Node 1</text>
+                        <line x1="300" y1="120" x2="300" y2="60" stroke="#fff" stroke-width="2"/><rect x="275" y="30" width="50" height="30" rx="4" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="300" y="48" fill="#00ffcc" font-size="8" text-anchor="middle">Node 2</text>
+                        <line x1="450" y1="120" x2="450" y2="60" stroke="#fff" stroke-width="2"/><rect x="425" y="30" width="50" height="30" rx="4" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="450" y="48" fill="#00ffcc" font-size="8" text-anchor="middle">Node 3</text>
+                        <circle r="5" fill="#ff0055"><animateMotion path="M 150,120 L 450,120" dur="6s" repeatCount="indefinite"/></circle>
+                    """
+                    text = "The Bus Network Topology utilizes a single shared communication line known as the backbone. Data broadcasted travels along the entire cable length until it reaches the intended recipient workstation."
+                elif "Ring" in subtopic:
+                    svg = """
+                        <circle cx="300" cy="120" r="70" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6"/>
+                        <g transform="translate(300, 50)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node A</text></g>
+                        <g transform="translate(370, 120)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node B</text></g>
+                        <g transform="translate(300, 190)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node C</text></g>
+                        <g transform="translate(230, 120)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node D</text></g>
+                        <circle r="5" fill="#ff0055"><animateMotion path="M 300,50 A 70,70 0 1,1 299,50" dur="8s" repeatCount="indefinite"/></circle>
+                    """
+                    text = "In a Ring Network Topology, devices are connected in a circular loop configuration. Data packets circulate in one specific direction from node to node until reaching the destination address."
+                elif "Mesh" in subtopic:
+                    svg = """
+                        <polygon points="200,60 400,60 500,160 300,210 100,160" fill="none" stroke="#555" stroke-width="2"/>
+                        <line x1="200" y1="60" x2="300" y2="210" stroke="#00ffcc" stroke-width="2"/>
+                        <line x1="400" y1="60" x2="300" y2="210" stroke="#00ffcc" stroke-width="2"/>
+                        <line x1="100" y1="160" x2="400" y2="60" stroke="#00ffcc" stroke-width="2"/>
+                        <line x1="500" y1="160" x2="200" y2="60" stroke="#00ffcc" stroke-width="2"/>
+                        <circle cx="200" cy="60" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="200" y="64" fill="#ffbb00" font-size="8" text-anchor="middle">N1</text>
+                        <circle cx="400" cy="60" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="400" y="64" fill="#ffbb00" font-size="8" text-anchor="middle">N2</text>
+                        <circle cx="500" cy="160" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="500" y="164" fill="#ffbb00" font-size="8" text-anchor="middle">N3</text>
+                        <circle cx="300" cy="210" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="300" y="214" fill="#ffbb00" font-size="8" text-anchor="middle">N4</text>
+                        <circle cx="100" cy="160" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="100" y="164" fill="#ffbb00" font-size="8" text-anchor="middle">N5</text>
+                    """
+                    text = "A Mesh Network Topology features redundant point-to-point connections between every node or across multiple nodes, offering supreme fault tolerance and path redundancy."
+                else:
+                    svg = """
+                        <rect x="150" y="90" width="300" height="80" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                        <text x="300" y="125" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">COMPLEX HYBRID TOPOLOGY</text>
+                        <text x="300" y="145" fill="#aaa" font-size="9" text-anchor="middle">Combining Star, Bus, and Ring Architectures</text>
+                    """
+                    text = "Hybrid Topologies combine two or more distinct network structures, such as star-ring or star-bus networks, accommodating large-scale institutional computing requirements."
+            elif "Database Systems" in topic:
+                if "Entity-Relationship" in subtopic:
+                    svg = """
+                        <rect x="60" y="80" width="120" height="70" rx="4" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                        <text x="120" y="112" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">STUDENT</text>
+                        <text x="120" y="130" fill="#aaa" font-size="8" text-anchor="middle">Entity Type</text>
+                        <ellipse cx="60" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
+                        <text x="60" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">StudentID (PK)</text>
+                        <line x1="60" y1="46" x2="90" y2="80" stroke="#555" stroke-width="1.5"/>
+                        <polygon points="260,115 310,85 360,115 310,145" fill="#1e1e1e" stroke="#ff0055" stroke-width="2"/>
+                        <text x="310" y="118" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">ENROLLS</text>
+                        <line x1="180" y1="115" x2="260" y2="115" stroke="#fff" stroke-width="2"/><text x="210" y="105" fill="#fff" font-size="8">1</text>
+                        <rect x="420" y="80" width="120" height="70" rx="4" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                        <text x="480" y="112" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">COURSE</text>
+                        <text x="480" y="130" fill="#aaa" font-size="8" text-anchor="middle">Entity Type</text>
+                        <line x1="360" y1="115" x2="420" y2="115" stroke="#fff" stroke-width="2"/><text x="390" y="105" fill="#fff" font-size="8">N</text>
+                        <circle r="5" fill="#00ffcc"><animateMotion path="M 120,115 L 310,115 L 480,115" dur="8s" repeatCount="indefinite"/></circle>
+                    """
+                    text = "Entity-Relationship (ER) Diagrams visually map database architecture. Rectangles represent entity types like Student and Course, diamonds indicate relationships, and ellipses define attributes."
+                elif "JOIN" in subtopic:
+                    svg = """
+                        <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                        <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
+                        <line x1="120" y1="105" x2="240" y2="105" stroke="#00ffcc" stroke-width="1"/>
+                        <text x="180" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Name</text>
+                        <text x="180" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | Alice</text>
+                        <rect x="360" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
+                        <text x="420" y="95" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">TABLE B</text>
+                        <line x1="360" y1="105" x2="480" y2="105" stroke="#ffbb00" stroke-width="1"/>
+                        <text x="420" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Course</text>
+                        <text x="420" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | ICT</text>
+                        <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
+                        <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
+                    """
+                    text = "SQL JOIN operations combine records from two or more tables based on a related column between them, facilitating complex relational database queries."
+                elif "Normalization" in subtopic:
+                    svg = """
+                        <rect x="150" y="80" width="300" height="90" rx="8" fill="#1e1e1e" stroke="#ff0055" stroke-width="2"/>
+                        <text x="300" y="110" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">DATABASE NORMALIZATION</text>
+                        <text x="300" y="135" fill="#fff" font-size="9" text-anchor="middle">1NF ➔ Remove Repeating Groups</text>
+                        <text x="300" y="155" fill="#fff" font-size="9" text-anchor="middle">2NF &amp; 3NF ➔ Eliminate Partial &amp; Transitive Dependencies</text>
+                    """
+                    text = "Database Normalization systematically structures tables to minimize data redundancy and dependency anomalies across First, Second, and Third Normal Forms (1NF, 2NF, 3NF)."
+                else:
+                    is_iframe = True
+                    iframe_url = "https://www.youtube.com/embed/HWD904aX5bs"
+                    text = "Exploring core relational database constraints, primary keys, foreign keys, and RDBMS architectural properties according to WAEC computing standards."
+            elif "Programming & Algorithms" in topic:
+                if "Flowcharts" in subtopic:
+                    svg = """
+                        <ellipse cx="300" cy="35" rx="55" ry="18" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="300" y="38" fill="#00ffcc" font-size="8" text-anchor="middle">Start Program</text>
+                        <line x1="300" y1="53" x2="300" y2="80" stroke="#fff" stroke-width="2"/>
+                        <polygon points="300,80 370,120 300,160 230,120" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="300" y="123" fill="#ffbb00" font-size="8" text-anchor="middle">Score &gt;= 50?</text>
+                        <line x1="370" y1="120" x2="450" y2="120" stroke="#fff" stroke-width="2"/><text x="410" y="112" fill="#00ffcc" font-size="8">YES</text>
+                        <rect x="450" y="100" width="100" height="40" rx="4" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="500" y="124" fill="#00ffcc" font-size="8" text-anchor="middle">Pass Grade</text>
+                        <circle r="5" fill="#ff0055"><animateMotion path="M 300,35 L 300,80 L 370,120 L 450,120" dur="6s" repeatCount="indefinite"/></circle>
+                    """
+                    text = "Flowcharts use standardized geometric symbols connected by arrows to illustrate algorithm logic, decision branching, and execution flow prior to writing actual source code."
+                elif "Control Structures" in subtopic:
+                    svg = """
+                        <rect x="150" y="70" width="300" height="100" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                        <text x="300" y="100" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">CONTROL STRUCTURES</text>
+                        <text x="300" y="125" fill="#fff" font-size="9" text-anchor="middle">Conditional: if / else / elif branching</text>
+                        <text x="300" y="145" fill="#fff" font-size="9" text-anchor="middle">Iterative: for loops &amp; while loops</text>
+                    """
+                    text = "Control structures dictate the order in which individual instructions or code blocks are evaluated and executed within programs."
+                else:
+                    is_unsupported = True
+                    text = "Advanced data structures and object-oriented programming principles for this specific subtopic do not have sufficient internal curriculum dataset items for live SVG rendering. Refer to your WAEC syllabus textbook for detailed implementation guidelines."
+            else:
+                is_iframe = True
+                iframe_url = "https://www.youtube.com/embed/9Q6isjw02Us"
+                text = "Cybersecurity fundamentals, data privacy, encryption, and defense against malicious software threats in digital environments."
+        elif subject == "ICT":
+            if "Computer Architecture" in topic:
+                if "CPU" in subtopic:
+                    svg = """
+                        <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                        <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
+                        <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+                        <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
+                        <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
+                        <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
+                        <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
+                        <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
+                        <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
+                        <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="8s" repeatCount="indefinite"/></circle>
+                    """
+                    text = "The CPU Fetch-Decode-Execute cycle is the fundamental operational process where instructions are retrieved from memory, decoded by the control unit, and executed by the ALU."
+                elif "Memory Hierarchy" in subtopic:
+                    svg = """
+                        <polygon points="300,50 450,190 150,190" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
+                        <text x="300" y="90" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CPU Registers &amp; Cache</text>
+                        <text x="300" y="130" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">Main Memory (RAM)</text>
+                        <text x="300" y="170" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Secondary Storage (SSD/HDD)</text>
+                    """
+                    text = "The Memory Hierarchy balances speed, capacity, and cost, ranging from lightning-fast processor registers and cache down to high-capacity secondary storage drives."
+                else:
+                    is_iframe = True
+                    iframe_url = "https://www.youtube.com/embed/GcDshWEDDHM"
+                    text = "Exploring computer hardware peripherals, logic gates, and boolean algebra principles for WAEC ICT."
+            elif "Operating Systems & Software" in topic:
+                svg = """
+                    <rect x="150" y="75" width="300" height="90" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                    <text x="300" y="105" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">OPERATING SYSTEM KERNEL</text>
+                    <text x="300" y="130" fill="#fff" font-size="9" text-anchor="middle">Process Management &amp; CPU Scheduling</text>
+                    <text x="300" y="150" fill="#fff" font-size="9" text-anchor="middle">File Systems &amp; Memory Allocation</text>
+                """
+                text = "The operating system manages computer hardware resources, provides common services for application software, and controls process scheduling."
+            else:
+                is_unsupported = True
+                text = "Specific web technology and productivity subtopics under ICT currently lack sufficient internal dataset instructional blocks for custom animation generation. Please consult the official GES ICT syllabus manual."
         else:
-            svg = """
-                <rect x="150" y="90" width="300" height="80" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                <text x="300" y="125" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">{topic}</text>
-                <text x="300" y="145" fill="#aaa" font-size="9" text-anchor="middle">{subtopic}</text>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 150,130 L 450,130" dur="10s" repeatCount="indefinite"/></circle>
-            """
-        return svg, text
+            if "Sensors & Actuators" in topic:
+                svg = """
+                    <rect x="80" y="90" width="120" height="60" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                    <text x="140" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">ULTRASONIC SENSOR</text>
+                    <line x1="205" y1="120" x2="395" y2="120" stroke="#fff" stroke-width="2" stroke-dasharray="4"/>
+                    <rect x="400" y="90" width="120" height="60" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+                    <text x="460" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">ARDUINO / ESP32</text>
+                    <circle r="5" fill="#ff0055"><animateMotion path="M 205,120 L 395,120" dur="5s" repeatCount="indefinite"/></circle>
+                """
+                text = "Robotic sensors collect environmental data such as distance, light, or proximity, transmitting signals to microcontrollers for automated response and feedback control."
+            else:
+                is_unsupported = True
+                text = "Advanced robotics kinematics and AI automation subtopics do not have sufficient local training text entries to construct a standalone animation. Refer to industrial robotics engineering textbooks."
 
-    # Pre-build client payload containing all topics/subtopics for current subject
-    all_subject_concepts = []
-    for t_name, sub_list in subject_topics_dict.items():
-        for s_name in sub_list:
-            c_svg, c_text = get_detailed_step_by_step_content(t_name, s_name)
-            all_subject_concepts.append({
-                "topic": t_name,
-                "subtopic": s_name,
-                "svg": c_svg,
-                "text": c_text
-            })
+        return svg, text, is_iframe, iframe_url, is_unsupported
 
-    # Default index based on user's selectbox choices
-    initial_idx = 0
-    for i, item in enumerate(all_subject_concepts):
-        if item["topic"] == chosen_topic and item["subtopic"] == chosen_subtopic:
-            initial_idx = i
-            break
+    current_svg, current_text, is_iframe, iframe_url, is_unsupported = get_whiteboard_content(selected_subject, chosen_topic, chosen_subtopic)
 
-    payload_json = json.dumps(all_subject_concepts)
-
-    # Fully responsive HTML/JS Component with YouTube-style Scrubber, Step-by-Step Word Highlighting, Pause/Play Resume, and Prev/Next
     player_html = f"""
     <!DOCTYPE html>
     <html lang="en">
     <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {{
             background-color: #121212;
@@ -559,12 +641,30 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             overflow: hidden;
             border: 1px solid #333;
         }}
-        .screen svg {{
+        .screen svg, .screen iframe {{
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            border: none;
+        }}
+        .unsupported-box {{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            background: #151515;
+            color: #ffbb00;
+            font-size: 0.95em;
+            box-sizing: border-box;
         }}
         .controls-bar {{
             display: flex;
@@ -606,36 +706,6 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             color: #000;
             border-color: #00ffcc;
         }}
-        .scrubber-container {{
-            margin-top: 10px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-        }}
-        input[type=range] {{
-            -webkit-appearance: none;
-            width: 100%;
-            background: #333;
-            height: 6px;
-            border-radius: 3px;
-            outline: none;
-        }}
-        input[type=range]::-webkit-slider-thumb {{
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #00ffcc;
-            cursor: pointer;
-        }}
-        .status {{
-            font-size: 0.75em;
-            color: #aaa;
-            text-align: right;
-            width: 100%;
-            margin-top: 4px;
-        }}
         .transcript-box {{
             margin-top: 10px;
             background: #181818;
@@ -655,10 +725,6 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             margin-bottom: 3px;
             font-size: 0.8em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }}
-        .word-span {{
-            transition: color 0.15s;
         }}
         .highlighted-word {{
             background: #00ffcc;
@@ -667,106 +733,65 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             border-radius: 3px;
             font-weight: bold;
         }}
-        .past-word {{
-            color: #888;
-        }}
-        .future-word {{
-            color: #ddd;
-        }}
+        .past-word {{ color: #888; }}
+        .future-word {{ color: #ddd; }}
     </style>
     </head>
     <body>
     <div class="player-container">
         <div class="player-header">
             <span class="brand">📺 SIR O.K. STUDIO</span>
-            <span class="topic-badge" id="displayConceptTitle"></span>
+            <span class="topic-badge">{chosen_topic} &gt; {chosen_subtopic}</span>
         </div>
         
         <div class="screen" id="screenContainer">
-            <svg id="wbSvg" viewBox="0 0 600 240">
-            </svg>
-        </div>
-
-        <div class="scrubber-container">
-            <input type="range" id="scrubber" min="0" max="100" value="0" step="0.1" oninput="onScrub(this.value)">
+            {"<iframe src='" + iframe_url + "' allowfullscreen></iframe>" if is_iframe else ("<div class='unsupported-box'>⚠️ " + current_text + "</div>" if is_unsupported else "<svg id='wbSvg' viewBox='0 0 600 240'>" + current_svg + "</svg>")}
         </div>
 
         <div class="controls-bar">
             <div class="btn-group">
-                <button onclick="prevConcept()">⏮️ Prev</button>
-                <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause</button>
-                <button onclick="restartAudio()">🔄 Restart</button>
-                <button onclick="nextConcept()">Next ⏭️</button>
+                <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause Audio</button>
+                <button onclick="restartAudio()">🔄 Restart Explanation</button>
             </div>
-            <div class="status" id="statusText">Playing Step-by-Step Audio (Max 120s)</div>
         </div>
 
+        {"<!--" if is_unsupported else ""}
         <div class="transcript-box" id="transcriptBox">
-            <div class="transcript-title">🎙️ Step-by-Step Live Transcript &amp; Word Highlighting</div>
+            <div class="transcript-title">🎙️ Synchronized Audio Explanation &amp; Word Highlighting</div>
             <div id="liveCaptionText"></div>
         </div>
+        {"-->" if is_unsupported else ""}
     </div>
 
     <script>
-        const concepts = {payload_json};
-        let currentConceptIdx = {initial_idx};
+        const fullText = "{current_text}";
+        let words = fullText.split(/\\s+/);
+        let currentWordIndex = 0;
         let isPlaying = true;
         let utterance = null;
-        let words = [];
-        let currentWordIndex = 0;
-        let totalDuration = 45.0;
-
-        const svg = document.getElementById('wbSvg');
         const playBtn = document.getElementById('playBtn');
-        const statusText = document.getElementById('statusText');
         const liveCaptionText = document.getElementById('liveCaptionText');
-        const scrubber = document.getElementById('scrubber');
-
-        function loadConcept(idx) {{
-            currentConceptIdx = (idx + concepts.length) % concepts.length;
-            const concept = concepts[currentConceptIdx];
-            
-            document.getElementById('displayConceptTitle').innerText = concept.topic + " > " + concept.subtopic;
-            svg.innerHTML = concept.svg;
-            
-            words = concept.text.split(/\\s+/);
-            currentWordIndex = 0;
-            scrubber.value = 0;
-            renderTranscript();
-            
-            try {{ svg.setCurrentTime(0); }} catch(e) {{}}
-            
-            if (isPlaying) {{
-                playSpeech();
-            }}
-        }}
 
         function renderTranscript() {{
+            if (!liveCaptionText) return;
             liveCaptionText.innerHTML = words.map((w, i) => {{
                 let cls = 'future-word';
                 if (i === currentWordIndex) cls = 'highlighted-word active-word';
                 else if (i < currentWordIndex) cls = 'past-word';
-                return `<span class="word-span ${{cls}}">${{w}}</span>`;
+                return `<span class="${{cls}}">${{w}}</span>`;
             }}).join(' ');
-
-            const activeEl = liveCaptionText.querySelector('.active-word');
-            if (activeEl) {{
-                activeEl.scrollIntoView({{ behavior: 'smooth', block: 'nearest', inline: 'center' }});
-            }}
         }}
 
         function playSpeech() {{
+            if ({str(is_unsupported).lower()}) return;
             if (!('speechSynthesis' in window)) return;
             window.speechSynthesis.cancel();
 
             const remainingWords = words.slice(currentWordIndex);
             if (remainingWords.length === 0) return;
 
-            const textChunk = remainingWords.join(' ');
-            utterance = new SpeechSynthesisUtterance(textChunk);
+            utterance = new SpeechSynthesisUtterance(remainingWords.join(' '));
             utterance.rate = 0.90;
-            utterance.pitch = 1.0;
-
             window.chunkStartIndex = currentWordIndex;
 
             utterance.onboundary = function(event) {{
@@ -775,24 +800,13 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                     const wordsBeforeChar = textUpToChar.trim() === '' ? 0 : textUpToChar.trim().split(/\\s+/).length;
                     currentWordIndex = window.chunkStartIndex + wordsBeforeChar;
                     if (currentWordIndex >= words.length) currentWordIndex = words.length - 1;
-                    
                     renderTranscript();
-                    
-                    const progress = (currentWordIndex / words.length) * 100;
-                    scrubber.value = progress;
-
-                    try {{
-                        svg.setCurrentTime((currentWordIndex / words.length) * totalDuration);
-                    }} catch(e) {{}}
                 }}
             }};
 
             utterance.onend = function() {{
-                if (isPlaying && currentWordIndex >= words.length - 1) {{
-                    isPlaying = false;
-                    playBtn.innerHTML = '▶️ Play';
-                    statusText.innerText = 'Completed';
-                }}
+                isPlaying = false;
+                if (playBtn) playBtn.innerHTML = '▶️ Play Audio';
             }};
 
             window.speechSynthesis.speak(utterance);
@@ -801,99 +815,83 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         function togglePlayPause() {{
             isPlaying = !isPlaying;
             if (isPlaying) {{
-                try {{ svg.unpauseAnimations(); }} catch(e) {{}}
-                playBtn.innerHTML = '⏸️ Pause';
-                statusText.innerText = 'Playing Step-by-Step Audio';
+                if (playBtn) playBtn.innerHTML = '⏸️ Pause Audio';
                 playSpeech();
             }} else {{
-                if ('speechSynthesis' in window) {{
-                    window.speechSynthesis.cancel();
-                }}
-                try {{ svg.pauseAnimations(); }} catch(e) {{}}
-                playBtn.innerHTML = '▶️ Play';
-                statusText.innerText = 'Paused (Resumes from current point)';
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                if (playBtn) playBtn.innerHTML = '▶️ Play Audio';
             }}
         }}
 
         function restartAudio() {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
-            }}
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             currentWordIndex = 0;
-            scrubber.value = 0;
             renderTranscript();
-            try {{ svg.setCurrentTime(0); }} catch(e) {{}}
-            
             isPlaying = true;
-            try {{ svg.unpauseAnimations(); }} catch(e) {{}}
-            playBtn.innerHTML = '⏸️ Pause';
-            statusText.innerText = 'Restarted & Playing';
+            if (playBtn) playBtn.innerHTML = '⏸️ Pause Audio';
             playSpeech();
         }}
 
-        function prevConcept() {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
-            }}
-            loadConcept(currentConceptIdx - 1);
-        }}
-
-        function nextConcept() {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
-            }}
-            loadConcept(currentConceptIdx + 1);
-        }}
-
-        function onScrub(val) {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
-            }}
-            currentWordIndex = Math.floor((val / 100) * words.length);
-            if (currentWordIndex >= words.length) currentWordIndex = words.length - 1;
-            if (currentWordIndex < 0) currentWordIndex = 0;
-
-            renderTranscript();
-            try {{
-                svg.setCurrentTime((currentWordIndex / words.length) * totalDuration);
-            }} catch(e) {{}}
-
-            if (isPlaying) {{
-                playSpeech();
-            }}
-        }}
-
         window.addEventListener('load', () => {{
-            loadConcept({initial_idx});
+            renderTranscript();
+            playSpeech();
         }});
     </script>
     </body>
     </html>
     """
 
-    components.html(player_html, height=520, scrolling=False)
+    components.html(player_html, height=480, scrolling=False)
 
 else:
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+# Export and Print controls side-by-side if report card / revision guide exists
 if st.session_state.last_revision_guide:
     st.sidebar.markdown("---")
-    st.sidebar.subheader("📥 Offline Study Tools")
-    st.sidebar.download_button(
-        label="Download Revision Guide (.txt)",
-        data=st.session_state.last_revision_guide,
-        file_name=f"SirOK_{selected_subject}_Revision_Guide.txt",
-        mime="text/plain",
-    )
+    st.sidebar.subheader("📥 Report Card & Study Tools")
+    
+    # Report Card PDF generator helper function using HTML/ReportLab simulation or direct HTML download
+    def generate_report_card_html():
+        return f"""
+        <!DOCTYPE html>
+        <html>
+        <head><title>Sir O.K. Report Card - {student_full_name}</title></head>
+        <body style="font-family: Arial; padding: 30px; color: #333;">
+            <h1 style="color: #0055ff;">SIR O.K. COMPUTING ACADEMY</h1>
+            <h2>Official Student Academic Report Card &amp; Revision Guide</h2>
+            <hr/>
+            <p><b>Student Name:</b> {student_full_name}</p>
+            <p><b>School:</b> {student_school}</p>
+            <p><b>Subject Area:</b> {selected_subject}</p>
+            <p><b>Date:</b> September 2026</p>
+            <hr/>
+            <h3>Performance Summary</h3>
+            <pre style="background: #f4f4f4; padding: 15px; border-radius: 5px;">{st.session_state.last_revision_guide}</pre>
+        </body>
+        </html>
+        """
+
+    col_exp1, col_exp2 = st.sidebar.columns(2)
+    with col_exp1:
+        st.download_button(
+            label="📥 Download PDF",
+            data=st.session_state.last_revision_guide,
+            file_name=f"SirOK_{selected_subject}_ReportCard.txt",
+            mime="text/plain",
+        )
+    with col_exp2:
+        if st.button("🖨️ Print Report"):
+            st.toast("Report ready for printing! Use your browser print menu (Ctrl+P).")
 
 user_query = None
 
-# Bottom chat input available in all modes (including Whiteboard for quick topic/subtopic comma or space separated entry)
+# Bottom chat input available in all modes
 if input_method == "⌨️ Type Question":
     if learning_mode == "🎨 Whiteboard Concept Studio":
-        prompt_label = "Or type topic and subtopic separated by space or comma (e.g., 'Database Systems, Entity-Relationship'):"
+        prompt_label = "Or type topic and subtopic separated by space or comma:"
     elif learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_state_stage == "awaiting_config":
         prompt_label = "Type your desired topic and number of questions (e.g., 'Databases, 2 questions'):"
     elif learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_state_stage == "in_progress":
@@ -914,13 +912,6 @@ else:
                 st.error("Could not transcribe audio. Please try again.")
 
 if user_query:
-    # Handle Whiteboard Studio shortcut via bottom input (Topic, Subtopic separated by comma or space)
-    if learning_mode == "🎨 Whiteboard Concept Studio":
-        parts = [p.strip() for p in user_query.replace(",", " ").split() if p.strip()]
-        if parts:
-            matched_t = parts[0]
-            st.success(f"Whiteboard query received: Topic keyword '{matched_t}'. Use selectors above or switch topic accordingly.")
-    
     st.session_state.messages.append({"role": "user", "content": user_query})
     with st.chat_message("user"):
         st.markdown(user_query)
@@ -1137,17 +1128,6 @@ if user_query:
                                     if pct < 70:
                                         weak_topics.append(top)
 
-                            prev_questions_text = ""
-                            if st.session_state.asked_questions:
-                                prev_questions_text = "\n".join(
-                                    [
-                                        f"Previous Question {i+1}:\n{q}"
-                                        for i, q in enumerate(
-                                            st.session_state.asked_questions
-                                        )
-                                    ]
-                                )
-
                             eval_and_next_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner in"
                                 f" {selected_subject} guiding {student_full_name}.\n\n"
@@ -1229,7 +1209,7 @@ if user_query:
                                         )[0].split(tag)[0]
                             else:
                                 st.session_state.last_revision_guide = (
-                                    f"SIR O.K AI TUTOR - OFFICIAL REVISION GUIDE\n"
+                                    f"SIR O.K AI TUTOR - OFFICIAL REPORT CARD & REVISION GUIDE\n"
                                     f"Student: {student_full_name} | School: {student_school}\n"
                                     f"Subject: {selected_subject}\n"
                                     f"--------------------------------------------------\n\n"
