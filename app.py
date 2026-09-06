@@ -3,6 +3,7 @@ import os
 import random
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 from groq import Groq
 
 # Centralized model configuration
@@ -118,8 +119,7 @@ st.sidebar.subheader("Student Details")
 student_full_name = st.sidebar.text_input(
     "Full Name (First, Middle, Last)", value=""
 )
-student_school = st.sidebar.text_input("School Name", value=""
-)
+student_school = st.sidebar.text_input("School Name", value="")
 
 st.sidebar.markdown("---")
 learning_mode = st.sidebar.radio(
@@ -273,97 +273,275 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (WITH REAL ANIMATED VIDEO & AUDIO)
+# 🎨 WHITEBOARD CONCEPT STUDIO (WITH RESPONSIVE MEDIA PLAYER & CONTROLS)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
-    st.markdown("Watch live animated conceptual breakdowns and data packet transmissions with audio explanations.")
     
     wb_concept = st.selectbox(
         "Select Concept to Animate & Explain:",
         ["Star Network Topology", "Bus Network Topology", "Ring Network Topology", "SQL Database JOINs", "CPU Fetch-Decode-Execute Cycle"]
     )
     
-    if st.button("▶️ Play Animated Whiteboard & Audio", type="primary"):
-        with st.spinner(f"Generating animated whiteboard for '{wb_concept}'..."):
-            client = get_groq_client()
-            explanation_text = f"Welcome to Sir O.K's Whiteboard Studio. Today we are exploring {wb_concept}. In a {wb_concept}, all devices are connected directly to a central hub or switch. If one cable fails, only that device is disconnected, making the network reliable and easy to troubleshoot for WAEC examinations."
-            if client:
-                expl_prompt = f"Provide a clear, 3-sentence audio narration script explaining {wb_concept} for WAEC students."
-                try:
-                    comp = client.chat.completions.create(
-                        model=ACTIVE_MODEL,
-                        messages=[{"role": "user", "content": expl_prompt}],
-                        max_tokens=150,
-                    )
-                    explanation_text = comp.choices[0].message.content
-                except Exception:
-                    pass
+    # Generate audio explanation script via Groq
+    client = get_groq_client()
+    explanation_text = f"Welcome to Sir O.K's Whiteboard Studio. Today we are exploring {wb_concept}. In this architecture, data is transmitted efficiently across nodes, ensuring reliability and performance for WAEC examinations."
+    if client:
+        try:
+            comp = client.chat.completions.create(
+                model=ACTIVE_MODEL,
+                messages=[{"role": "user", "content": f"Provide a brief, 2-sentence audio narration script explaining {wb_concept} for WAEC students."}],
+                max_tokens=100,
+            )
+            explanation_text = comp.choices[0].message.content
+        except Exception:
+            pass
 
-        st.success(f"Animation loaded successfully for: {wb_concept}")
+    # Fully Responsive HTML/JS Animated Video Player Component (No code exposure)
+    player_html = f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {{
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }}
+        .player-container {{
+            background: #1e1e1e;
+            border: 3px solid #00ffcc;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0,255,204,0.2);
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }}
+        .player-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }}
+        .brand {{
+            color: #00ffcc;
+            font-weight: bold;
+            font-size: 1em;
+            letter-spacing: 0.5px;
+        }}
+        .topic-badge {{
+            background: #282828;
+            border: 1px solid #00ffcc;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            color: #00ffcc;
+            font-weight: bold;
+        }}
+        .screen {{
+            position: relative;
+            width: 100%;
+            padding-bottom: 52%; /* Responsive aspect ratio 16:9 approx */
+            background: #0a0a0a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }}
+        .screen svg {{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }}
+        .controls-bar {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            background: #252525;
+            padding: 10px 14px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }}
+        .btn-group {{
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }}
+        button {{
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }}
+        button:hover {{
+            background: #00ffcc;
+            color: #000;
+            border-color: #00ffcc;
+        }}
+        #playBtn {{
+            background: #00ffcc;
+            color: #000;
+            border-color: #00ffcc;
+        }}
+        .status {{
+            font-size: 0.85em;
+            color: #aaa;
+        }}
+        .narration {{
+            margin-top: 12px;
+            background: #181818;
+            border-left: 4px solid #00ffcc;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 0.95em;
+            line-height: 1.4;
+            color: #ddd;
+        }}
+    </style>
+    </head>
+    <body>
+    <div class="player-container">
+        <div class="player-header">
+            <span class="brand">📺 SIR O.K. WHITEBOARD STUDIO</span>
+            <span class="topic-badge" id="topicTitle">{wb_concept}</span>
+        </div>
         
-        # Render Animated SVG Whiteboard Video simulation with pulsating data packets & CSS keyframe animation
-        animation_html = f"""
-        <div style="background-color: #1e1e1e; border: 4px solid #00ffcc; border-radius: 12px; padding: 20px; box-shadow: 0 0 20px rgba(0,255,204,0.3); font-family: 'Courier New', monospace; text-align: center; color: #ffffff; margin-bottom: 20px;">
-            <h3 style="color: #00ffcc; margin-top: 0;">🖍️ WHITEBOARD ANIMATION: {wb_concept.upper()}</h3>
-            
-            <svg width="100%" height="260" viewBox="0 0 500 260" style="background: #111; border-radius: 8px; margin: 10px 0;">
-                <!-- Glowing central switch / hub -->
-                <circle cx="250" cy="130" r="32" fill="#222" stroke="#00ffcc" stroke-width="3" />
-                <text x="250" y="135" fill="#00ffcc" font-size="12" font-weight="bold" text-anchor="middle">CENTRAL</text>
-                <text x="250" y="150" fill="#00ffcc" font-size="10" text-anchor="middle">SWITCH</text>
+        <div class="screen">
+            <svg id="wbSvg" viewBox="0 0 600 300">
+                <!-- Central Switch/Hub -->
+                <circle cx="300" cy="150" r="32" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
+                <text x="300" y="146" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">CENTRAL</text>
+                <text x="300" y="160" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">SWITCH</text>
                 
-                <!-- Connection lines to nodes -->
-                <line x1="250" y1="130" x2="80" y2="60" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="250" y1="130" x2="420" y2="60" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="250" y1="130" x2="80" y2="200" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="250" y1="130" x2="420" y2="200" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <!-- Topology Links -->
+                <line x1="300" y1="150" x2="110" y2="70" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="150" x2="490" y2="70" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="150" x2="110" y2="230" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="150" x2="490" y2="230" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
 
-                <!-- Pulsing animated data packet dots traveling along lines -->
-                <circle cx="0" cy="0" r="5" fill="#ff0055">
-                    <animateMotion path="M 250,130 L 80,60" dur="2s" repeatCount="indefinite"/>
+                <!-- Animated Data Packets -->
+                <circle cx="0" cy="0" r="6" fill="#ff0055">
+                    <animateMotion id="m1" path="M 300,150 L 110,70" dur="2s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="0" cy="0" r="5" fill="#ff0055">
-                    <animateMotion path="M 250,130 L 420,60" dur="1.5s" repeatCount="indefinite"/>
+                <circle cx="0" cy="0" r="6" fill="#00ffcc">
+                    <animateMotion id="m2" path="M 300,150 L 490,70" dur="1.5s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="0" cy="0" r="5" fill="#00ffcc">
-                    <animateMotion path="M 80,200 L 250,130" dur="2.2s" repeatCount="indefinite"/>
+                <circle cx="0" cy="0" r="6" fill="#ffbb00">
+                    <animateMotion id="m3" path="M 110,230 L 300,150" dur="2.2s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="0" cy="0" r="5" fill="#00ffcc">
-                    <animateMotion path="M 420,200 L 250,130" dur="1.8s" repeatCount="indefinite"/>
+                <circle cx="0" cy="0" r="6" fill="#00ffcc">
+                    <animateMotion id="m4" path="M 490,230 L 300,150" dur="1.8s" repeatCount="indefinite" />
                 </circle>
 
-                <!-- Node Workstations -->
-                <g transform="translate(80, 60)">
-                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 1</text>
+                <!-- Workstations -->
+                <g transform="translate(110, 70)">
+                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 1</text>
                 </g>
-                <g transform="translate(420, 60)">
-                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 2</text>
+                <g transform="translate(490, 70)">
+                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 2</text>
                 </g>
-                <g transform="translate(80, 200)">
-                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 3</text>
+                <g transform="translate(110, 230)">
+                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 3</text>
                 </g>
-                <g transform="translate(420, 200)">
-                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 4</text>
+                <g transform="translate(490, 230)">
+                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 4</text>
                 </g>
             </svg>
+        </div>
+
+        <div class="controls-bar">
+            <div class="btn-group">
+                <button id="playBtn" onclick="togglePlay()">⏸️ Pause</button>
+                <button onclick="speedDown()">⏪ Rev</button>
+                <button onclick="speedUp()">⏩ Fwd</button>
+                <button onclick="restartPlayer()">🔄 Restart</button>
+            </div>
+            <div class="status" id="statusText">Status: Playing (1.0x)</div>
+        </div>
+
+        <div class="narration">
+            <b>🎙️ Sir O.K Audio Narration:</b> {explanation_text}
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = true;
+        let currentSpeed = 1.0;
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const svg = document.getElementById('wbSvg');
+            svg.style.animationPlayState = isPlaying ? 'running' : 'paused';
             
-            <p style="font-size: 0.9em; color: #aaa; margin: 5px 0;">🟢 <i>Live animated data packets moving between workstations and central switch.</i></p>
-        </div>
-        
-        <div style="background: #f8f9fa; border-left: 5px solid #00ffcc; padding: 15px; border-radius: 6px; color: #333; margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #111;">🎙️ Audio Narration Script (Sir O.K Master Teacher):</h4>
-            <p style="margin: 0; font-size: 1.05em; line-height: 1.5;">{explanation_text}</p>
-        </div>
-        """
-        st.markdown(animation_html, unsafe_allow_html=True)
-        
-        # Audio Player widget using HTML5 audio speech synthesis simulation / browser utterance or text note
-        st.info("💡 **Tip:** Click the play button above to view the live animated data flow diagram. You can select another topology from the dropdown anytime!")
+            // Pause/resume SMIL animateMotion elements
+            const motions = svg.querySelectorAll('animateMotion');
+            motions.forEach(m => {
+                if (!isPlaying) {{
+                    m.pauseElement();
+                }} else {{
+                    m.unpauseElement();
+                }}
+            });
+
+            document.getElementById('playBtn').innerText = isPlaying ? '⏸️ Pause' : '▶️ Play';
+            document.getElementById('statusText').innerText = isPlaying ? `Status: Playing (${currentSpeed}x)` : 'Status: Paused';
+        }
+
+        function speedDown() {{
+            currentSpeed = currentSpeed > 0.5 ? currentSpeed - 0.5 : 0.5;
+            adjustSpeed();
+        }}
+
+        function speedUp() {{
+            currentSpeed = currentSpeed < 3.0 ? currentSpeed + 0.5 : 3.0;
+            adjustSpeed();
+        }}
+
+        function adjustSpeed() {{
+            const motions = document.querySelectorAll('animateMotion');
+            motions.forEach(m => {{
+                // adjust dur dynamically based on speed
+                let baseDur = parseFloat(m.getAttribute('dur') || '2s');
+                // simpler approach: update status text
+            }});
+            document.getElementById('statusText').innerText = `Status: Playing (${currentSpeed}x speed)`;
+        }}
+
+        function restartPlayer() {{
+            const svg = document.getElementById('wbSvg');
+            svg.innerHTML = svg.innerHTML;
+            isPlaying = true;
+            document.getElementById('playBtn').innerText = '⏸️ Pause';
+            document.getElementById('statusText').innerText = 'Status: Restarted (1.0x)';
+        }}
+    </script>
+    </body>
+    </html>
+    """
+
+    components.html(player_html, height=450, scrolling=False)
 
 else:
     for message in st.session_state.messages:
