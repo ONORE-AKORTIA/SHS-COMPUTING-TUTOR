@@ -877,6 +877,78 @@ if user_query:
                                     except Exception:
                                         pass
 
-Python's `f-string` treats curly braces `{` and `}` as placeholders for variable interpolation. When embedding JavaScript/CSS inside an `f-string`, unescaped braces (like `{{` and `}}` used for JS functions or CSS blocks) cause `KeyError` or syntax errors because Python looks for a variable named inside those braces. 
+                                if "[correct:" in ai_response.lower():
+                                    try:
+                                        parts = ai_response.lower().split("[correct:")
+                                        st.session_state.current_correct_option = (
+                                            parts[1].split("]")[0].strip()[0].upper()
+                                        )
+                                    except Exception:
+                                        pass
 
-The fixed code above uses a standard Python string for `player_html` (with double curly braces escaped as `{{` and `}}` where needed for JS/CSS) and applies `.format(wb_concept=wb_concept, explanation_text=explanation_text)` properly without syntax or formatting key collisions.
+                            display_response = ai_response
+                            if not is_last_question:
+                                for tag in ["[correct:", "[topic:"]:
+                                    if tag in display_response.lower():
+                                        display_response = display_response.split(
+                                            tag.upper()
+                                        )[0].split(tag)[0]
+                            else:
+                                st.session_state.last_revision_guide = (
+                                    f"SIR O.K AI TUTOR - OFFICIAL REVISION GUIDE\n"
+                                    f"Student: {student_full_name} | School: {student_school}\n"
+                                    f"Subject: {selected_subject}\n"
+                                    f"--------------------------------------------------\n\n"
+                                    + display_response
+                                )
+
+                            display_response = display_response.strip()
+
+                            if not is_last_question:
+                                st.session_state.current_question_num += 1
+                            else:
+                                st.session_state.exam_active = False
+                                st.session_state.exam_state_stage = (
+                                    "awaiting_config"
+                                )
+
+                            st.session_state.asked_questions.append(display_response)
+                            st.markdown(display_response)
+                            st.session_state.messages.append(
+                                {"role": "assistant", "content": display_response}
+                            )
+                    else:
+                        persona_prompt = (
+                            f"You are Sir O.K, an expert SHS AI Tutor helping"
+                            f" {student_full_name} from {student_school} in"
+                            f" {selected_subject}."
+                        )
+
+                        completion = client.chat.completions.create(
+                            model=ACTIVE_MODEL,
+                            messages=[
+                                {
+                                    "role": "system",
+                                    "content": (
+                                        f"Relevant Textbook Content:\n{filtered_context}"
+                                    ),
+                                },
+                                {"role": "system", "content": persona_prompt},
+                                {"role": "user", "content": user_query},
+                            ],
+                            max_tokens=400,
+                            temperature=0.3,
+                        )
+                        ai_response = completion.choices[0].message.content
+                        st.markdown(ai_response)
+                        st.session_state.messages.append(
+                            {"role": "assistant", "content": ai_response}
+                        )
+
+                    if user_key in st.session_state.user_sessions:
+                        st.session_state.user_sessions[user_key]["messages"] = (
+                            st.session_state.messages
+                        )
+
+                except Exception as e:
+                    st.error(f"Error connecting to AI service: {e}")
