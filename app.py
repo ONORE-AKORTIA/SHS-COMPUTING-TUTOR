@@ -173,7 +173,7 @@ if "exam_active" not in st.session_state:
 if "total_questions" not in st.session_state:
     st.session_state.total_questions = 5
 if "current_question_num" not in st.session_state:
-    st.session_state.current_question_num = 0
+    st.session_state.current_question_num = 1
 if "correct_count" not in st.session_state:
     st.session_state.correct_count = 0
 if "wrong_count" not in st.session_state:
@@ -229,11 +229,7 @@ if not st.session_state.greeted and student_full_name and student_school:
 
 # Display progress dashboard immediately if in WAEC Exam Practice mode and exam is active
 if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
-    answered = (
-        st.session_state.current_question_num - 1
-        if st.session_state.current_question_num > 0
-        else 0
-    )
+    answered = st.session_state.current_question_num - 1
     total = st.session_state.total_questions
     correct = st.session_state.correct_count
     wrong = st.session_state.wrong_count
@@ -243,8 +239,9 @@ if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
         progress_val,
         text=(
             f"Progress Dashboard ({exam_question_type}) | Current Topic:"
-            f" {st.session_state.current_topic} | Answered: {answered}/{total} |"
-            f" Correct: {correct} | Wrong: {wrong}"
+            f" {st.session_state.current_topic} | Question:"
+            f" {st.session_state.current_question_num}/{total} | Correct:"
+            f" {correct} | Wrong: {wrong}"
         ),
     )
 
@@ -277,8 +274,8 @@ if input_method == "⌨️ Type Question":
         learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active
     ):
         prompt_label = (
-            f"Type your answer for {exam_question_type} (e.g., option letter A/B/C/D"
-            " for MCQ, short answer phrase, or essay write-up)..."
+            f"Type your answer for Question {st.session_state.current_question_num}"
+            f" of {st.session_state.total_questions} (e.g., A, B, C, or D)..."
         )
     else:
         prompt_label = f"Ask a question about {selected_subject}..."
@@ -428,7 +425,6 @@ if user_query:
                         else:
                             current_q = st.session_state.current_question_num
                             total_q = st.session_state.total_questions
-                            is_last_question = current_q >= total_q
 
                             user_ans_clean = user_query.strip().upper()
                             expected_letter = (
@@ -487,6 +483,9 @@ if user_query:
                                         f" WAS {expected_letter}."
                                     ),
                                 ])
+
+                            # Check if this answer was for the FINAL question
+                            is_last_question = current_q >= total_q
 
                             # Build cognitive report tracking list for weak topics
                             cognitive_summary_text = ""
@@ -598,7 +597,7 @@ if user_query:
                             display_response = ai_response
                             if not is_last_question:
                                 for tag in ["[correct:", "[topic:"]:
-                                    if tag in display_response.lower():
+                                    if tag in display_source_lower := display_response.lower():
                                         display_response = display_response.split(
                                             tag.upper()
                                         )[0].split(tag)[0]
@@ -614,8 +613,10 @@ if user_query:
 
                             display_response = display_response.strip()
 
-                            st.session_state.current_question_num += 1
-                            if is_last_question:
+                            # Increment question counter or finish exam
+                            if not is_last_question:
+                                st.session_state.current_question_num += 1
+                            else:
                                 st.session_state.exam_active = False
 
                             st.session_state.asked_questions.append(display_response)
