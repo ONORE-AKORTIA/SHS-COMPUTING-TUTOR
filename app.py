@@ -172,10 +172,12 @@ if "exam_active" not in st.session_state:
     st.session_state.exam_active = False
 if "exam_state_stage" not in st.session_state:
     st.session_state.exam_state_stage = (
-        "awaiting_count"  # "awaiting_count" or "in_progress"
+        "awaiting_config"  # "awaiting_config" or "in_progress"
     )
 if "total_questions" not in st.session_state:
     st.session_state.total_questions = 5
+if "target_topic" not in st.session_state:
+    st.session_state.target_topic = "General Syllabus"
 if "current_question_num" not in st.session_state:
     st.session_state.current_question_num = 1
 if "correct_count" not in st.session_state:
@@ -246,8 +248,8 @@ if (
     st.progress(
         progress_val,
         text=(
-            f"Progress Dashboard ({exam_question_type}) | Current Topic:"
-            f" {st.session_state.current_topic} | Question:"
+            f"Progress Dashboard ({exam_question_type}) | Topic Focus:"
+            f" {st.session_state.target_topic} | Question:"
             f" {st.session_state.current_question_num}/{total} | Correct:"
             f" {correct} | Wrong: {wrong}"
         ),
@@ -275,10 +277,11 @@ user_query = None
 if input_method == "⌨️ Type Question":
     if (
         learning_mode == "📝 WAEC Exam Practice"
-        and st.session_state.exam_state_stage == "awaiting_count"
+        and st.session_state.exam_state_stage == "awaiting_config"
     ):
         prompt_label = (
-            "Type the total number of questions you want for this session (e.g., 5):"
+            "Type your desired topic and number of questions (e.g., 'Databases,"
+            " 5 questions' or 'Networking, 3'):"
         )
     elif (
         learning_mode == "📝 WAEC Exam Practice"
@@ -340,16 +343,49 @@ if user_query:
             with st.spinner("Thinking..."):
                 try:
                     if learning_mode == "📝 WAEC Exam Practice":
-                        if st.session_state.exam_state_stage == "awaiting_count":
-                            try:
-                                digits = "".join(
-                                    filter(str.isdigit, user_query.strip())
+                        if st.session_state.exam_state_stage == "awaiting_config":
+                            # Parse number of questions and topic from user query
+                            import re
+
+                            digits_found = re.findall(r"\d+", user_query)
+                            parsed_total = (
+                                int(digits_found[0]) if digits_found else 5
+                            )
+                            if parsed_total <= 0:
+                                parsed_total = 5
+
+                            st.session_state.total_questions = parsed_total
+
+                            # Extract topic by cleaning out numbers and common stop words
+                            cleaned_topic = user_query
+                            for d in digits_found:
+                                cleaned_topic = cleaned_topic.replace(d, "")
+                            for word in [
+                                "questions",
+                                "question",
+                                "qrs",
+                                "qs",
+                                "tests",
+                                "test",
+                                "exams",
+                                "exam",
+                                "practice",
+                                "for",
+                                "on",
+                                "about",
+                                "need",
+                                "want",
+                                "give",
+                                "me",
+                            ]:
+                                cleaned_topic = re.sub(
+                                    rf"\b{word}\b", "", cleaned_topic, flags=re.IGNORECASE
                                 )
-                                parsed_total = int(digits) if digits else 5
-                                if parsed_total > 0:
-                                    st.session_state.total_questions = parsed_total
-                            except ValueError:
-                                st.session_state.total_questions = 5
+                            cleaned_topic = cleaned_topic.strip(" ,.-")
+                            if not cleaned_topic:
+                                cleaned_topic = "General Syllabus"
+
+                            st.session_state.target_topic = cleaned_topic
 
                             st.session_state.exam_active = True
                             st.session_state.exam_state_stage = "in_progress"
@@ -364,11 +400,11 @@ if user_query:
                             start_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner in"
                                 f" {selected_subject} testing {student_full_name} from"
-                                f" {student_school}. The student initiated an exam practice session"
-                                f" of exactly {st.session_state.total_questions} questions using question type: {exam_question_type}.\n\n"
-                                f"Generate **Question 1** of {st.session_state.total_questions} right now covering core WAEC syllabus topics for {selected_subject}.\n\n"
+                                f" {student_school}. The student requested an exam practice session"
+                                f" of exactly **{st.session_state.total_questions} questions** focusing on the topic/area: **{st.session_state.target_topic}** using question type: {exam_question_type}.\n\n"
+                                f"Generate **Question 1 of {st.session_state.total_questions}** right now covering this exact focus area for {selected_subject}.\n\n"
                                 f"CRITICAL FORMATTING & METADATA RULES:\n"
-                                f"1. The question number (e.g., 'Question 1 of {st.session_state.total_questions}') and the actual"
+                                f"1. The question label (e.g., 'Question 1 of {st.session_state.total_questions}') and the actual"
                                 f" question text MUST be on separate lines using double"
                                 f" newlines.\n"
                                 f"2. Every question must include a complete, explicit question statement.\n"
@@ -396,7 +432,7 @@ if user_query:
                             ai_response = completion.choices[0].message.content
 
                             # Parse Topic metadata
-                            topic_name = "General Concept"
+                            topic_name = st.session_state.target_topic
                             if "[topic:" in ai_response.lower():
                                 try:
                                     parts = ai_response.lower().split("[topic:")
@@ -551,7 +587,7 @@ if user_query:
                                 next_q_num = current_q + 1
                                 eval_and_next_prompt += (
                                     f"3. Present **Question {next_q_num} of {total_q}** on the"
-                                    f" subject syllabus, ensuring it is entirely NEW"
+                                    f" subject syllabus (focusing on {st.session_state.target_topic}), ensuring it is entirely NEW"
                                     f" and unrepeated.\n"
                                     f"4. Format rules: Question number and text on separate lines. Provide MCQ table options A, B, C, D.\n"
                                     f"5. Include topic tag [TOPIC: Topic Name] and correct option tag [CORRECT: X] at the very end."
@@ -567,7 +603,7 @@ if user_query:
                                 weak_topics_str = (
                                     ", ".join(weak_topics)
                                     if weak_topics
-                                    else "General Core Concepts"
+                                    else st.session_state.target_topic
                                 )
                                 eval_and_next_prompt += (
                                     f"3. Since this was the FINAL question (Question {current_q}"
@@ -645,7 +681,7 @@ if user_query:
                             else:
                                 st.session_state.exam_active = False
                                 st.session_state.exam_state_stage = (
-                                    "awaiting_count"
+                                    "awaiting_config"
                                 )
 
                             st.session_state.asked_questions.append(display_response)
