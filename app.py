@@ -132,11 +132,34 @@ if learning_mode == "📝 WAEC Exam Practice":
     exam_question_type = st.sidebar.selectbox(
         "Select Question Type", ["MCQ", "Short Answer", "Essay"]
     )
+    
+    # Reset exam state if switching modes or restarting configuration
+    if "prev_learning_mode" not in st.session_state:
+        st.session_state.prev_learning_mode = learning_mode
+    if st.session_state.prev_learning_mode != learning_mode:
+        st.session_state.exam_active = False
+        st.session_state.exam_state_stage = "awaiting_config"
+        st.session_state.prev_learning_mode = learning_mode
 
 st.sidebar.markdown("---")
 input_method = st.sidebar.radio(
     "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"]
 )
+
+# Button to reset exam session manually if desired
+if learning_mode == "📝 WAEC Exam Practice":
+    if st.sidebar.button("🔄 Restart Exam Session"):
+        st.session_state.exam_active = False
+        st.session_state.exam_state_stage = "awaiting_config"
+        st.session_state.current_question_num = 1
+        st.session_state.correct_count = 0
+        st.session_state.wrong_count = 0
+        st.session_state.asked_questions = []
+        st.session_state.messages.append({
+            "role": "assistant", 
+            "content": f"Exam session reset. Please type your desired topic and number of questions (e.g., 'Databases, 2 questions')."
+        })
+        st.rerun()
 
 # Load data for selected subject
 dataset_files = subjects[selected_subject]
@@ -171,11 +194,9 @@ if "greeted" not in st.session_state:
 if "exam_active" not in st.session_state:
     st.session_state.exam_active = False
 if "exam_state_stage" not in st.session_state:
-    st.session_state.exam_state_stage = (
-        "awaiting_config"  # "awaiting_config" or "in_progress"
-    )
+    st.session_state.exam_state_stage = "awaiting_config"  # "awaiting_config" or "in_progress"
 if "total_questions" not in st.session_state:
-    st.session_state.total_questions = 5
+    st.session_state.total_questions = 2
 if "target_topic" not in st.session_state:
     st.session_state.target_topic = "General Syllabus"
 if "current_question_num" not in st.session_state:
@@ -203,35 +224,35 @@ if student_full_name and student_school:
             "messages": st.session_state.messages,
             "is_returning": True,
         }
-    elif (
-        user_key in st.session_state.user_sessions
-        and not st.session_state.greeted
-    ):
-        st.session_state.messages = st.session_state.user_sessions[user_key][
-            "messages"
-        ]
+    elif user_key in st.session_state.user_sessions and not st.session_state.greeted:
+        st.session_state.messages = st.session_state.user_sessions[user_key]["messages"]
 
 # Trigger initial personalized greeting ONLY when ALL THREE fields are provided
 if not st.session_state.greeted and student_full_name and student_school:
-    user_status_label = (
-        "Welcome back"
-        if user_key in st.session_state.user_sessions
-        else "Welcome (First-time user)"
-    )
+    user_status_label = "Welcome back" if user_key in st.session_state.user_sessions else "Welcome (First-time user)"
     initial_greeting = (
         f"Hello {student_full_name} from {student_school}! ({user_status_label})."
         f" I am Sir O.K, your AI tutor ready to help you master {selected_subject}"
         " for WAEC. How can I assist you today?"
     )
-    st.session_state.messages.append(
-        {"role": "assistant", "content": initial_greeting}
-    )
+    if learning_mode == "📝 WAEC Exam Practice":
+        initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'* or *'Databases, 2'*)."
+        st.session_state.exam_state_stage = "awaiting_config"
+
+    st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
     if user_key not in st.session_state.user_sessions:
         st.session_state.user_sessions[user_key] = {
             "messages": st.session_state.messages,
             "is_returning": False,
         }
+
+# If user just switched to Exam Practice mode and hasn't started configuration yet
+if learning_mode == "📝 WAEC Exam Practice" and not st.session_state.exam_active and st.session_state.exam_state_stage == "awaiting_config":
+    # Ensure there's a prompt asking for configuration if messages don't already prompt it
+    if not any("Exam Practice Ready" in m["content"] or "topic and number of questions" in m["content"] for m in st.session_state.messages[-2:]):
+        config_prompt = f"📝 **WAEC Exam Practice Mode Activated ({exam_question_type})**. Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'* or *'Databases, 2'*):"
+        st.session_state.messages.append({"role": "assistant", "content": config_prompt})
 
 # Display progress dashboard immediately if in WAEC Exam Practice mode and exam is active
 if (
@@ -281,7 +302,7 @@ if input_method == "⌨️ Type Question":
     ):
         prompt_label = (
             "Type your desired topic and number of questions (e.g., 'Databases,"
-            " 5 questions' or 'Networking, 3'):"
+            " 2 questions' or 'Networking, 2'):"
         )
     elif (
         learning_mode == "📝 WAEC Exam Practice"
@@ -349,10 +370,10 @@ if user_query:
 
                             digits_found = re.findall(r"\d+", user_query)
                             parsed_total = (
-                                int(digits_found[0]) if digits_found else 5
+                                int(digits_found[0]) if digits_found else 2
                             )
                             if parsed_total <= 0:
-                                parsed_total = 5
+                                parsed_total = 2
 
                             st.session_state.total_questions = parsed_total
 
@@ -377,6 +398,8 @@ if user_query:
                                 "want",
                                 "give",
                                 "me",
+                                "mcq",
+                                "mcqs",
                             ]:
                                 cleaned_topic = re.sub(
                                     rf"\b{word}\b", "", cleaned_topic, flags=re.IGNORECASE
