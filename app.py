@@ -297,7 +297,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         except Exception:
             pass
 
-    # Fully Responsive HTML/JS Animated Video Player Component (No code exposure)
+    # Fully Responsive HTML/JS Animated Video Player Component with Browser Text-to-Speech Audio & Visible Controls
     player_html = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -310,14 +310,14 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 10px;
+            padding: 5px;
             box-sizing: border-box;
         }}
         .player-container {{
             background: #1e1e1e;
             border: 3px solid #00ffcc;
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
             box-shadow: 0 4px 20px rgba(0,255,204,0.2);
             width: 100%;
             max-width: 100%;
@@ -327,31 +327,30 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             border-bottom: 1px solid #333;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }}
         .brand {{
             color: #00ffcc;
             font-weight: bold;
-            font-size: 1em;
-            letter-spacing: 0.5px;
+            font-size: 0.95em;
         }}
         .topic-badge {{
             background: #282828;
             border: 1px solid #00ffcc;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 6px;
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #00ffcc;
             font-weight: bold;
         }}
         .screen {{
             position: relative;
             width: 100%;
-            padding-bottom: 52%; /* Responsive aspect ratio 16:9 approx */
+            padding-bottom: 50%;
             background: #0a0a0a;
             border-radius: 8px;
             overflow: hidden;
@@ -368,12 +367,12 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 12px;
+            margin-top: 10px;
             background: #252525;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-radius: 8px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }}
         .btn-group {{
             display: flex;
@@ -389,7 +388,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }}
         button:hover {{
             background: #00ffcc;
@@ -402,16 +401,16 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             border-color: #00ffcc;
         }}
         .status {{
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: #aaa;
         }}
         .narration {{
-            margin-top: 12px;
+            margin-top: 10px;
             background: #181818;
             border-left: 4px solid #00ffcc;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border-radius: 4px;
-            font-size: 0.95em;
+            font-size: 0.9em;
             line-height: 1.4;
             color: #ddd;
         }}
@@ -426,18 +425,15 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         
         <div class="screen">
             <svg id="wbSvg" viewBox="0 0 600 300">
-                <!-- Central Switch/Hub -->
                 <circle cx="300" cy="150" r="32" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
                 <text x="300" y="146" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">CENTRAL</text>
                 <text x="300" y="160" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">SWITCH</text>
                 
-                <!-- Topology Links -->
                 <line x1="300" y1="150" x2="110" y2="70" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
                 <line x1="300" y1="150" x2="490" y2="70" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
                 <line x1="300" y1="150" x2="110" y2="230" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
                 <line x1="300" y1="150" x2="490" y2="230" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
 
-                <!-- Animated Data Packets -->
                 <circle cx="0" cy="0" r="6" fill="#ff0055">
                     <animateMotion id="m1" path="M 300,150 L 110,70" dur="2s" repeatCount="indefinite" />
                 </circle>
@@ -451,7 +447,6 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                     <animateMotion id="m4" path="M 490,230 L 300,150" dur="1.8s" repeatCount="indefinite" />
                 </circle>
 
-                <!-- Workstations -->
                 <g transform="translate(110, 70)">
                     <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
                     <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 1</text>
@@ -474,67 +469,66 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         <div class="controls-bar">
             <div class="btn-group">
                 <button id="playBtn" onclick="togglePlay()">⏸️ Pause</button>
-                <button onclick="speedDown()">⏪ Rev</button>
-                <button onclick="speedUp()">⏩ Fwd</button>
                 <button onclick="restartPlayer()">🔄 Restart</button>
             </div>
-            <div class="status" id="statusText">Status: Playing (1.0x)</div>
+            <div class="status" id="statusText">Status: Playing</div>
         </div>
 
         <div class="narration">
-            <b>🎙️ Sir O.K Audio Narration:</b> {explanation_text}
+            <b>🎙️ Sir O.K Audio Narration:</b> <span id="narrationText">{explanation_text}</span>
         </div>
     </div>
 
     <script>
         let isPlaying = true;
-        let currentSpeed = 1.0;
+        const svg = document.getElementById('wbSvg');
+        const narrationString = `{explanation_text}`;
+
+        function speakNarration() {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(narrationString);
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                window.speechSynthesis.speak(utterance);
+            }}
+        }}
+
+        window.addEventListener('DOMContentLoaded', () => {{
+            speakNarration();
+        }});
 
         function togglePlay() {{
             isPlaying = !isPlaying;
-            const svg = document.getElementById('wbSvg');
-            svg.style.animationPlayState = isPlaying ? 'running' : 'paused';
-            
-            const motions = svg.querySelectorAll('animateMotion');
-            motions.forEach(m => {{
-                if (!isPlaying) {{
-                    m.pauseElement();
-                }} else {{
-                    m.unpauseElement();
+            if (isPlaying) {{
+                svg.unpauseAnimations();
+                document.getElementById('playBtn').innerText = '⏸️ Pause';
+                document.getElementById('statusText').innerText = 'Status: Playing';
+                speakNarration();
+            }} else {{
+                svg.pauseAnimations();
+                document.getElementById('playBtn').innerText = '▶️ Play';
+                document.getElementById('statusText').innerText = 'Status: Paused';
+                if ('speechSynthesis' in window) {{
+                    window.speechSynthesis.cancel();
                 }}
-            }});
-
-            document.getElementById('playBtn').innerText = isPlaying ? '⏸️ Pause' : '▶️ Play';
-            document.getElementById('statusText').innerText = isPlaying ? 'Status: Playing (' + currentSpeed + 'x)' : 'Status: Paused';
-        }}
-
-        function speedDown() {{
-            currentSpeed = currentSpeed > 0.5 ? currentSpeed - 0.5 : 0.5;
-            adjustSpeed();
-        }}
-
-        function speedUp() {{
-            currentSpeed = currentSpeed < 3.0 ? currentSpeed + 0.5 : 3.0;
-            adjustSpeed();
-        }}
-
-        function adjustSpeed() {{
-            document.getElementById('statusText').innerText = 'Status: Playing (' + currentSpeed + 'x speed)';
+            }}
         }}
 
         function restartPlayer() {{
-            const svg = document.getElementById('wbSvg');
-            svg.innerHTML = svg.innerHTML;
+            svg.setCurrentTime(0);
             isPlaying = true;
+            svg.unpauseAnimations();
             document.getElementById('playBtn').innerText = '⏸️ Pause';
-            document.getElementById('statusText').innerText = 'Status: Restarted (1.0x)';
+            document.getElementById('statusText').innerText = 'Status: Playing';
+            speakNarration();
         }}
     </script>
     </body>
     </html>
     """
 
-    components.html(player_html, height=450, scrolling=False)
+    components.html(player_html, height=480, scrolling=False)
 
 else:
     for message in st.session_state.messages:
