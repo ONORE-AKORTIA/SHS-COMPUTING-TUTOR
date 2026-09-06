@@ -334,7 +334,10 @@ if user_query:
                     if learning_mode == "📝 WAEC Exam Practice":
                         if not st.session_state.exam_active:
                             try:
-                                parsed_total = int(user_query.strip())
+                                digits = "".join(
+                                    filter(str.isdigit, user_query.strip())
+                                )
+                                parsed_total = int(digits) if digits else 5
                                 if parsed_total > 0:
                                     st.session_state.total_questions = parsed_total
                             except ValueError:
@@ -354,7 +357,7 @@ if user_query:
                                 f" {selected_subject} testing {student_full_name} from"
                                 f" {student_school}. The student initiated an exam practice session"
                                 f" of {st.session_state.total_questions} questions using question type: {exam_question_type}.\n\n"
-                                f"Please generate **Question 1** of {st.session_state.total_questions} right now covering core WAEC syllabus topics for {selected_subject}.\n\n"
+                                f"Acknowledge the session size of {st.session_state.total_questions} questions briefly, then generate **Question 1** of {st.session_state.total_questions} right now covering core WAEC syllabus topics for {selected_subject}.\n\n"
                                 f"CRITICAL FORMATTING & METADATA RULES:\n"
                                 f"1. The question number (e.g., 'Question 1') and the actual"
                                 f" question text MUST be on separate lines using double"
@@ -481,7 +484,7 @@ if user_query:
                                     ),
                                     (
                                         f"KEEP PUSHING, {student_full_name}! THE CORRECT OPTION"
-                                        f" FOR THE PREVIOUS QUESTION WAS {expected_letter}."
+                                        f" WAS {expected_letter}."
                                     ),
                                 ])
 
@@ -511,22 +514,18 @@ if user_query:
                                 f"You are Sir O.K, an expert WAEC Examiner and Tutor in"
                                 f" {selected_subject} guiding {student_full_name} from"
                                 f" {student_school}.\n\n"
-                                f"Evaluation Result for Question {current_q} (Topic: {active_topic}):"
-                                f" Student answered '{user_query}'. Evaluation is"
-                                f" {'CORRECT' if is_correct else 'INCORRECT'} (Correct option"
-                                f" was {expected_letter}).\n\n"
-                                f"PREVIOUSLY ASKED QUESTIONS (DO NOT REPEAT):\n"
-                                f"{chr(10).join(st.session_state.asked_questions)}\n\n"
+                                f"Evaluation Result for Question {current_q} of {total_q} (Topic: {active_topic}):\n"
+                                f"- Student Answer: '{user_query}'\n"
+                                f"- Result: {'CORRECT' if is_correct else 'INCORRECT'} (Correct option was {expected_letter}).\n\n"
                                 f"Instructions:\n"
-                                f"1. Start your response with the evaluation remark:"
-                                f" '{eval_remark}'\n"
-                                f"2. DO NOT display the options or table of the previous question.\n"
+                                f"1. Start your response by restating Question {current_q} and giving a brief 1-sentence explanation of why Option {expected_letter} is correct.\n"
+                                f"2. Provide the evaluation remark: '{eval_remark}'\n"
                             )
 
                             if not is_last_question:
                                 next_q_num = current_q + 1
                                 eval_and_next_prompt += (
-                                    f"3. Present Question {next_q_num} of {total_q} on the"
+                                    f"3. Present **Question {next_q_num} of {total_q}** on the"
                                     f" subject syllabus, ensuring it is entirely NEW"
                                     f" and unrepeated.\n"
                                     f"4. Format rules: Question number and text on separate lines. Provide MCQ table options A, B, C, D.\n"
