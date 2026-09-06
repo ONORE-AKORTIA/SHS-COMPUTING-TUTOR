@@ -273,7 +273,7 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (WITH RESPONSIVE MEDIA PLAYER & CONTROLS)
+# 🎨 WHITEBOARD CONCEPT STUDIO (FULLY RESPONSIVE & AUTOPLAY SPEECH FIXED)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
@@ -283,21 +283,21 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         ["Star Network Topology", "Bus Network Topology", "Ring Network Topology", "SQL Database JOINs", "CPU Fetch-Decode-Execute Cycle"]
     )
     
-    # Generate audio explanation script via Groq
+    # Generate tailored audio explanation script via Groq
     client = get_groq_client()
     explanation_text = f"Welcome to Sir O.K's Whiteboard Studio. Today we are exploring {wb_concept}. In this architecture, data is transmitted efficiently across nodes, ensuring reliability and performance for WAEC examinations."
     if client:
         try:
             comp = client.chat.completions.create(
                 model=ACTIVE_MODEL,
-                messages=[{"role": "user", "content": f"Provide a brief, 2-sentence audio narration script explaining {wb_concept} for WAEC students."}],
+                messages=[{"role": "user", "content": f"Provide a concise, 2-sentence audio narration script explaining {wb_concept} clearly for WAEC computing students."}],
                 max_tokens=100,
             )
-            explanation_text = comp.choices[0].message.content
+            explanation_text = comp.choices[0].message.content.replace('"', '\\"').replace('\n', ' ')
         except Exception:
             pass
 
-    # Fully Responsive HTML/JS Animated Video Player Component with Browser Text-to-Speech Audio & Visible Controls
+    # Fully Responsive HTML/JS Component with standard Web Speech API, proper iframe height, and robust controls
     player_html = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -310,49 +310,46 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 5px;
+            padding: 4px;
             box-sizing: border-box;
         }}
         .player-container {{
             background: #1e1e1e;
-            border: 3px solid #00ffcc;
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 4px 20px rgba(0,255,204,0.2);
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0,255,204,0.15);
             width: 100%;
-            max-width: 100%;
             box-sizing: border-box;
         }}
         .player-header {{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border-bottom: 1px solid #333;
-            padding-bottom: 6px;
-            flex-wrap: wrap;
-            gap: 6px;
+            padding-bottom: 4px;
         }}
         .brand {{
             color: #00ffcc;
             font-weight: bold;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }}
         .topic-badge {{
             background: #282828;
             border: 1px solid #00ffcc;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 0.85em;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
             color: #00ffcc;
             font-weight: bold;
         }}
         .screen {{
             position: relative;
             width: 100%;
-            padding-bottom: 50%;
+            padding-bottom: 45%;
             background: #0a0a0a;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             border: 1px solid #333;
         }}
@@ -367,28 +364,24 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 8px;
             background: #252525;
-            padding: 8px 12px;
-            border-radius: 8px;
-            flex-wrap: wrap;
-            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
         }}
         .btn-group {{
             display: flex;
             gap: 6px;
-            flex-wrap: wrap;
         }}
         button {{
             background: #333;
             color: #fff;
             border: 1px solid #555;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 5px 10px;
+            border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85em;
+            font-size: 0.8em;
         }}
         button:hover {{
             background: #00ffcc;
@@ -401,17 +394,17 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             border-color: #00ffcc;
         }}
         .status {{
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #aaa;
         }}
         .narration {{
-            margin-top: 10px;
+            margin-top: 8px;
             background: #181818;
-            border-left: 4px solid #00ffcc;
-            padding: 8px 12px;
+            border-left: 3px solid #00ffcc;
+            padding: 6px 10px;
             border-radius: 4px;
-            font-size: 0.9em;
-            line-height: 1.4;
+            font-size: 0.85em;
+            line-height: 1.3;
             color: #ddd;
         }}
     </style>
@@ -419,49 +412,49 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
     <body>
     <div class="player-container">
         <div class="player-header">
-            <span class="brand">📺 SIR O.K. WHITEBOARD STUDIO</span>
-            <span class="topic-badge" id="topicTitle">{wb_concept}</span>
+            <span class="brand">📺 SIR O.K. STUDIO</span>
+            <span class="topic-badge">{wb_concept}</span>
         </div>
         
         <div class="screen">
-            <svg id="wbSvg" viewBox="0 0 600 300">
-                <circle cx="300" cy="150" r="32" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
-                <text x="300" y="146" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">CENTRAL</text>
-                <text x="300" y="160" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">SWITCH</text>
+            <svg id="wbSvg" viewBox="0 0 600 280">
+                <circle cx="300" cy="140" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
+                <text x="300" y="136" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CENTRAL</text>
+                <text x="300" y="148" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">SWITCH</text>
                 
-                <line x1="300" y1="150" x2="110" y2="70" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="150" x2="490" y2="70" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="150" x2="110" y2="230" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="150" x2="490" y2="230" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="140" x2="110" y2="65" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="140" x2="490" y2="65" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="140" x2="110" y2="215" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="140" x2="490" y2="215" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
 
-                <circle cx="0" cy="0" r="6" fill="#ff0055">
-                    <animateMotion id="m1" path="M 300,150 L 110,70" dur="2s" repeatCount="indefinite" />
+                <circle cx="0" cy="0" r="5" fill="#ff0055">
+                    <animateMotion path="M 300,140 L 110,65" dur="2s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="0" cy="0" r="6" fill="#00ffcc">
-                    <animateMotion id="m2" path="M 300,150 L 490,70" dur="1.5s" repeatCount="indefinite" />
+                <circle cx="0" cy="0" r="5" fill="#00ffcc">
+                    <animateMotion path="M 300,140 L 490,65" dur="1.5s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="0" cy="0" r="6" fill="#ffbb00">
-                    <animateMotion id="m3" path="M 110,230 L 300,150" dur="2.2s" repeatCount="indefinite" />
+                <circle cx="0" cy="0" r="5" fill="#ffbb00">
+                    <animateMotion path="M 110,215 L 300,140" dur="2.2s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="0" cy="0" r="6" fill="#00ffcc">
-                    <animateMotion id="m4" path="M 490,230 L 300,150" dur="1.8s" repeatCount="indefinite" />
+                <circle cx="0" cy="0" r="5" fill="#00ffcc">
+                    <animateMotion path="M 490,215 L 300,140" dur="1.8s" repeatCount="indefinite" />
                 </circle>
 
-                <g transform="translate(110, 70)">
-                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 1</text>
+                <g transform="translate(110, 65)">
+                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 1</text>
                 </g>
-                <g transform="translate(490, 70)">
-                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 2</text>
+                <g transform="translate(490, 65)">
+                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 2</text>
                 </g>
-                <g transform="translate(110, 230)">
-                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 3</text>
+                <g transform="translate(110, 215)">
+                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 3</text>
                 </g>
-                <g transform="translate(490, 230)">
-                    <rect x="-26" y="-18" width="52" height="36" rx="6" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">PC 4</text>
+                <g transform="translate(490, 215)">
+                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 4</text>
                 </g>
             </svg>
         </div>
@@ -470,32 +463,34 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             <div class="btn-group">
                 <button id="playBtn" onclick="togglePlay()">⏸️ Pause</button>
                 <button onclick="restartPlayer()">🔄 Restart</button>
+                <button onclick="speakNarration()">🔊 Replay Audio</button>
             </div>
-            <div class="status" id="statusText">Status: Playing</div>
+            <div class="status" id="statusText">Playing</div>
         </div>
 
         <div class="narration">
-            <b>🎙️ Sir O.K Audio Narration:</b> <span id="narrationText">{explanation_text}</span>
+            <b>🎙️ Sir O.K Audio Narration:</b> {explanation_text}
         </div>
     </div>
 
     <script>
         let isPlaying = true;
         const svg = document.getElementById('wbSvg');
-        const narrationString = `{explanation_text}`;
+        const narrationText = "{explanation_text}";
 
         function speakNarration() {{
             if ('speechSynthesis' in window) {{
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(narrationString);
-                utterance.rate = 1.0;
+                const utterance = new SpeechSynthesisUtterance(narrationText);
+                utterance.rate = 0.95;
                 utterance.pitch = 1.0;
                 window.speechSynthesis.speak(utterance);
             }}
         }}
 
-        window.addEventListener('DOMContentLoaded', () => {{
-            speakNarration();
+        // Attempt autoplay on load
+        window.addEventListener('load', () => {{
+            setTimeout(speakNarration, 300);
         }});
 
         function togglePlay() {{
@@ -503,12 +498,12 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             if (isPlaying) {{
                 svg.unpauseAnimations();
                 document.getElementById('playBtn').innerText = '⏸️ Pause';
-                document.getElementById('statusText').innerText = 'Status: Playing';
+                document.getElementById('statusText').innerText = 'Playing';
                 speakNarration();
             }} else {{
                 svg.pauseAnimations();
                 document.getElementById('playBtn').innerText = '▶️ Play';
-                document.getElementById('statusText').innerText = 'Status: Paused';
+                document.getElementById('statusText').innerText = 'Paused';
                 if ('speechSynthesis' in window) {{
                     window.speechSynthesis.cancel();
                 }}
@@ -520,7 +515,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             isPlaying = true;
             svg.unpauseAnimations();
             document.getElementById('playBtn').innerText = '⏸️ Pause';
-            document.getElementById('statusText').innerText = 'Status: Playing';
+            document.getElementById('statusText').innerText = 'Playing';
             speakNarration();
         }}
     </script>
@@ -528,7 +523,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
     </html>
     """
 
-    components.html(player_html, height=480, scrolling=False)
+    components.html(player_html, height=440, scrolling=False)
 
 else:
     for message in st.session_state.messages:
@@ -927,7 +922,7 @@ if user_query:
                                         f"Relevant Textbook Content:\n{filtered_context}"
                                     ),
                                 },
-                                {"role": "system", "content": persona_prompt},
+                                {"role": "system", "content": persona_proper} if 'persona_proper' in locals() else {"role": "system", "content": persona_prompt},
                                 {"role": "user", "content": user_query},
                             ],
                             max_tokens=400,
