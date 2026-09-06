@@ -2,6 +2,7 @@ import base64
 import os
 import random
 import json
+import datetime
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -15,17 +16,21 @@ st.set_page_config(
     page_title="SHS Computing AI Tutor", page_icon="💻", layout="wide"
 )
 
-# Inject custom CSS to maximize width and responsiveness across all modes
+# Inject custom CSS to maximize width, responsiveness across all modes, and eliminate scroll traps
 st.markdown("""
     <style>
     .block-container {
         max-width: 95% !important;
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
     .stChatInput {
+        max-width: 100% !important;
+    }
+    iframe {
+        width: 100% !important;
         max-width: 100% !important;
     }
     </style>
@@ -251,6 +256,7 @@ if learning_mode == "📝 WAEC Exam Practice":
         st.session_state.correct_count = 0
         st.session_state.wrong_count = 0
         st.session_state.asked_questions = []
+        st.session_state.exam_question_logs = []
         st.session_state.messages.append({
             "role": "assistant", 
             "content": f"Exam session reset. Please type your desired topic and number of questions (e.g., 'Databases, 2 questions')."
@@ -278,13 +284,19 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Initialize session state stores
+# Initialize session state stores & session time logs
 if "user_sessions" not in st.session_state:
     st.session_state.user_sessions = {}
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "greeted" not in st.session_state:
     st.session_state.greeted = False
+
+# Session time tracking variables
+if "session_login_time" not in st.session_state:
+    st.session_state.session_login_time = datetime.datetime.now()
+if "exam_question_logs" not in st.session_state:
+    st.session_state.exam_question_logs = []
 
 # Exam session state variables
 if "exam_active" not in st.session_state:
@@ -327,7 +339,7 @@ if not st.session_state.greeted and student_full_name and student_school:
     user_status_label = "Welcome back" if user_key in st.session_state.user_sessions else "Welcome (First-time user)"
     initial_greeting = (
         f"Hello {student_full_name} from {student_school}! ({user_status_label})."
-        f" I am Sir O.K, your AI tutor ready to help you master {selected_subject}"
+        f" I am Sir OK, your AI tutor ready to help you master {selected_subject}"
         " for WAEC. How can I assist you today?"
     )
     if learning_mode == "📝 WAEC Exam Practice":
@@ -370,7 +382,7 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (WITH RIGHT SIDEBAR & <121s YOUTUBE FALLBACKS)
+# 🎨 WHITEBOARD CONCEPT STUDIO (FULLY RESPONSIVE & LIVE AUDIO-TO-TEXT TRANSCRIPTION)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     curr_hierarchy = get_curriculum_hierarchy()
@@ -378,8 +390,8 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         "General Concepts": ["Introduction and Fundamental Principles"]
     })
 
-    # Main layout split: Left viewport container (80%), Right custom control sidebar (20%)
-    col_main_vp, col_side_ctrl = st.columns([4, 1])
+    # Main layout split: Left viewport container (78%), Right custom control sidebar (22%)
+    col_main_vp, col_side_ctrl = st.columns([78, 22])
 
     with col_side_ctrl:
         st.markdown("### 🎛️ Studio Controls")
@@ -425,7 +437,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 else:
                     use_video_fallback = True
                     yt_video_id = "fZW_qA8c3Gg"  # Curated computing video <121s
-                    text = "Curated WAEC educational video explaining network topology architectural layouts under 121 seconds."
+                    text = "Curated WAEC educational video explaining network topology architectural layouts under 121 seconds with live audio-to-text transcript sync."
             elif "Database Systems" in topic:
                 if "Entity-Relationship" in subtopic:
                     svg = """
@@ -448,11 +460,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 else:
                     use_video_fallback = True
                     yt_video_id = "HWD904aX5bs"  # Curated database video <121s
-                    text = "Database normalization and SQL constraints explained via curated WAEC instructional video."
+                    text = "Database normalization and SQL constraints explained via curated WAEC instructional video with live audio transcription."
             else:
                 use_video_fallback = True
                 yt_video_id = "9Q6isjw02Us"  # Cybersecurity overview <121s
-                text = "Cybersecurity fundamentals and data protection principles explained in under 121 seconds."
+                text = "Cybersecurity fundamentals and data protection principles explained in under 121 seconds with live speech transcript."
         elif subject == "ICT":
             if "Computer Architecture" in topic:
                 svg = """
@@ -471,11 +483,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             else:
                 use_video_fallback = True
                 yt_video_id = "GcDshWEDDHM"  # ICT hardware video <121s
-                text = "Curated video explaining ICT hardware components and peripherals under 121 seconds."
+                text = "Curated video explaining ICT hardware components and peripherals under 121 seconds with live speech transcription."
         else:
             use_video_fallback = True
             yt_video_id = "8HYvFejdGSQ"  # Robotics video <121s
-            text = "Robotic sensors and microcontrollers explained in under 121 seconds."
+            text = "Robotic sensors and microcontrollers explained in under 121 seconds with live active transcription."
 
         return svg, text, use_video_fallback, yt_video_id
 
@@ -488,49 +500,53 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         <head>
         <meta charset="UTF-8">
         <style>
+            * {{ box-sizing: border-box; }}
             body {{
                 background-color: #121212;
                 color: #ffffff;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 margin: 0;
-                padding: 4px;
-                box-sizing: border-box;
+                padding: 2px;
+                width: 100%;
+                overflow-x: hidden;
             }}
             .player-container {{
                 background: #1e1e1e;
                 border: 2px solid #00ffcc;
-                border-radius: 10px;
-                padding: 16px;
+                border-radius: 8px;
+                padding: 12px;
                 box-shadow: 0 4px 20px rgba(0,255,204,0.2);
                 width: 100%;
-                box-sizing: border-box;
+                max-width: 100%;
             }}
             .player-header {{
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 10px;
+                margin-bottom: 8px;
                 border-bottom: 1px solid #333;
-                padding-bottom: 8px;
+                padding-bottom: 6px;
+                flex-wrap: wrap;
+                gap: 5px;
             }}
             .brand {{
                 color: #00ffcc;
                 font-weight: bold;
-                font-size: 0.95em;
+                font-size: 0.9em;
             }}
             .topic-badge {{
                 background: #282828;
                 border: 1px solid #00ffcc;
-                padding: 3px 10px;
+                padding: 2px 8px;
                 border-radius: 4px;
-                font-size: 0.8em;
+                font-size: 0.75em;
                 color: #00ffcc;
                 font-weight: bold;
             }}
             .screen {{
                 position: relative;
                 width: 100%;
-                padding-bottom: 42%;
+                padding-bottom: 38%;
                 background: #0a0a0a;
                 border-radius: 6px;
                 overflow: hidden;
@@ -548,16 +564,16 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-top: 12px;
+                margin-top: 10px;
                 background: #252525;
-                padding: 10px 14px;
+                padding: 8px 12px;
                 border-radius: 6px;
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 6px;
             }}
             .btn-group {{
                 display: flex;
-                gap: 8px;
+                gap: 6px;
                 align-items: center;
                 width: 100%;
                 justify-content: space-between;
@@ -566,11 +582,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 background: #333;
                 color: #fff;
                 border: 1px solid #555;
-                padding: 8px 14px;
+                padding: 6px 12px;
                 border-radius: 4px;
                 font-weight: bold;
                 cursor: pointer;
-                font-size: 0.8em;
+                font-size: 0.78em;
                 transition: all 0.2s;
                 flex-grow: 1;
             }}
@@ -585,29 +601,29 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 border-color: #00ffcc;
             }}
             .transcript-box {{
-                margin-top: 10px;
+                margin-top: 8px;
                 background: #181818;
                 border-left: 3px solid #00ffcc;
-                padding: 10px 14px;
+                padding: 8px 12px;
                 border-radius: 4px;
-                font-size: 0.9em;
-                line-height: 1.5;
+                font-size: 0.85em;
+                line-height: 1.4;
                 color: #ddd;
-                max-height: 85px;
+                max-height: 75px;
                 overflow-y: auto;
-                box-sizing: border-box;
+                width: 100%;
             }}
             .transcript-title {{
                 font-weight: bold;
                 color: #00ffcc;
-                margin-bottom: 3px;
-                font-size: 0.8em;
+                margin-bottom: 2px;
+                font-size: 0.75em;
                 text-transform: uppercase;
             }}
             .highlighted-word {{
                 background: #00ffcc;
                 color: #000;
-                padding: 0 3px;
+                padding: 0 2px;
                 border-radius: 3px;
                 font-weight: bold;
             }}
@@ -618,7 +634,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         <body>
         <div class="player-container">
             <div class="player-header">
-                <span class="brand">📺 SIR O.K. STUDIO ({ "YOUTUBE FALLBACK <121s" if use_video_fallback else "WHITEBOARD ANIMATION" })</span>
+                <span class="brand">📺 SIR OK STUDIO ({ "YOUTUBE LIVE TRANSCRIPTION" if use_video_fallback else "WHITEBOARD ANIMATION" })</span>
                 <span class="topic-badge">{chosen_topic} &gt; {chosen_subtopic}</span>
             </div>
             
@@ -626,7 +642,6 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 {"<iframe src='https://www.youtube.com/embed/" + yt_video_id + "?rel=0&autoplay=1' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>" if use_video_fallback else "<svg id='wbSvg' viewBox='0 0 600 240'>" + current_svg + "</svg>"}
             </div>
 
-            {"<!--" if use_video_fallback else ""}
             <div class="controls-bar">
                 <div class="btn-group">
                     <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause Audio</button>
@@ -634,13 +649,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 </div>
             </div>
             <div class="transcript-box" id="transcriptBox">
-                <div class="transcript-title">🎙️ Synchronized Audio Explanation &amp; Word Highlighting</div>
+                <div class="transcript-title">🎙️ {"Live YouTube Audio Transcription" if use_video_fallback else "Synchronized Audio Explanation & Word Highlighting"}</div>
                 <div id="liveCaptionText"></div>
             </div>
-            {"-->" if use_video_fallback else ""}
         </div>
 
-        {"<!--" if use_video_fallback else ""}
         <script>
             const fullText = "{current_text}";
             let words = fullText.split(/\\s+/);
@@ -714,29 +727,28 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 playSpeech();
             }});
         </script>
-        {"-->" if use_video_fallback else ""}
         </body>
         </html>
         """
 
-        components.html(player_html, height=540, scrolling=False)
+        components.html(player_html, height=480, scrolling=False)
 
 else:
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-# Export and Print controls side-by-side if report card / revision guide exists
-if st.session_state.last_revision_guide:
+# Export and Print controls side-by-side if report card / revision guide exists (WAEC Exams Mode Only)
+if learning_mode == "📝 WAEC Exam Practice" and st.session_state.last_revision_guide:
     st.sidebar.markdown("---")
-    st.sidebar.subheader("📥 Report Card & Study Tools")
+    st.sidebar.subheader("📥 WAEC Report Card & Study Tools")
     
     col_exp1, col_exp2 = st.sidebar.columns(2)
     with col_exp1:
         st.download_button(
             label="📥 Download PDF",
             data=st.session_state.last_revision_guide,
-            file_name=f"SirOK_{selected_subject}_ReportCard.txt",
+            file_name=f"SirOK_{selected_subject}_WAEC_ReportCard.txt",
             mime="text/plain",
         )
     with col_exp2:
@@ -855,12 +867,13 @@ if user_query:
                             st.session_state.correct_count = 0
                             st.session_state.wrong_count = 0
                             st.session_state.asked_questions = []
+                            st.session_state.exam_question_logs = []
                             st.session_state.current_correct_option = None
                             st.session_state.topic_performance = {}
                             st.session_state.last_revision_guide = None
 
                             start_prompt = (
-                                f"You are Sir O.K, an expert WAEC Examiner in"
+                                f"You are Sir OK, an expert WAEC Examiner in"
                                 f" {selected_subject} testing {student_full_name} from"
                                 f" {student_school}. The student requested an exam practice session"
                                 f" of exactly **{st.session_state.total_questions} questions** focusing on: **{st.session_state.target_topic}** using question type: {exam_question_type}.\n\n"
@@ -939,6 +952,20 @@ if user_query:
                             ):
                                 is_correct = True
 
+                            # Log question item details for exportable WAEC report card
+                            q_text_summary = st.session_state.asked_questions[-1] if st.session_state.asked_questions else f"Question {current_q}"
+                            q_summary_snippet = q_text_summary.split("\n")[0][:80]
+                            question_log_entry = {
+                                "q_num": current_q,
+                                "topic": active_topic,
+                                "item_desc": q_summary_snippet,
+                                "user_answer": user_ans_clean,
+                                "correct_answer": expected_letter,
+                                "result": "CORRECT" if is_correct else "INCORRECT",
+                                "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                            }
+                            st.session_state.exam_question_logs.append(question_log_entry)
+
                             if (
                                 active_topic
                                 not in st.session_state.topic_performance
@@ -986,7 +1013,7 @@ if user_query:
                                         weak_topics.append(top)
 
                             eval_and_next_prompt = (
-                                f"You are Sir O.K, an expert WAEC Examiner in"
+                                f"You are Sir OK, an expert WAEC Examiner in"
                                 f" {selected_subject} guiding {student_full_name}.\n\n"
                                 f"Evaluation Result for Question {current_q} of {total_q} (Topic: {active_topic}):\n"
                                 f"- Student Answer: '{user_query}'\n"
@@ -1000,12 +1027,30 @@ if user_query:
                                     f"Include topic tag [TOPIC: Topic Name] and correct option tag [CORRECT: X] at the very end."
                                 )
                             else:
+                                session_logout_time = datetime.datetime.now()
+                                session_duration = session_logout_time - st.session_state.session_login_time
+                                duration_mins = int(session_duration.total_seconds() // 60)
+                                duration_secs = int(session_duration.total_seconds() % 60)
+
+                                test_items_table = "\n### 📋 Detailed Test Items Breakdown\n"
+                                test_items_table += "| Q# | Topic | Item Summary | Your Ans | Correct | Status |\n"
+                                test_items_table += "|---|---|---|---|---|---|\n"
+                                for log in st.session_state.exam_question_logs:
+                                    test_items_table += f"| {log['q_num']} | {log['topic']} | {log['item_desc']} | {log['user_answer']} | {log['correct_answer']} | {log['result']} |\n"
+
                                 evaluation_summary_score = (
-                                    f"\n\n### 📊 Final Examination Summary\n"
+                                    f"\n\n### 📊 WAEC Examination & Session Summary\n"
+                                    f"- **Student Name:** {student_full_name}\n"
+                                    f"- **School:** {student_school}\n"
+                                    f"- **Session Date:** {st.session_state.session_login_time.strftime('%Y-%m-%d')}\n"
+                                    f"- **Login Time:** {st.session_state.session_login_time.strftime('%H:%M:%S')}\n"
+                                    f"- **Logout Time:** {session_logout_time.strftime('%H:%M:%S')}\n"
+                                    f"- **Total Time Spent:** {duration_mins} minutes {duration_secs} seconds\n"
                                     f"- **Total Questions:** {total_q}\n"
                                     f"- **Correct Answers:** {st.session_state.correct_count}\n"
                                     f"- **Wrong Answers:** {st.session_state.wrong_count}\n"
-                                    f"- **Overall Score:** {(st.session_state.correct_count / total_q) * 100:.1f}%\n"
+                                    f"- **Overall Performance Score:** {(st.session_state.correct_count / total_q) * 100:.1f}%\n"
+                                    + test_items_table
                                 )
                                 weak_topics_str = (
                                     ", ".join(weak_topics)
@@ -1065,11 +1110,26 @@ if user_query:
                                             tag.upper()
                                         )[0].split(tag)[0]
                             else:
+                                session_logout_time = datetime.datetime.now()
+                                session_duration = session_logout_time - st.session_state.session_login_time
+                                duration_mins = int(session_duration.total_seconds() // 60)
+                                duration_secs = int(session_duration.total_seconds() % 60)
+
+                                report_card_text_table = "DETAILED TEST ITEMS BREAKDOWN:\n"
+                                for log in st.session_state.exam_question_logs:
+                                    report_card_text_table += f"Q{log['q_num']} | Topic: {log['topic']} | Your Ans: {log['user_answer']} | Correct: {log['correct_answer']} | Status: {log['result']}\n"
+
                                 st.session_state.last_revision_guide = (
-                                    f"SIR O.K AI TUTOR - OFFICIAL REPORT CARD & REVISION GUIDE\n"
+                                    f"SIR OK AI TUTOR - OFFICIAL WAEC REPORT CARD & TIME LOG\n"
                                     f"Student: {student_full_name} | School: {student_school}\n"
                                     f"Subject: {selected_subject}\n"
+                                    f"Session Date: {st.session_state.session_login_time.strftime('%Y-%m-%d')}\n"
+                                    f"Login Time: {st.session_state.session_login_time.strftime('%H:%M:%S')}\n"
+                                    f"Logout Time: {session_logout_time.strftime('%H:%M:%S')}\n"
+                                    f"Total Time Spent: {duration_mins} mins {duration_secs} secs\n"
+                                    f"Overall Score: {(st.session_state.correct_count / total_q) * 100:.1f}% ({st.session_state.correct_count}/{total_q})\n"
                                     f"--------------------------------------------------\n\n"
+                                    f"{report_card_text_table}\n\n"
                                     + display_response
                                 )
 
@@ -1090,7 +1150,7 @@ if user_query:
                             )
                     else:
                         persona_prompt = (
-                            f"You are Sir O.K, an expert SHS AI Tutor helping"
+                            f"You are Sir OK, an expert SHS AI Tutor helping"
                             f" {student_full_name} from {student_school} in"
                             f" {selected_subject}."
                         )
