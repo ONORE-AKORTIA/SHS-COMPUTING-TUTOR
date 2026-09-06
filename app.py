@@ -122,7 +122,7 @@ student_school = st.sidebar.text_input("School Name", value="")
 
 st.sidebar.markdown("---")
 learning_mode = st.sidebar.radio(
-    "Select Mode", ["💬 Study & Chat", "📝 WAEC Exam Practice"]
+    "Select Mode", ["💬 Study & Chat", "📝 WAEC Exam Practice", "🎨 Whiteboard Concept Studio"]
 )
 
 # Sub-dropdown for WAEC Exam Practice question types
@@ -238,6 +238,8 @@ if not st.session_state.greeted and student_full_name and student_school:
     if learning_mode == "📝 WAEC Exam Practice":
         initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'* or *'Databases, 2'*)."
         st.session_state.exam_state_stage = "awaiting_config"
+    elif learning_mode == "🎨 Whiteboard Concept Studio":
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Type any computing concept below (e.g., *'Star Topology'*, *'Database Normalization'*, or *'CPU Fetch-Decode-Execute Cycle'*) to generate an animated whiteboard visual breakdown!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -275,10 +277,48 @@ if (
         ),
     )
 
-# Display chat history
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# Display chat history or Whiteboard Studio interface
+if learning_mode == "🎨 Whiteboard Concept Studio":
+    st.markdown("### 🎨 Sir O.K Whiteboard Animation Studio")
+    st.markdown("Visualize complex computing concepts with animated step-by-step whiteboard sketches and structured breakdowns.")
+    
+    wb_concept = st.text_input("Enter concept to visualize on whiteboard:", placeholder="e.g., Star Network Topology, SQL JOINs, Fetch-Decode Cycle")
+    if st.button("✨ Generate Whiteboard Animation & Breakdown", type="primary"):
+        if wb_concept:
+            with st.spinner(f"Drawing whiteboard animation for '{wb_concept}'..."):
+                client = get_groq_client()
+                if client:
+                    wb_prompt = (
+                        f"You are Sir O.K, an expert master teacher in {selected_subject}. "
+                        f"The student requested a visual whiteboard breakdown and step-by-step animated concept explanation for: '{wb_concept}'.\n\n"
+                        f"Format your response as an interactive animated whiteboard storyboard:\n"
+                        f"1. **Title Banner:** Clear title with a whiteboard marker aesthetic (e.g., `🖍️ WHITEBOARD SKETCH: [Concept Name]`).\n"
+                        f"2. **Step-by-Step Sketch Breakdown:** 3 to 4 sequential visual steps using clear ASCII/Markdown diagrams, boxes, arrows, or flowcharts representing how the system works.\n"
+                        f"3. **Key Technical Takeaways:** Bullet points explaining the core mechanism for WAEC exams."
+                    )
+                    completion = client.chat.completions.create(
+                        model=ACTIVE_MODEL,
+                        messages=[{"role": "user", "content": wb_prompt}],
+                        max_tokens=800,
+                        temperature=0.3,
+                    )
+                    wb_output = completion.choices[0].message.content
+                    
+                    # Render with custom CSS Whiteboard styling container
+                    st.markdown(
+                        f"""
+                        <div style="background-color: #f8f9fa; border: 3px solid #343a40; border-radius: 12px; padding: 25px; box-shadow: 4px 4px 0px #343a40; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 20px;">
+                            {wb_output.replace('\n', '<br>')}
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+        else:
+            st.warning("Please enter a concept to visualize.")
+else:
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 # Provide download button in sidebar if a revision guide is available
 if st.session_state.last_revision_guide:
@@ -294,37 +334,38 @@ if st.session_state.last_revision_guide:
 # Handle user input based on sidebar choice (Text or Voice)
 user_query = None
 
-if input_method == "⌨️ Type Question":
-    if (
-        learning_mode == "📝 WAEC Exam Practice"
-        and st.session_state.exam_state_stage == "awaiting_config"
-    ):
-        prompt_label = (
-            "Type your desired topic and number of questions (e.g., 'Databases,"
-            " 2 questions' or 'Networking, 2'):"
-        )
-    elif (
-        learning_mode == "📝 WAEC Exam Practice"
-        and st.session_state.exam_state_stage == "in_progress"
-    ):
-        prompt_label = (
-            f"Type your answer for Question {st.session_state.current_question_num}"
-            f" of {st.session_state.total_questions} (e.g., A, B, C, or D)..."
-        )
+if learning_mode != "🎨 Whiteboard Concept Studio":
+    if input_method == "⌨️ Type Question":
+        if (
+            learning_mode == "📝 WAEC Exam Practice"
+            and st.session_state.exam_state_stage == "awaiting_config"
+        ):
+            prompt_label = (
+                "Type your desired topic and number of questions (e.g., 'Databases,"
+                " 2 questions' or 'Networking, 2'):"
+            )
+        elif (
+            learning_mode == "📝 WAEC Exam Practice"
+            and st.session_state.exam_state_stage == "in_progress"
+        ):
+            prompt_label = (
+                f"Type your answer for Question {st.session_state.current_question_num}"
+                f" of {st.session_state.total_questions} (e.g., A, B, C, or D)..."
+            )
+        else:
+            prompt_label = f"Ask a question about {selected_subject}..."
+        user_query = st.chat_input(prompt_label)
     else:
-        prompt_label = f"Ask a question about {selected_subject}..."
-    user_query = st.chat_input(prompt_label)
-else:
-    st.markdown("### Record your input:")
-    audio_value = st.audio_input("Click to record your voice")
-    if audio_value:
-        with st.spinner("Transcribing your voice..."):
-            transcribed_text = transcribe_audio(audio_value)
-            if transcribed_text:
-                st.success(f'Transcribed: "{transcribed_text}"')
-                user_query = transcribed_text
-            else:
-                st.error("Could not transcribe audio. Please try again.")
+        st.markdown("### Record your input:")
+        audio_value = st.audio_input("Click to record your voice")
+        if audio_value:
+            with st.spinner("Transcribing your voice..."):
+                transcribed_text = transcribe_audio(audio_value)
+                if transcribed_text:
+                    st.success(f'Transcribed: "{transcribed_text}"')
+                    user_query = transcribed_text
+                else:
+                    st.error("Could not transcribe audio. Please try again.")
 
 if user_query:
     st.session_state.messages.append({"role": "user", "content": user_query})
