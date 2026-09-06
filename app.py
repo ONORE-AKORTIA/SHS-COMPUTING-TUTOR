@@ -170,6 +170,10 @@ if "greeted" not in st.session_state:
 # Exam session & Knowledge Tracing state variables
 if "exam_active" not in st.session_state:
     st.session_state.exam_active = False
+if "exam_state_stage" not in st.session_state:
+    st.session_state.exam_state_stage = (
+        "awaiting_count"  # "awaiting_count" or "in_progress"
+    )
 if "total_questions" not in st.session_state:
     st.session_state.total_questions = 5
 if "current_question_num" not in st.session_state:
@@ -228,7 +232,11 @@ if not st.session_state.greeted and student_full_name and student_school:
         }
 
 # Display progress dashboard immediately if in WAEC Exam Practice mode and exam is active
-if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
+if (
+    learning_mode == "📝 WAEC Exam Practice"
+    and st.session_state.exam_active
+    and st.session_state.exam_state_stage == "in_progress"
+):
     answered = st.session_state.current_question_num - 1
     total = st.session_state.total_questions
     correct = st.session_state.correct_count
@@ -265,12 +273,16 @@ if st.session_state.last_revision_guide:
 user_query = None
 
 if input_method == "⌨️ Type Question":
-    if learning_mode == "📝 WAEC Exam Practice" and not st.session_state.exam_active:
+    if (
+        learning_mode == "📝 WAEC Exam Practice"
+        and st.session_state.exam_state_stage == "awaiting_count"
+    ):
         prompt_label = (
             "Type the total number of questions you want for this session (e.g., 5):"
         )
     elif (
-        learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active
+        learning_mode == "📝 WAEC Exam Practice"
+        and st.session_state.exam_state_stage == "in_progress"
     ):
         prompt_label = (
             f"Type your answer for Question {st.session_state.current_question_num}"
@@ -328,7 +340,7 @@ if user_query:
             with st.spinner("Thinking..."):
                 try:
                     if learning_mode == "📝 WAEC Exam Practice":
-                        if not st.session_state.exam_active:
+                        if st.session_state.exam_state_stage == "awaiting_count":
                             try:
                                 digits = "".join(
                                     filter(str.isdigit, user_query.strip())
@@ -340,6 +352,7 @@ if user_query:
                                 st.session_state.total_questions = 5
 
                             st.session_state.exam_active = True
+                            st.session_state.exam_state_stage = "in_progress"
                             st.session_state.current_question_num = 1
                             st.session_state.correct_count = 0
                             st.session_state.wrong_count = 0
@@ -352,10 +365,10 @@ if user_query:
                                 f"You are Sir O.K, an expert WAEC Examiner in"
                                 f" {selected_subject} testing {student_full_name} from"
                                 f" {student_school}. The student initiated an exam practice session"
-                                f" of {st.session_state.total_questions} questions using question type: {exam_question_type}.\n\n"
-                                f"Acknowledge the session size of {st.session_state.total_questions} questions briefly, then generate **Question 1** of {st.session_state.total_questions} right now covering core WAEC syllabus topics for {selected_subject}.\n\n"
+                                f" of exactly {st.session_state.total_questions} questions using question type: {exam_question_type}.\n\n"
+                                f"Generate **Question 1** of {st.session_state.total_questions} right now covering core WAEC syllabus topics for {selected_subject}.\n\n"
                                 f"CRITICAL FORMATTING & METADATA RULES:\n"
-                                f"1. The question number (e.g., 'Question 1') and the actual"
+                                f"1. The question number (e.g., 'Question 1 of {st.session_state.total_questions}') and the actual"
                                 f" question text MUST be on separate lines using double"
                                 f" newlines.\n"
                                 f"2. Every question must include a complete, explicit question statement.\n"
@@ -508,7 +521,7 @@ if user_query:
                                     if pct < 70:
                                         weak_topics.append(top)
 
-                            # Retrieve previously asked questions from session state to feed into context, preventing the model from asking for them
+                            # Retrieve previously asked questions from session state to feed into context, preventing repetition
                             prev_questions_text = ""
                             if st.session_state.asked_questions:
                                 prev_questions_text = "\n".join(
@@ -524,7 +537,7 @@ if user_query:
                                 f"You are Sir O.K, an expert WAEC Examiner and Tutor in"
                                 f" {selected_subject} guiding {student_full_name} from"
                                 f" {student_school}.\n\n"
-                                f"Here are the previous questions already asked in this session so you have full record of them:\n"
+                                f"Here are all the previous questions already asked in this session:\n"
                                 f"{prev_questions_text}\n\n"
                                 f"Evaluation Result for Question {current_q} of {total_q} (Topic: {active_topic}):\n"
                                 f"- Student Answer: '{user_query}'\n"
@@ -579,7 +592,7 @@ if user_query:
                                     {"role": "system", "content": eval_and_next_prompt},
                                     {
                                         "role": "user",
-                                        "content": f"Proceed with evaluation and next step without asking for any missing text.",
+                                        "content": f"Proceed immediately with evaluation and the next question step without asking for any missing text.",
                                     },
                                 ],
                                 max_tokens=1500,
@@ -631,6 +644,9 @@ if user_query:
                                 st.session_state.current_question_num += 1
                             else:
                                 st.session_state.exam_active = False
+                                st.session_state.exam_state_stage = (
+                                    "awaiting_count"
+                                )
 
                             st.session_state.asked_questions.append(display_response)
                             st.markdown(display_response)
