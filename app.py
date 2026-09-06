@@ -249,7 +249,6 @@ if not st.session_state.greeted and student_full_name and student_school:
 
 # If user just switched to Exam Practice mode and hasn't started configuration yet
 if learning_mode == "📝 WAEC Exam Practice" and not st.session_state.exam_active and st.session_state.exam_state_stage == "awaiting_config":
-    # Ensure there's a prompt asking for configuration if messages don't already prompt it
     if not any("Exam Practice Ready" in m["content"] or "topic and number of questions" in m["content"] for m in st.session_state.messages[-2:]):
         config_prompt = f"📝 **WAEC Exam Practice Mode Activated ({exam_question_type})**. Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'* or *'Databases, 2'*):"
         st.session_state.messages.append({"role": "assistant", "content": config_prompt})
@@ -361,7 +360,7 @@ if user_query:
     client = get_groq_client()
     if client:
         with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
+            with st.spinner("Preparing your exam session..."):
                 try:
                     if learning_mode == "📝 WAEC Exam Practice":
                         if st.session_state.exam_state_stage == "awaiting_config":
@@ -425,18 +424,14 @@ if user_query:
                                 f" {selected_subject} testing {student_full_name} from"
                                 f" {student_school}. The student requested an exam practice session"
                                 f" of exactly **{st.session_state.total_questions} questions** focusing on the topic/area: **{st.session_state.target_topic}** using question type: {exam_question_type}.\n\n"
-                                f"Generate **Question 1 of {st.session_state.total_questions}** right now covering this exact focus area for {selected_subject}.\n\n"
-                                f"CRITICAL FORMATTING & METADATA RULES:\n"
-                                f"1. The question label (e.g., 'Question 1 of {st.session_state.total_questions}') and the actual"
-                                f" question text MUST be on separate lines using double"
-                                f" newlines.\n"
-                                f"2. Every question must include a complete, explicit question statement.\n"
-                                f"3. For MCQ, options MUST be presented in a nicely formatted"
-                                f" Markdown table with columns 'Option' and 'Description', labeled"
-                                f" A, B, C, and D.\n"
-                                f"4. ABSOLUTELY DO NOT output the correct answer key in the main text.\n"
-                                f"5. Include the specific syllabus topic name at the very end in format [TOPIC: Name of Topic].\n"
-                                f"6. Include the correct option tag at the very end in format [CORRECT: X] (e.g. [CORRECT: B])."
+                                f"INSTRUCTIONS:\n"
+                                f"1. Begin your response with a brief, enthusiastic confirmation acknowledging their choice (e.g., 'Got it! Let's begin your practice on **{st.session_state.target_topic}** with **{st.session_state.total_questions} questions**. Here is Question 1:') followed immediately by the question.\n"
+                                f"2. Generate **Question 1 of {st.session_state.total_questions}** right now covering this exact focus area for {selected_subject}.\n"
+                                f"3. The question label and the actual question text MUST be on separate lines using double newlines.\n"
+                                f"4. For MCQ, options MUST be presented in a nicely formatted Markdown table with columns 'Option' and 'Description', labeled A, B, C, and D.\n"
+                                f"5. ABSOLUTELY DO NOT output the correct answer key in the main text.\n"
+                                f"6. Include the specific syllabus topic name at the very end in format [TOPIC: Name of Topic].\n"
+                                f"7. Include the correct option tag at the very end in format [CORRECT: X] (e.g. [CORRECT: B])."
                             )
                             completion = client.chat.completions.create(
                                 model=ACTIVE_MODEL,
@@ -449,7 +444,7 @@ if user_query:
                                     },
                                     {"role": "user", "content": start_prompt},
                                 ],
-                                max_tokens=400,
+                                max_tokens=500,
                                 temperature=0.3,
                             )
                             ai_response = completion.choices[0].message.content
