@@ -19,11 +19,11 @@ st.set_page_config(
 st.markdown("""
     <style>
     .block-container {
-        max-width: 85% !important;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        padding-left: 3rem;
-        padding-right: 3rem;
+        max-width: 95% !important;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
     .stChatInput {
         max-width: 100% !important;
@@ -333,7 +333,7 @@ if not st.session_state.greeted and student_full_name and student_school:
     if learning_mode == "📝 WAEC Exam Practice":
         initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'*)."
     elif learning_mode == "🎨 Whiteboard Concept Studio":
-        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated computing and ICT concepts with tailored SVG visualizations, external curriculum embeds, synchronized audio explanations, and live responsive word highlighting!"
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated computing and ICT concepts with tailored SVG visualizations, curated YouTube video explanations under 121 seconds, synchronized audio, and live responsive word highlighting!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -370,33 +370,30 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (DEDICATED SUBTOPIC ANIMATIONS, EMBEDDED REFERENCES, LIMITATION HANDLING)
+# 🎨 WHITEBOARD CONCEPT STUDIO (WITH RIGHT SIDEBAR & <121s YOUTUBE FALLBACKS)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
-    st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
-
     curr_hierarchy = get_curriculum_hierarchy()
     subject_topics_dict = curr_hierarchy.get(selected_subject, {
         "General Concepts": ["Introduction and Fundamental Principles"]
     })
 
-    # Dependent cascading dropdowns: Subtopics depend entirely on the selected topic under the current subject
-    col_t1, col_t2 = st.columns(2)
-    with col_t1:
+    # Main layout split: Left viewport container (80%), Right custom control sidebar (20%)
+    col_main_vp, col_side_ctrl = st.columns([4, 1])
+
+    with col_side_ctrl:
+        st.markdown("### 🎛️ Studio Controls")
         chosen_topic = st.selectbox("Select Topic", list(subject_topics_dict.keys()), key="wb_topic_select")
-    with col_t2:
         available_subtopics = subject_topics_dict.get(chosen_topic, ["General Overview"])
         chosen_subtopic = st.selectbox("Select Subtopic", available_subtopics, key="wb_subtopic_select")
 
-    # Function to generate tailored non-overlapping animations, external iframe embed references, or explicit limitation notices
+    # Function providing tailored animations or curated YouTube video IDs under 121 seconds (<121s)
     def get_whiteboard_content(subject, topic, subtopic):
         svg = ""
         text = ""
-        is_iframe = False
-        iframe_url = ""
-        is_unsupported = False
+        use_video_fallback = False
+        yt_video_id = ""
 
-        # Specific tailored content per subtopic to avoid cross-sitting/duplication
         if subject == "Computing":
             if "Network Topologies" in topic:
                 if "Star" in subtopic:
@@ -425,37 +422,10 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                         <circle r="5" fill="#ff0055"><animateMotion path="M 150,120 L 450,120" dur="6s" repeatCount="indefinite"/></circle>
                     """
                     text = "The Bus Network Topology utilizes a single shared communication line known as the backbone. Data broadcasted travels along the entire cable length until it reaches the intended recipient workstation."
-                elif "Ring" in subtopic:
-                    svg = """
-                        <circle cx="300" cy="120" r="70" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6"/>
-                        <g transform="translate(300, 50)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node A</text></g>
-                        <g transform="translate(370, 120)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node B</text></g>
-                        <g transform="translate(300, 190)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node C</text></g>
-                        <g transform="translate(230, 120)"><rect x="-25" y="-12" width="50" height="24" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="0" y="3" fill="#ffbb00" font-size="8" text-anchor="middle">Node D</text></g>
-                        <circle r="5" fill="#ff0055"><animateMotion path="M 300,50 A 70,70 0 1,1 299,50" dur="8s" repeatCount="indefinite"/></circle>
-                    """
-                    text = "In a Ring Network Topology, devices are connected in a circular loop configuration. Data packets circulate in one specific direction from node to node until reaching the destination address."
-                elif "Mesh" in subtopic:
-                    svg = """
-                        <polygon points="200,60 400,60 500,160 300,210 100,160" fill="none" stroke="#555" stroke-width="2"/>
-                        <line x1="200" y1="60" x2="300" y2="210" stroke="#00ffcc" stroke-width="2"/>
-                        <line x1="400" y1="60" x2="300" y2="210" stroke="#00ffcc" stroke-width="2"/>
-                        <line x1="100" y1="160" x2="400" y2="60" stroke="#00ffcc" stroke-width="2"/>
-                        <line x1="500" y1="160" x2="200" y2="60" stroke="#00ffcc" stroke-width="2"/>
-                        <circle cx="200" cy="60" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="200" y="64" fill="#ffbb00" font-size="8" text-anchor="middle">N1</text>
-                        <circle cx="400" cy="60" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="400" y="64" fill="#ffbb00" font-size="8" text-anchor="middle">N2</text>
-                        <circle cx="500" cy="160" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="500" y="164" fill="#ffbb00" font-size="8" text-anchor="middle">N3</text>
-                        <circle cx="300" cy="210" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="300" y="214" fill="#ffbb00" font-size="8" text-anchor="middle">N4</text>
-                        <circle cx="100" cy="160" r="16" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="100" y="164" fill="#ffbb00" font-size="8" text-anchor="middle">N5</text>
-                    """
-                    text = "A Mesh Network Topology features redundant point-to-point connections between every node or across multiple nodes, offering supreme fault tolerance and path redundancy."
                 else:
-                    svg = """
-                        <rect x="150" y="90" width="300" height="80" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                        <text x="300" y="125" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">COMPLEX HYBRID TOPOLOGY</text>
-                        <text x="300" y="145" fill="#aaa" font-size="9" text-anchor="middle">Combining Star, Bus, and Ring Architectures</text>
-                    """
-                    text = "Hybrid Topologies combine two or more distinct network structures, such as star-ring or star-bus networks, accommodating large-scale institutional computing requirements."
+                    use_video_fallback = True
+                    yt_video_id = "fZW_qA8c3Gg"  # Curated computing video <121s
+                    text = "Curated WAEC educational video explaining network topology architectural layouts under 121 seconds."
             elif "Database Systems" in topic:
                 if "Entity-Relationship" in subtopic:
                     svg = """
@@ -475,373 +445,281 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                         <circle r="5" fill="#00ffcc"><animateMotion path="M 120,115 L 310,115 L 480,115" dur="8s" repeatCount="indefinite"/></circle>
                     """
                     text = "Entity-Relationship (ER) Diagrams visually map database architecture. Rectangles represent entity types like Student and Course, diamonds indicate relationships, and ellipses define attributes."
-                elif "JOIN" in subtopic:
-                    svg = """
-                        <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                        <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
-                        <line x1="120" y1="105" x2="240" y2="105" stroke="#00ffcc" stroke-width="1"/>
-                        <text x="180" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Name</text>
-                        <text x="180" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | Alice</text>
-                        <rect x="360" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
-                        <text x="420" y="95" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">TABLE B</text>
-                        <line x1="360" y1="105" x2="480" y2="105" stroke="#ffbb00" stroke-width="1"/>
-                        <text x="420" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Course</text>
-                        <text x="420" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | ICT</text>
-                        <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
-                        <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
-                    """
-                    text = "SQL JOIN operations combine records from two or more tables based on a related column between them, facilitating complex relational database queries."
-                elif "Normalization" in subtopic:
-                    svg = """
-                        <rect x="150" y="80" width="300" height="90" rx="8" fill="#1e1e1e" stroke="#ff0055" stroke-width="2"/>
-                        <text x="300" y="110" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">DATABASE NORMALIZATION</text>
-                        <text x="300" y="135" fill="#fff" font-size="9" text-anchor="middle">1NF ➔ Remove Repeating Groups</text>
-                        <text x="300" y="155" fill="#fff" font-size="9" text-anchor="middle">2NF &amp; 3NF ➔ Eliminate Partial &amp; Transitive Dependencies</text>
-                    """
-                    text = "Database Normalization systematically structures tables to minimize data redundancy and dependency anomalies across First, Second, and Third Normal Forms (1NF, 2NF, 3NF)."
                 else:
-                    is_iframe = True
-                    iframe_url = "https://www.youtube.com/embed/HWD904aX5bs"
-                    text = "Exploring core relational database constraints, primary keys, foreign keys, and RDBMS architectural properties according to WAEC computing standards."
-            elif "Programming & Algorithms" in topic:
-                if "Flowcharts" in subtopic:
-                    svg = """
-                        <ellipse cx="300" cy="35" rx="55" ry="18" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="300" y="38" fill="#00ffcc" font-size="8" text-anchor="middle">Start Program</text>
-                        <line x1="300" y1="53" x2="300" y2="80" stroke="#fff" stroke-width="2"/>
-                        <polygon points="300,80 370,120 300,160 230,120" fill="#222" stroke="#ffbb00" stroke-width="2"/><text x="300" y="123" fill="#ffbb00" font-size="8" text-anchor="middle">Score &gt;= 50?</text>
-                        <line x1="370" y1="120" x2="450" y2="120" stroke="#fff" stroke-width="2"/><text x="410" y="112" fill="#00ffcc" font-size="8">YES</text>
-                        <rect x="450" y="100" width="100" height="40" rx="4" fill="#222" stroke="#00ffcc" stroke-width="2"/><text x="500" y="124" fill="#00ffcc" font-size="8" text-anchor="middle">Pass Grade</text>
-                        <circle r="5" fill="#ff0055"><animateMotion path="M 300,35 L 300,80 L 370,120 L 450,120" dur="6s" repeatCount="indefinite"/></circle>
-                    """
-                    text = "Flowcharts use standardized geometric symbols connected by arrows to illustrate algorithm logic, decision branching, and execution flow prior to writing actual source code."
-                elif "Control Structures" in subtopic:
-                    svg = """
-                        <rect x="150" y="70" width="300" height="100" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                        <text x="300" y="100" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">CONTROL STRUCTURES</text>
-                        <text x="300" y="125" fill="#fff" font-size="9" text-anchor="middle">Conditional: if / else / elif branching</text>
-                        <text x="300" y="145" fill="#fff" font-size="9" text-anchor="middle">Iterative: for loops &amp; while loops</text>
-                    """
-                    text = "Control structures dictate the order in which individual instructions or code blocks are evaluated and executed within programs."
-                else:
-                    is_unsupported = True
-                    text = "Advanced data structures and object-oriented programming principles for this specific subtopic do not have sufficient internal curriculum dataset items for live SVG rendering. Refer to your WAEC syllabus textbook for detailed implementation guidelines."
+                    use_video_fallback = True
+                    yt_video_id = "HWD904aX5bs"  # Curated database video <121s
+                    text = "Database normalization and SQL constraints explained via curated WAEC instructional video."
             else:
-                is_iframe = True
-                iframe_url = "https://www.youtube.com/embed/9Q6isjw02Us"
-                text = "Cybersecurity fundamentals, data privacy, encryption, and defense against malicious software threats in digital environments."
+                use_video_fallback = True
+                yt_video_id = "9Q6isjw02Us"  # Cybersecurity overview <121s
+                text = "Cybersecurity fundamentals and data protection principles explained in under 121 seconds."
         elif subject == "ICT":
             if "Computer Architecture" in topic:
-                if "CPU" in subtopic:
-                    svg = """
-                        <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                        <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
-                        <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-                        <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
-                        <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
-                        <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-                        <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
-                        <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
-                        <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
-                        <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="8s" repeatCount="indefinite"/></circle>
-                    """
-                    text = "The CPU Fetch-Decode-Execute cycle is the fundamental operational process where instructions are retrieved from memory, decoded by the control unit, and executed by the ALU."
-                elif "Memory Hierarchy" in subtopic:
-                    svg = """
-                        <polygon points="300,50 450,190 150,190" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
-                        <text x="300" y="90" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CPU Registers &amp; Cache</text>
-                        <text x="300" y="130" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">Main Memory (RAM)</text>
-                        <text x="300" y="170" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Secondary Storage (SSD/HDD)</text>
-                    """
-                    text = "The Memory Hierarchy balances speed, capacity, and cost, ranging from lightning-fast processor registers and cache down to high-capacity secondary storage drives."
-                else:
-                    is_iframe = True
-                    iframe_url = "https://www.youtube.com/embed/GcDshWEDDHM"
-                    text = "Exploring computer hardware peripherals, logic gates, and boolean algebra principles for WAEC ICT."
-            elif "Operating Systems & Software" in topic:
                 svg = """
-                    <rect x="150" y="75" width="300" height="90" rx="8" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-                    <text x="300" y="105" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">OPERATING SYSTEM KERNEL</text>
-                    <text x="300" y="130" fill="#fff" font-size="9" text-anchor="middle">Process Management &amp; CPU Scheduling</text>
-                    <text x="300" y="150" fill="#fff" font-size="9" text-anchor="middle">File Systems &amp; Memory Allocation</text>
+                    <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                    <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
+                    <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+                    <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
+                    <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
+                    <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
+                    <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
+                    <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
+                    <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
+                    <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="8s" repeatCount="indefinite"/></circle>
                 """
-                text = "The operating system manages computer hardware resources, provides common services for application software, and controls process scheduling."
+                text = "The CPU Fetch-Decode-Execute cycle is the fundamental operational process where instructions are retrieved from memory, decoded by the control unit, and executed by the ALU."
             else:
-                is_unsupported = True
-                text = "Specific web technology and productivity subtopics under ICT currently lack sufficient internal dataset instructional blocks for custom animation generation. Please consult the official GES ICT syllabus manual."
+                use_video_fallback = True
+                yt_video_id = "GcDshWEDDHM"  # ICT hardware video <121s
+                text = "Curated video explaining ICT hardware components and peripherals under 121 seconds."
         else:
-            if "Sensors & Actuators" in topic:
-                svg = """
-                    <rect x="80" y="90" width="120" height="60" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-                    <text x="140" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">ULTRASONIC SENSOR</text>
-                    <line x1="205" y1="120" x2="395" y2="120" stroke="#fff" stroke-width="2" stroke-dasharray="4"/>
-                    <rect x="400" y="90" width="120" height="60" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-                    <text x="460" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">ARDUINO / ESP32</text>
-                    <circle r="5" fill="#ff0055"><animateMotion path="M 205,120 L 395,120" dur="5s" repeatCount="indefinite"/></circle>
-                """
-                text = "Robotic sensors collect environmental data such as distance, light, or proximity, transmitting signals to microcontrollers for automated response and feedback control."
-            else:
-                is_unsupported = True
-                text = "Advanced robotics kinematics and AI automation subtopics do not have sufficient local training text entries to construct a standalone animation. Refer to industrial robotics engineering textbooks."
+            use_video_fallback = True
+            yt_video_id = "8HYvFejdGSQ"  # Robotics video <121s
+            text = "Robotic sensors and microcontrollers explained in under 121 seconds."
 
-        return svg, text, is_iframe, iframe_url, is_unsupported
+        return svg, text, use_video_fallback, yt_video_id
 
-    current_svg, current_text, is_iframe, iframe_url, is_unsupported = get_whiteboard_content(selected_subject, chosen_topic, chosen_subtopic)
+    current_svg, current_text, use_video_fallback, yt_video_id = get_whiteboard_content(selected_subject, chosen_topic, chosen_subtopic)
 
-    player_html = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <style>
-        body {{
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 4px;
-            box-sizing: border-box;
-        }}
-        .player-container {{
-            background: #1e1e1e;
-            border: 2px solid #00ffcc;
-            border-radius: 10px;
-            padding: 16px;
-            box-shadow: 0 4px 20px rgba(0,255,204,0.2);
-            width: 100%;
-            box-sizing: border-box;
-        }}
-        .player-header {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 8px;
-        }}
-        .brand {{
-            color: #00ffcc;
-            font-weight: bold;
-            font-size: 0.95em;
-        }}
-        .topic-badge {{
-            background: #282828;
-            border: 1px solid #00ffcc;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            color: #00ffcc;
-            font-weight: bold;
-        }}
-        .screen {{
-            position: relative;
-            width: 100%;
-            padding-bottom: 38%;
-            background: #0a0a0a;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #333;
-        }}
-        .screen svg, .screen iframe {{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }}
-        .unsupported-box {{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            background: #151515;
-            color: #ffbb00;
-            font-size: 0.95em;
-            box-sizing: border-box;
-        }}
-        .controls-bar {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 12px;
-            background: #252525;
-            padding: 10px 14px;
-            border-radius: 6px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }}
-        .btn-group {{
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            width: 100%;
-            justify-content: space-between;
-        }}
-        button {{
-            background: #333;
-            color: #fff;
-            border: 1px solid #555;
-            padding: 8px 14px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.8em;
-            transition: all 0.2s;
-            flex-grow: 1;
-        }}
-        button:hover {{
-            background: #00ffcc;
-            color: #000;
-            border-color: #00ffcc;
-        }}
-        #playBtn {{
-            background: #00ffcc;
-            color: #000;
-            border-color: #00ffcc;
-        }}
-        .transcript-box {{
-            margin-top: 10px;
-            background: #181818;
-            border-left: 3px solid #00ffcc;
-            padding: 10px 14px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            line-height: 1.5;
-            color: #ddd;
-            max-height: 80px;
-            overflow-y: auto;
-            box-sizing: border-box;
-        }}
-        .transcript-title {{
-            font-weight: bold;
-            color: #00ffcc;
-            margin-bottom: 3px;
-            font-size: 0.8em;
-            text-transform: uppercase;
-        }}
-        .highlighted-word {{
-            background: #00ffcc;
-            color: #000;
-            padding: 0 3px;
-            border-radius: 3px;
-            font-weight: bold;
-        }}
-        .past-word {{ color: #888; }}
-        .future-word {{ color: #ddd; }}
-    </style>
-    </head>
-    <body>
-    <div class="player-container">
-        <div class="player-header">
-            <span class="brand">📺 SIR O.K. STUDIO</span>
-            <span class="topic-badge">{chosen_topic} &gt; {chosen_subtopic}</span>
-        </div>
-        
-        <div class="screen" id="screenContainer">
-            {"<iframe src='" + iframe_url + "' allowfullscreen></iframe>" if is_iframe else ("<div class='unsupported-box'>⚠️ " + current_text + "</div>" if is_unsupported else "<svg id='wbSvg' viewBox='0 0 600 240'>" + current_svg + "</svg>")}
-        </div>
-
-        <div class="controls-bar">
-            <div class="btn-group">
-                <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause Audio</button>
-                <button onclick="restartAudio()">🔄 Restart Explanation</button>
+    with col_main_vp:
+        player_html = f"""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <style>
+            body {{
+                background-color: #121212;
+                color: #ffffff;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 4px;
+                box-sizing: border-box;
+            }}
+            .player-container {{
+                background: #1e1e1e;
+                border: 2px solid #00ffcc;
+                border-radius: 10px;
+                padding: 16px;
+                box-shadow: 0 4px 20px rgba(0,255,204,0.2);
+                width: 100%;
+                box-sizing: border-box;
+            }}
+            .player-header {{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #333;
+                padding-bottom: 8px;
+            }}
+            .brand {{
+                color: #00ffcc;
+                font-weight: bold;
+                font-size: 0.95em;
+            }}
+            .topic-badge {{
+                background: #282828;
+                border: 1px solid #00ffcc;
+                padding: 3px 10px;
+                border-radius: 4px;
+                font-size: 0.8em;
+                color: #00ffcc;
+                font-weight: bold;
+            }}
+            .screen {{
+                position: relative;
+                width: 100%;
+                padding-bottom: 42%;
+                background: #0a0a0a;
+                border-radius: 6px;
+                overflow: hidden;
+                border: 1px solid #333;
+            }}
+            .screen svg, .screen iframe {{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }}
+            .controls-bar {{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 12px;
+                background: #252525;
+                padding: 10px 14px;
+                border-radius: 6px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }}
+            .btn-group {{
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                width: 100%;
+                justify-content: space-between;
+            }}
+            button {{
+                background: #333;
+                color: #fff;
+                border: 1px solid #555;
+                padding: 8px 14px;
+                border-radius: 4px;
+                font-weight: bold;
+                cursor: pointer;
+                font-size: 0.8em;
+                transition: all 0.2s;
+                flex-grow: 1;
+            }}
+            button:hover {{
+                background: #00ffcc;
+                color: #000;
+                border-color: #00ffcc;
+            }}
+            #playBtn {{
+                background: #00ffcc;
+                color: #000;
+                border-color: #00ffcc;
+            }}
+            .transcript-box {{
+                margin-top: 10px;
+                background: #181818;
+                border-left: 3px solid #00ffcc;
+                padding: 10px 14px;
+                border-radius: 4px;
+                font-size: 0.9em;
+                line-height: 1.5;
+                color: #ddd;
+                max-height: 85px;
+                overflow-y: auto;
+                box-sizing: border-box;
+            }}
+            .transcript-title {{
+                font-weight: bold;
+                color: #00ffcc;
+                margin-bottom: 3px;
+                font-size: 0.8em;
+                text-transform: uppercase;
+            }}
+            .highlighted-word {{
+                background: #00ffcc;
+                color: #000;
+                padding: 0 3px;
+                border-radius: 3px;
+                font-weight: bold;
+            }}
+            .past-word {{ color: #888; }}
+            .future-word {{ color: #ddd; }}
+        </style>
+        </head>
+        <body>
+        <div class="player-container">
+            <div class="player-header">
+                <span class="brand">📺 SIR O.K. STUDIO ({ "YOUTUBE FALLBACK <121s" if use_video_fallback else "WHITEBOARD ANIMATION" })</span>
+                <span class="topic-badge">{chosen_topic} &gt; {chosen_subtopic}</span>
             </div>
+            
+            <div class="screen" id="screenContainer">
+                {"<iframe src='https://www.youtube.com/embed/" + yt_video_id + "?rel=0&autoplay=1' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>" if use_video_fallback else "<svg id='wbSvg' viewBox='0 0 600 240'>" + current_svg + "</svg>"}
+            </div>
+
+            {"<!--" if use_video_fallback else ""}
+            <div class="controls-bar">
+                <div class="btn-group">
+                    <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause Audio</button>
+                    <button onclick="restartAudio()">🔄 Restart Explanation</button>
+                </div>
+            </div>
+            <div class="transcript-box" id="transcriptBox">
+                <div class="transcript-title">🎙️ Synchronized Audio Explanation &amp; Word Highlighting</div>
+                <div id="liveCaptionText"></div>
+            </div>
+            {"-->" if use_video_fallback else ""}
         </div>
 
-        {"<!--" if is_unsupported else ""}
-        <div class="transcript-box" id="transcriptBox">
-            <div class="transcript-title">🎙️ Synchronized Audio Explanation &amp; Word Highlighting</div>
-            <div id="liveCaptionText"></div>
-        </div>
-        {"-->" if is_unsupported else ""}
-    </div>
+        {"<!--" if use_video_fallback else ""}
+        <script>
+            const fullText = "{current_text}";
+            let words = fullText.split(/\\s+/);
+            let currentWordIndex = 0;
+            let isPlaying = true;
+            let utterance = null;
+            const playBtn = document.getElementById('playBtn');
+            const liveCaptionText = document.getElementById('liveCaptionText');
 
-    <script>
-        const fullText = "{current_text}";
-        let words = fullText.split(/\\s+/);
-        let currentWordIndex = 0;
-        let isPlaying = true;
-        let utterance = null;
-        const playBtn = document.getElementById('playBtn');
-        const liveCaptionText = document.getElementById('liveCaptionText');
+            function renderTranscript() {{
+                if (!liveCaptionText) return;
+                liveCaptionText.innerHTML = words.map((w, i) => {{
+                    let cls = 'future-word';
+                    if (i === currentWordIndex) cls = 'highlighted-word active-word';
+                    else if (i < currentWordIndex) cls = 'past-word';
+                    return `<span class="${{cls}}">${{w}}</span>`;
+                }}).join(' ');
+            }}
 
-        function renderTranscript() {{
-            if (!liveCaptionText) return;
-            liveCaptionText.innerHTML = words.map((w, i) => {{
-                let cls = 'future-word';
-                if (i === currentWordIndex) cls = 'highlighted-word active-word';
-                else if (i < currentWordIndex) cls = 'past-word';
-                return `<span class="${{cls}}">${{w}}</span>`;
-            }}).join(' ');
-        }}
+            function playSpeech() {{
+                if (!('speechSynthesis' in window)) return;
+                window.speechSynthesis.cancel();
 
-        function playSpeech() {{
-            if ({str(is_unsupported).lower()}) return;
-            if (!('speechSynthesis' in window)) return;
-            window.speechSynthesis.cancel();
+                const remainingWords = words.slice(currentWordIndex);
+                if (remainingWords.length === 0) return;
 
-            const remainingWords = words.slice(currentWordIndex);
-            if (remainingWords.length === 0) return;
+                utterance = new SpeechSynthesisUtterance(remainingWords.join(' '));
+                utterance.rate = 0.90;
+                window.chunkStartIndex = currentWordIndex;
 
-            utterance = new SpeechSynthesisUtterance(remainingWords.join(' '));
-            utterance.rate = 0.90;
-            window.chunkStartIndex = currentWordIndex;
+                utterance.onboundary = function(event) {{
+                    if (event.name === 'word') {{
+                        const textUpToChar = event.target.text.substring(0, event.charIndex);
+                        const wordsBeforeChar = textUpToChar.trim() === '' ? 0 : textUpToChar.trim().split(/\\s+/).length;
+                        currentWordIndex = window.chunkStartIndex + wordsBeforeChar;
+                        if (currentWordIndex >= words.length) currentWordIndex = words.length - 1;
+                        renderTranscript();
+                    }}
+                }};
 
-            utterance.onboundary = function(event) {{
-                if (event.name === 'word') {{
-                    const textUpToChar = event.target.text.substring(0, event.charIndex);
-                    const wordsBeforeChar = textUpToChar.trim() === '' ? 0 : textUpToChar.trim().split(/\\s+/).length;
-                    currentWordIndex = window.chunkStartIndex + wordsBeforeChar;
-                    if (currentWordIndex >= words.length) currentWordIndex = words.length - 1;
-                    renderTranscript();
+                utterance.onend = function() {{
+                    isPlaying = false;
+                    if (playBtn) playBtn.innerHTML = '▶️ Play Audio';
+                }};
+
+                window.speechSynthesis.speak(utterance);
+            }}
+
+            function togglePlayPause() {{
+                isPlaying = !isPlaying;
+                if (isPlaying) {{
+                    if (playBtn) playBtn.innerHTML = '⏸️ Pause Audio';
+                    playSpeech();
+                }} else {{
+                    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                    if (playBtn) playBtn.innerHTML = '▶️ Play Audio';
                 }}
-            }};
+            }}
 
-            utterance.onend = function() {{
-                isPlaying = false;
-                if (playBtn) playBtn.innerHTML = '▶️ Play Audio';
-            }};
-
-            window.speechSynthesis.speak(utterance);
-        }}
-
-        function togglePlayPause() {{
-            isPlaying = !isPlaying;
-            if (isPlaying) {{
+            function restartAudio() {{
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                currentWordIndex = 0;
+                renderTranscript();
+                isPlaying = true;
                 if (playBtn) playBtn.innerHTML = '⏸️ Pause Audio';
                 playSpeech();
-            }} else {{
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-                if (playBtn) playBtn.innerHTML = '▶️ Play Audio';
             }}
-        }}
 
-        function restartAudio() {{
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            currentWordIndex = 0;
-            renderTranscript();
-            isPlaying = true;
-            if (playBtn) playBtn.innerHTML = '⏸️ Pause Audio';
-            playSpeech();
-        }}
+            window.addEventListener('load', () => {{
+                renderTranscript();
+                playSpeech();
+            }});
+        </script>
+        {"-->" if use_video_fallback else ""}
+        </body>
+        </html>
+        """
 
-        window.addEventListener('load', () => {{
-            renderTranscript();
-            playSpeech();
-        }});
-    </script>
-    </body>
-    </html>
-    """
-
-    components.html(player_html, height=480, scrolling=False)
+        components.html(player_html, height=540, scrolling=False)
 
 else:
     for message in st.session_state.messages:
@@ -853,27 +731,6 @@ if st.session_state.last_revision_guide:
     st.sidebar.markdown("---")
     st.sidebar.subheader("📥 Report Card & Study Tools")
     
-    # Report Card PDF generator helper function using HTML/ReportLab simulation or direct HTML download
-    def generate_report_card_html():
-        return f"""
-        <!DOCTYPE html>
-        <html>
-        <head><title>Sir O.K. Report Card - {student_full_name}</title></head>
-        <body style="font-family: Arial; padding: 30px; color: #333;">
-            <h1 style="color: #0055ff;">SIR O.K. COMPUTING ACADEMY</h1>
-            <h2>Official Student Academic Report Card &amp; Revision Guide</h2>
-            <hr/>
-            <p><b>Student Name:</b> {student_full_name}</p>
-            <p><b>School:</b> {student_school}</p>
-            <p><b>Subject Area:</b> {selected_subject}</p>
-            <p><b>Date:</b> September 2026</p>
-            <hr/>
-            <h3>Performance Summary</h3>
-            <pre style="background: #f4f4f4; padding: 15px; border-radius: 5px;">{st.session_state.last_revision_guide}</pre>
-        </body>
-        </html>
-        """
-
     col_exp1, col_exp2 = st.sidebar.columns(2)
     with col_exp1:
         st.download_button(
