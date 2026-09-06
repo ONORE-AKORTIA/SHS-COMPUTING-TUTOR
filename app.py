@@ -186,6 +186,8 @@ if "current_topic" not in st.session_state:
     st.session_state.current_topic = "General Concept"
 if "topic_performance" not in st.session_state:
     st.session_state.topic_performance = {}
+if "last_revision_guide" not in st.session_state:
+    st.session_state.last_revision_guide = None
 
 user_key = f"{student_full_name.strip().lower()}_{student_school.strip().lower()}"
 
@@ -250,6 +252,17 @@ if learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+
+# Provide download button in sidebar if a revision guide is available
+if st.session_state.last_revision_guide:
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("📥 Offline Study Tools")
+    st.sidebar.download_button(
+        label="Download Revision Guide (.txt)",
+        data=st.session_state.last_revision_guide,
+        file_name=f"SirOK_{selected_subject}_Revision_Guide.txt",
+        mime="text/plain",
+    )
 
 # Handle user input based on sidebar choice (Text or Voice)
 user_query = None
@@ -334,6 +347,7 @@ if user_query:
                             st.session_state.asked_questions = []
                             st.session_state.current_correct_option = None
                             st.session_state.topic_performance = {}
+                            st.session_state.last_revision_guide = None
 
                             start_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner in"
@@ -589,6 +603,16 @@ if user_query:
                                         display_response = display_response.split(
                                             tag.upper()
                                         )[0].split(tag)[0]
+                            else:
+                                # Save revision guide for download
+                                st.session_state.last_revision_guide = (
+                                    f"SIR O.K AI TUTOR - OFFICIAL REVISION GUIDE\n"
+                                    f"Student: {student_full_name} | School: {student_school}\n"
+                                    f"Subject: {selected_subject}\n"
+                                    f"--------------------------------------------------\n\n"
+                                    + display_response
+                                )
+
                             display_response = display_response.strip()
 
                             st.session_state.current_question_num += 1
