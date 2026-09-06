@@ -508,10 +508,24 @@ if user_query:
                                     if pct < 70:
                                         weak_topics.append(top)
 
+                            # Retrieve previously asked questions from session state to feed into context, preventing the model from asking for them
+                            prev_questions_text = ""
+                            if st.session_state.asked_questions:
+                                prev_questions_text = "\n".join(
+                                    [
+                                        f"Previous Question {i+1}:\n{q}"
+                                        for i, q in enumerate(
+                                            st.session_state.asked_questions
+                                        )
+                                    ]
+                                )
+
                             eval_and_next_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner and Tutor in"
                                 f" {selected_subject} guiding {student_full_name} from"
                                 f" {student_school}.\n\n"
+                                f"Here are the previous questions already asked in this session so you have full record of them:\n"
+                                f"{prev_questions_text}\n\n"
                                 f"Evaluation Result for Question {current_q} of {total_q} (Topic: {active_topic}):\n"
                                 f"- Student Answer: '{user_query}'\n"
                                 f"- Result: {'CORRECT' if is_correct else 'INCORRECT'} (Correct option was {expected_letter}).\n\n"
@@ -565,11 +579,11 @@ if user_query:
                                     {"role": "system", "content": eval_and_next_prompt},
                                     {
                                         "role": "user",
-                                        "content": f"Proceed with evaluation and next step.",
+                                        "content": f"Proceed with evaluation and next step without asking for any missing text.",
                                     },
                                 ],
                                 max_tokens=1500,
-                                temperature=0.4,
+                                temperature=0.3,
                             )
                             ai_response = completion.choices[0].message.content
 
