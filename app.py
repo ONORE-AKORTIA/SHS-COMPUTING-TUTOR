@@ -267,8 +267,7 @@ user_query = None
 if input_method == "⌨️ Type Question":
     if learning_mode == "📝 WAEC Exam Practice" and not st.session_state.exam_active:
         prompt_label = (
-            "Type the total number of questions you want for this session (e.g.,"
-            " 5):"
+            "Type the total number of questions you want for this session (e.g., 5):"
         )
     elif (
         learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_active
@@ -597,7 +596,7 @@ if user_query:
                             display_response = ai_response
                             if not is_last_question:
                                 for tag in ["[correct:", "[topic:"]:
-                                    if tag in display_source_lower := display_response.lower():
+                                    if tag in display_response.lower():
                                         display_response = display_response.split(
                                             tag.upper()
                                         )[0].split(tag)[0]
