@@ -237,7 +237,7 @@ if not st.session_state.greeted and student_full_name and student_school:
     if learning_mode == "📝 WAEC Exam Practice":
         initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'*)."
     elif learning_mode == "🎨 Whiteboard Concept Studio":
-        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated network topologies and computing concepts with synchronized audio and live transcripts!"
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated network topologies and computing concepts with synchronized audio, YouTube-style scrubber, and live responsive word highlighting!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -274,12 +274,11 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (HIERARCHICAL SELECT, 120s PACED SVG, INTEGRATED AUDIO, LIVE TRANSCRIPT)
+# 🎨 WHITEBOARD CONCEPT STUDIO (CLIENT-SIDE ALL-IN-ONE PLAYER: YOUTUBE SCRUBBER, WORD HIGHLIGHTING, UNIFIED CONTROLS)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
-    
-    # Categorized hierarchy for better organization and subtopic selection
+
     concept_categories = {
         "🌐 Network Topologies": [
             "Star Network Topology",
@@ -299,256 +298,159 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         ]
     }
 
-    if "wb_category" not in st.session_state:
-        st.session_state.wb_category = list(concept_categories.keys())[0]
-    if "wb_concept" not in st.session_state:
-        st.session_state.wb_concept = concept_categories[st.session_state.wb_category][0]
+    # Pre-build payload for all concepts so JavaScript can instantly switch between concepts, play/pause, scrub, and highlight words smoothly without reloading
+    client_payload_concepts = []
 
-    # Hierarchical Dropdown Selection (Category -> Subtopic)
-    col_cat, col_sub = st.columns(2)
-    with col_cat:
-        selected_category = st.selectbox(
-            "Select Topic Category:",
-            list(concept_categories.keys()),
-            key="wb_category_selectbox"
-        )
-    
-    # If category changed, reset subtopic to first in category
-    if selected_category != st.session_state.wb_category:
-        st.session_state.wb_category = selected_category
-        st.session_state.wb_concept = concept_categories[selected_category][0]
+    def get_svg_and_text(concept_name):
+        svg = ""
+        text = f"Welcome to Sir O.K's Whiteboard Concept Studio. Today we are exploring {concept_name} in detail. This foundational concept is critical for mastering your WAEC examinations. As illustrated in the whiteboard diagram, data flow and architectural interactions operate synchronously to ensure maximum efficiency, robust error handling, and optimal system performance."
+        
+        if concept_name == "Star Network Topology":
+            svg = """
+                <circle cx="300" cy="130" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
+                <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
+                <text x="300" y="138" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">SWITCH</text>
+                <line x1="300" y1="130" x2="100" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="130" x2="500" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="12s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#00ffcc"><animateMotion path="M 300,130 L 500,55" dur="10s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#ffbb00"><animateMotion path="M 100,205 L 300,130" dur="14s" repeatCount="indefinite"/></circle>
+                <circle r="6" fill="#00ffcc"><animateMotion path="M 500,205 L 300,130" dur="11s" repeatCount="indefinite"/></circle>
+                <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
+                <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
+                <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
+                <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
+            """
+        elif concept_name == "Bus Network Topology":
+            svg = """
+                <line x1="50" y1="130" x2="550" y2="130" stroke="#00ffcc" stroke-width="6" stroke-linecap="round"/>
+                <text x="300" y="115" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MAIN BACKBONE CABLE</text>
+                <line x1="120" y1="130" x2="120" y2="60" stroke="#aaa" stroke-width="2"/>
+                <line x1="280" y1="130" x2="280" y2="200" stroke="#aaa" stroke-width="2"/>
+                <line x1="420" y1="130" x2="420" y2="60" stroke="#aaa" stroke-width="2"/>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 60,130 L 540,130" dur="12s" repeatCount="indefinite"/></circle>
+                <g transform="translate(120, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
+                <g transform="translate(280, 215)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
+                <g transform="translate(420, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
+            """
+        elif concept_name == "Ring Network Topology":
+            svg = """
+                <circle cx="300" cy="130" r="75" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6,4"/>
+                <text x="300" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CLOSED LOOP</text>
+                <circle r="6" fill="#ffbb00"><animateMotion path="M 300,55 A 75,75 0 1,1 299.9,55" dur="14s" repeatCount="indefinite"/></circle>
+                <g transform="translate(300, 50)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 1</text></g>
+                <g transform="translate(385, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 2</text></g>
+                <g transform="translate(300, 210)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 3</text></g>
+                <g transform="translate(215, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 4</text></g>
+            """
+        elif concept_name == "Mesh Network Topology":
+            svg = """
+                <line x1="150" y1="70" x2="450" y2="70" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
+                <line x1="150" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
+                <line x1="450" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
+                <line x1="150" y1="70" x2="100" y2="190" stroke="#00ffcc" stroke-width="2"/>
+                <line x1="450" y1="70" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
+                <line x1="100" y1="190" x2="300" y2="190" stroke="#00ffcc" stroke-width="2"/>
+                <line x1="300" y1="190" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 150,70 L 450,70 L 300,190 Z" dur="15s" repeatCount="indefinite"/></circle>
+                <g transform="translate(150, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
+                <g transform="translate(450, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
+                <g transform="translate(100, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
+                <g transform="translate(300, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node D</text></g>
+                <g transform="translate(500, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node E</text></g>
+            """
+        elif concept_name == "SQL Database JOINs":
+            svg = """
+                <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
+                <line x1="120" y1="105" x2="240" y2="105" stroke="#00ffcc" stroke-width="1"/>
+                <text x="180" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Name</text>
+                <text x="180" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | Alice</text>
+                <rect x="360" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
+                <text x="420" y="95" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">TABLE B</text>
+                <line x1="360" y1="105" x2="480" y2="105" stroke="#ffbb00" stroke-width="1"/>
+                <text x="420" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Course</text>
+                <text x="420" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | ICT</text>
+                <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
+                <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
+            """
+        elif concept_name == "Database Normalization (1NF, 2NF, 3NF)":
+            svg = """
+                <rect x="80" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
+                <text x="140" y="125" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Unnormalized</text>
+                <text x="140" y="140" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Data (UNF)</text>
+                <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+                <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">1NF &amp; 2NF</text>
+                <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">Atomicity</text>
+                <rect x="400" y="90" width="120" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                <text x="460" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">3NF (Third</text>
+                <text x="460" y="140" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">Normal Form)</text>
+                <line x1="205" y1="130" x2="235" y2="130" stroke="#fff" stroke-width="2"/>
+                <line x1="365" y1="130" x2="395" y2="130" stroke="#fff" stroke-width="2"/>
+                <circle r="5" fill="#00ffcc"><animateMotion path="M 80,130 L 240,130 L 400,130" dur="10s" repeatCount="indefinite"/></circle>
+            """
+        elif concept_name == "Entity-Relationship (ER) Diagrams":
+            svg = """
+                <rect x="80" y="100" width="100" height="60" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                <text x="130" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">STUDENT</text>
+                <ellipse cx="300" cy="130" rx="55" ry="35" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+                <text x="300" y="135" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">ENROLLS</text>
+                <rect x="420" y="100" width="100" height="60" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
+                <text x="470" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">COURSE</text>
+                <line x1="185" y1="130" x2="240" y2="130" stroke="#fff" stroke-width="2"/>
+                <line x1="355" y1="130" x2="415" y2="130" stroke="#fff" stroke-width="2"/>
+                <circle r="5" fill="#ffbb00"><animateMotion path="M 130,130 L 300,130 L 470,130" dur="10s" repeatCount="indefinite"/></circle>
+            """
+        elif concept_name == "Memory Hierarchy (Cache, RAM, Storage)":
+            svg = """
+                <polygon points="300,45 420,135 180,135" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                <text x="300" y="80" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CPU Registers &amp; Cache</text>
+                <polygon points="180,140 420,140 470,215 130,215" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
+                <text x="300" y="180" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">Main Memory (RAM)</text>
+                <circle r="6" fill="#ff0055"><animateMotion path="M 300,60 L 300,180" dur="8s" repeatCount="indefinite"/></circle>
+            """
+        elif concept_name == "Logic Gates & Boolean Algebra":
+            svg = """
+                <rect x="220" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                <text x="270" y="135" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">AND GATE</text>
+                <line x1="120" y1="110" x2="215" y2="110" stroke="#fff" stroke-width="2"/>
+                <text x="140" y="105" fill="#aaa" font-size="9">Input A</text>
+                <line x1="120" y1="150" x2="215" y2="150" stroke="#fff" stroke-width="2"/>
+                <text x="140" y="165" fill="#aaa" font-size="9">Input B</text>
+                <line x1="325" y1="130" x2="420" y2="130" stroke="#ffbb00" stroke-width="3"/>
+                <text x="350" y="120" fill="#ffbb00" font-size="9">Output Q</text>
+                <circle r="5" fill="#00ffcc"><animateMotion path="M 120,110 L 270,130 L 420,130" dur="9s" repeatCount="indefinite"/></circle>
+            """
+        else:
+            svg = """
+                <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+                <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
+                <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+                <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
+                <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
+                <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
+                <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
+                <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
+                <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
+                <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="12s" repeatCount="indefinite"/></circle>
+            """
+        return svg, text
 
-    with col_sub:
-        available_subtopics = concept_categories[st.session_state.wb_category]
-        current_sub_index = available_subtopics.index(st.session_state.wb_concept) if st.session_state.wb_concept in available_subtopics else 0
-        selected_subtopic = st.selectbox(
-            "Select Specific Concept (Subtopic):",
-            available_subtopics,
-            index=current_sub_index,
-            key="wb_subtopic_selectbox"
-        )
-        st.session_state.wb_concept = selected_subtopic
+    for cat, items in concept_categories.items():
+        for item in items:
+            s_svg, s_text = get_svg_and_text(item)
+            client_payload_concepts.append({
+                "category": cat,
+                "title": item,
+                "svg": s_svg,
+                "text": s_text
+            })
 
-    wb_concept = st.session_state.wb_concept
+    payload_json = json.dumps(client_payload_concepts)
 
-    # Flatten list for forward/backward navigation
-    flat_concept_list = []
-    for cat_items in concept_categories.values():
-        flat_concept_list.extend(cat_items)
-    current_flat_idx = flat_concept_list.index(wb_concept) if wb_concept in flat_concept_list else 0
-
-    # Navigation controls (Previous / Next)
-    nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
-    with nav_col1:
-        if st.button("⏮️ Previous Concept"):
-            new_idx = (current_flat_idx - 1) % len(flat_concept_list)
-            target_concept = flat_concept_list[new_idx]
-            for cat, items in concept_categories.items():
-                if target_concept in items:
-                    st.session_state.wb_category = cat
-                    st.session_state.wb_concept = target_concept
-                    break
-            st.rerun()
-    with nav_col3:
-        if st.button("Next Concept ⏭️"):
-            new_idx = (current_flat_idx + 1) % len(flat_concept_list)
-            target_concept = flat_concept_list[new_idx]
-            for cat, items in concept_categories.items():
-                if target_concept in items:
-                    st.session_state.wb_category = cat
-                    st.session_state.wb_concept = target_concept
-                    break
-            st.rerun()
-
-    # Generate comprehensive audio explanation script via Groq (synthesized for thorough explanation, paced up to 120s max)
-    client = get_groq_client()
-    default_explanation = (
-        f"Welcome to Sir O.K's Whiteboard Concept Studio. Today we are exploring {wb_concept} in detail. "
-        f"This foundational concept is critical for mastering your WAEC examinations. "
-        f"As illustrated in the whiteboard diagram, data flow and architectural interactions operate synchronously to ensure maximum efficiency, robust error handling, and optimal system performance."
-    )
-    explanation_text = default_explanation
-    if client:
-        try:
-            comp = client.chat.completions.create(
-                model=ACTIVE_MODEL,
-                messages=[{
-                    "role": "user", 
-                    "content": f"Provide a comprehensive, highly detailed 4 to 5 sentence audio narration script explaining {wb_concept} thoroughly for WAEC computing students."
-                }],
-                max_tokens=250,
-            )
-            raw_text = comp.choices[0].message.content
-            if raw_text and len(raw_text.strip()) > 10:
-                explanation_text = raw_text.replace('\n', ' ')
-        except Exception:
-            pass
-
-    # Build Concept-Specific SVG Graphics (with smooth, longer 15s-20s pacing scaled for comprehensive comprehension)
-    svg_content = ""
-    if wb_concept == "Star Network Topology":
-        svg_content = """
-            <circle cx="300" cy="130" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
-            <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
-            <text x="300" y="138" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">SWITCH</text>
-            
-            <line x1="300" y1="130" x2="100" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-            <line x1="300" y1="130" x2="500" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-            <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-            <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
-
-            <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="12s" repeatCount="indefinite"/></circle>
-            <circle r="6" fill="#00ffcc"><animateMotion path="M 300,130 L 500,55" dur="10s" repeatCount="indefinite"/></circle>
-            <circle r="6" fill="#ffbb00"><animateMotion path="M 100,205 L 300,130" dur="14s" repeatCount="indefinite"/></circle>
-            <circle r="6" fill="#00ffcc"><animateMotion path="M 500,205 L 300,130" dur="11s" repeatCount="indefinite"/></circle>
-
-            <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
-            <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
-            <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
-            <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
-        """
-    elif wb_concept == "Bus Network Topology":
-        svg_content = """
-            <line x1="50" y1="130" x2="550" y2="130" stroke="#00ffcc" stroke-width="6" stroke-linecap="round"/>
-            <text x="300" y="115" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MAIN BACKBONE CABLE</text>
-            
-            <line x1="120" y1="130" x2="120" y2="60" stroke="#aaa" stroke-width="2"/>
-            <line x1="280" y1="130" x2="280" y2="200" stroke="#aaa" stroke-width="2"/>
-            <line x1="420" y1="130" x2="420" y2="60" stroke="#aaa" stroke-width="2"/>
-
-            <circle r="6" fill="#ff0055"><animateMotion path="M 60,130 L 540,130" dur="12s" repeatCount="indefinite"/></circle>
-
-            <g transform="translate(120, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
-            <g transform="translate(280, 215)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
-            <g transform="translate(420, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
-        """
-    elif wb_concept == "Ring Network Topology":
-        svg_content = """
-            <circle cx="300" cy="130" r="75" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6,4"/>
-            <text x="300" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CLOSED LOOP</text>
-            
-            <circle r="6" fill="#ffbb00"><animateMotion path="M 300,55 A 75,75 0 1,1 299.9,55" dur="14s" repeatCount="indefinite"/></circle>
-
-            <g transform="translate(300, 50)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 1</text></g>
-            <g transform="translate(385, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 2</text></g>
-            <g transform="translate(300, 210)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 3</text></g>
-            <g transform="translate(215, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 4</text></g>
-        """
-    elif wb_concept == "Mesh Network Topology":
-        svg_content = """
-            <line x1="150" y1="70" x2="450" y2="70" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
-            <line x1="150" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
-            <line x1="450" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
-            <line x1="150" y1="70" x2="100" y2="190" stroke="#00ffcc" stroke-width="2"/>
-            <line x1="450" y1="70" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
-            <line x1="100" y1="190" x2="300" y2="190" stroke="#00ffcc" stroke-width="2"/>
-            <line x1="300" y1="190" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
-
-            <circle r="6" fill="#ff0055"><animateMotion path="M 150,70 L 450,70 L 300,190 Z" dur="15s" repeatCount="indefinite"/></circle>
-
-            <g transform="translate(150, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
-            <g transform="translate(450, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
-            <g transform="translate(100, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
-            <g transform="translate(300, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node D</text></g>
-            <g transform="translate(500, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node E</text></g>
-        """
-    elif wb_concept == "SQL Database JOINs":
-        svg_content = """
-            <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
-            <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
-            <line x1="120" y1="105" x2="240" y2="105" stroke="#00ffcc" stroke-width="1"/>
-            <text x="180" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Name</text>
-            <text x="180" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | Alice</text>
-
-            <rect x="360" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
-            <text x="420" y="95" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">TABLE B</text>
-            <line x1="360" y1="105" x2="480" y2="105" stroke="#ffbb00" stroke-width="1"/>
-            <text x="420" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Course</text>
-            <text x="420" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | ICT</text>
-
-            <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
-            <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
-        """
-    elif wb_concept == "Database Normalization (1NF, 2NF, 3NF)":
-        svg_content = """
-            <rect x="80" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-            <text x="140" y="125" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Unnormalized</text>
-            <text x="140" y="140" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">Data (UNF)</text>
-
-            <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-            <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">1NF &amp; 2NF</text>
-            <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">Atomicity</text>
-
-            <rect x="400" y="90" width="120" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-            <text x="460" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">3NF (Third</text>
-            <text x="460" y="140" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">Normal Form)</text>
-
-            <line x1="205" y1="130" x2="235" y2="130" stroke="#fff" stroke-width="2"/>
-            <line x1="365" y1="130" x2="395" y2="130" stroke="#fff" stroke-width="2"/>
-            <circle r="5" fill="#00ffcc"><animateMotion path="M 80,130 L 240,130 L 400,130" dur="10s" repeatCount="indefinite"/></circle>
-        """
-    elif wb_concept == "Entity-Relationship (ER) Diagrams":
-        svg_content = """
-            <rect x="80" y="100" width="100" height="60" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-            <text x="130" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">STUDENT</text>
-
-            <ellipse cx="300" cy="130" rx="55" ry="35" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-            <text x="300" y="135" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">ENROLLS</text>
-
-            <rect x="420" y="100" width="100" height="60" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-            <text x="470" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">COURSE</text>
-
-            <line x1="185" y1="130" x2="240" y2="130" stroke="#fff" stroke-width="2"/>
-            <line x1="355" y1="130" x2="415" y2="130" stroke="#fff" stroke-width="2"/>
-            <circle r="5" fill="#ffbb00"><animateMotion path="M 130,130 L 300,130 L 470,130" dur="10s" repeatCount="indefinite"/></circle>
-        """
-    elif wb_concept == "Memory Hierarchy (Cache, RAM, Storage)":
-        svg_content = """
-            <polygon points="300,45 420,135 180,135" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-            <text x="300" y="80" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CPU Registers &amp; Cache</text>
-            
-            <polygon points="180,140 420,140 470,215 130,215" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
-            <text x="300" y="180" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">Main Memory (RAM)</text>
-
-            <circle r="6" fill="#ff0055"><animateMotion path="M 300,60 L 300,180" dur="8s" repeatCount="indefinite"/></circle>
-        """
-    elif wb_concept == "Logic Gates & Boolean Algebra":
-        svg_content = """
-            <rect x="220" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-            <text x="270" y="135" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">AND GATE</text>
-
-            <line x1="120" y1="110" x2="215" y2="110" stroke="#fff" stroke-width="2"/>
-            <text x="140" y="105" fill="#aaa" font-size="9">Input A</text>
-            <line x1="120" y1="150" x2="215" y2="150" stroke="#fff" stroke-width="2"/>
-            <text x="140" y="165" fill="#aaa" font-size="9">Input B</text>
-
-            <line x1="325" y1="130" x2="420" y2="130" stroke="#ffbb00" stroke-width="3"/>
-            <text x="350" y="120" fill="#ffbb00" font-size="9">Output Q</text>
-
-            <circle r="5" fill="#00ffcc"><animateMotion path="M 120,110 L 270,130 L 420,130" dur="9s" repeatCount="indefinite"/></circle>
-        """
-    else:  # CPU Fetch-Decode-Execute Cycle
-        svg_content = """
-            <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
-            <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
-
-            <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
-            <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
-            <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
-
-            <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
-            <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
-
-            <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2"/>
-            <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
-            <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="12s" repeatCount="indefinite"/></circle>
-        """
-
-    # Safely JSON-encode the explanation text and topic to prevent JS string breaking or audio failure
-    safe_explanation_json = json.dumps(explanation_text)
-    safe_title_json = json.dumps(wb_concept)
-
-    # Fully Responsive HTML/JS Component with Integrated Play/Pause, Navigation, and Live Responsive Subtitle/Transcript Display Box
+    # Fully Responsive HTML/JS Component with Unified Controls Bar, YouTube Scrubber, Word Highlighting, and Resume Capability
     player_html = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -584,21 +486,21 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         .brand {{
             color: #00ffcc;
             font-weight: bold;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }}
         .topic-badge {{
             background: #282828;
             border: 1px solid #00ffcc;
             padding: 2px 8px;
             border-radius: 4px;
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #00ffcc;
             font-weight: bold;
         }}
         .screen {{
             position: relative;
             width: 100%;
-            padding-bottom: 42%;
+            padding-bottom: 40%;
             background: #0a0a0a;
             border-radius: 6px;
             overflow: hidden;
@@ -624,18 +526,22 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         }}
         .btn-group {{
             display: flex;
-            gap: 8px;
+            gap: 6px;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
         }}
         button {{
             background: #333;
             color: #fff;
             border: 1px solid #555;
-            padding: 6px 14px;
+            padding: 6px 10px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.8em;
+            font-size: 0.75em;
             transition: all 0.2s;
+            flex-grow: 1;
         }}
         button:hover {{
             background: #00ffcc;
@@ -647,32 +553,72 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             color: #000;
             border-color: #00ffcc;
         }}
+        .scrubber-container {{
+            margin-top: 8px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }}
+        input[type=range] {{
+            -webkit-appearance: none;
+            width: 100%;
+            background: #333;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }}
+        input[type=range]::-webkit-slider-thumb {{
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #00ffcc;
+            cursor: pointer;
+        }}
         .status {{
-            font-size: 0.75em;
+            font-size: 0.7em;
             color: #aaa;
+            text-align: right;
+            width: 100%;
+            margin-top: 4px;
         }}
         .transcript-box {{
-            margin-top: 10px;
+            margin-top: 8px;
             background: #181818;
             border-left: 3px solid #00ffcc;
             padding: 8px 12px;
             border-radius: 4px;
             font-size: 0.85em;
-            line-height: 1.4;
+            line-height: 1.5;
             color: #ddd;
-            min-height: 50px;
+            max-height: 70px;
+            overflow-y: auto;
             box-sizing: border-box;
         }}
         .transcript-title {{
             font-weight: bold;
             color: #00ffcc;
-            margin-bottom: 4px;
-            font-size: 0.8em;
+            margin-bottom: 2px;
+            font-size: 0.75em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }}
-        #liveCaptionText {{
-            color: #ffffff;
+        .word-span {{
+            transition: color 0.15s;
+        }}
+        .highlighted-word {{
+            background: #00ffcc;
+            color: #000;
+            padding: 0 3px;
+            border-radius: 3px;
+            font-weight: bold;
+        }}
+        .past-word {{
+            color: #888;
+        }}
+        .future-word {{
+            color: #ddd;
         }}
     </style>
     </head>
@@ -683,103 +629,198 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             <span class="topic-badge" id="displayConceptTitle"></span>
         </div>
         
-        <div class="screen">
+        <div class="screen" id="screenContainer">
             <svg id="wbSvg" viewBox="0 0 600 260">
-                {svg_content}
             </svg>
+        </div>
+
+        <div class="scrubber-container">
+            <input type="range" id="scrubber" min="0" max="100" value="0" step="0.1" oninput="onScrub(this.value)">
         </div>
 
         <div class="controls-bar">
             <div class="btn-group">
-                <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause Audio &amp; Animation</button>
-                <button onclick="restartExperience()">🔄 Restart</button>
+                <button onclick="prevConcept()">⏮️ Prev</button>
+                <button id="playBtn" onclick="togglePlayPause()">⏸️ Pause</button>
+                <button onclick="restartAudio()">🔄 Restart</button>
+                <button onclick="nextConcept()">Next ⏭️</button>
             </div>
             <div class="status" id="statusText">Playing (Audio Active)</div>
         </div>
 
-        <div class="transcript-box">
-            <div class="transcript-title">🎙️ Live Audio Transcript &amp; Narration</div>
+        <div class="transcript-box" id="transcriptBox">
+            <div class="transcript-title">🎙️ Live Transcript &amp; Word Highlighting</div>
             <div id="liveCaptionText"></div>
         </div>
     </div>
 
     <script>
-        const conceptTitle = {safe_title_json};
-        const narrationText = {safe_explanation_json};
-        
-        document.getElementById('displayConceptTitle').innerText = conceptTitle;
-        document.getElementById('liveCaptionText').innerText = narrationText;
-
+        const concepts = {payload_json};
+        let currentConceptIdx = 0;
         let isPlaying = true;
-        const svg = document.getElementById('wbSvg');
         let utterance = null;
+        let words = [];
+        let currentWordIndex = 0;
+        let totalDuration = 15.0;
 
-        function initSpeech() {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
-                utterance = new SpeechSynthesisUtterance(narrationText);
-                utterance.rate = 0.90; // Balanced pacing for up to 120s comprehensive delivery
-                utterance.pitch = 1.0;
+        const svg = document.getElementById('wbSvg');
+        const playBtn = document.getElementById('playBtn');
+        const statusText = document.getElementById('statusText');
+        const transcriptBox = document.getElementById('transcriptBox');
+        const liveCaptionText = document.getElementById('liveCaptionText');
+        const scrubber = document.getElementById('scrubber');
 
-                utterance.onboundary = function(event) {{
-                    if (event.name === 'word') {{
-                        // Highlight or keep transcript active
-                    }}
-                }};
-
-                utterance.onend = function() {{
-                    if (isPlaying) {{
-                        document.getElementById('statusText').innerText = 'Completed / Paused';
-                    }}
-                }};
-
-                window.speechSynthesis.speak(utterance);
+        function loadConcept(idx) {{
+            currentConceptIdx = (idx + concepts.length) % concepts.length;
+            const concept = concepts[currentConceptIdx];
+            
+            document.getElementById('displayConceptTitle').innerText = concept.title + " (" + concept.category + ")";
+            svg.innerHTML = concept.svg;
+            
+            words = concept.text.split(/\\s+/);
+            currentWordIndex = 0;
+            scrubber.value = 0;
+            renderTranscript();
+            
+            try {{ svg.setCurrentTime(0); }} catch(e) {{}}
+            
+            if (isPlaying) {{
+                playSpeech();
             }}
         }}
 
-        function stopSpeech() {{
-            if ('speechSynthesis' in window) {{
-                window.speechSynthesis.cancel();
+        function renderTranscript() {{
+            liveCaptionText.innerHTML = words.map((w, i) => {{
+                let cls = 'future-word';
+                if (i === currentWordIndex) cls = 'highlighted-word active-word';
+                else if (i < currentWordIndex) cls = 'past-word';
+                return `<span class="word-span ${{cls}}">${{w}}</span>`;
+            }}).join(' ');
+
+            const activeEl = liveCaptionText.querySelector('.active-word');
+            if (activeEl) {{
+                activeEl.scrollIntoView({{ behavior: 'smooth', block: 'nearest', inline: 'center' }});
             }}
         }}
 
-        // Autoplay on load
-        window.addEventListener('load', () => {{
-            setTimeout(initSpeech, 300);
-        }});
+        function playSpeech() {{
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+
+            const remainingWords = words.slice(currentWordIndex);
+            if (remainingWords.length === 0) return;
+
+            const textChunk = remainingWords.join(' ');
+            utterance = new SpeechSynthesisUtterance(textChunk);
+            utterance.rate = 0.90;
+            utterance.pitch = 1.0;
+
+            window.chunkStartIndex = currentWordIndex;
+
+            utterance.onboundary = function(event) {{
+                if (event.name === 'word') {{
+                    const textUpToChar = event.target.text.substring(0, event.charIndex);
+                    const wordsBeforeChar = textUpToChar.trim() === '' ? 0 : textUpToChar.trim().split(/\\s+/).length;
+                    currentWordIndex = window.chunkStartIndex + wordsBeforeChar;
+                    if (currentWordIndex >= words.length) currentWordIndex = words.length - 1;
+                    
+                    renderTranscript();
+                    
+                    const progress = (currentWordIndex / words.length) * 100;
+                    scrubber.value = progress;
+
+                    try {{
+                        svg.setCurrentTime((currentWordIndex / words.length) * totalDuration);
+                    }} catch(e) {{}}
+                }}
+            }};
+
+            utterance.onend = function() {{
+                if (isPlaying && currentWordIndex >= words.length - 1) {{
+                    isPlaying = false;
+                    playBtn.innerHTML = '▶️ Play';
+                    statusText.innerText = 'Completed';
+                }}
+            }};
+
+            window.speechSynthesis.speak(utterance);
+        }}
 
         function togglePlayPause() {{
             isPlaying = !isPlaying;
-            const playBtn = document.getElementById('playBtn');
-            const statusText = document.getElementById('statusText');
-
             if (isPlaying) {{
                 try {{ svg.unpauseAnimations(); }} catch(e) {{}}
-                playBtn.innerText = '⏸️ Pause Audio &amp; Animation';
+                playBtn.innerHTML = '⏸️ Pause';
                 statusText.innerText = 'Playing (Audio Active)';
-                initSpeech();
+                playSpeech();
             }} else {{
+                if ('speechSynthesis' in window) {{
+                    window.speechSynthesis.cancel();
+                }}
                 try {{ svg.pauseAnimations(); }} catch(e) {{}}
-                playBtn.innerText = '▶️ Play Audio &amp; Animation';
+                playBtn.innerHTML = '▶️ Play';
                 statusText.innerText = 'Paused';
-                stopSpeech();
             }}
         }}
 
-        function restartExperience() {{
+        function restartAudio() {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+            }}
+            currentWordIndex = 0;
+            scrubber.value = 0;
+            renderTranscript();
             try {{ svg.setCurrentTime(0); }} catch(e) {{}}
+            
             isPlaying = true;
             try {{ svg.unpauseAnimations(); }} catch(e) {{}}
-            document.getElementById('playBtn').innerText = '⏸️ Pause Audio &amp; Animation';
-            document.getElementById('statusText').innerText = 'Playing (Audio Active)';
-            initSpeech();
+            playBtn.innerHTML = '⏸️ Pause';
+            statusText.innerText = 'Playing (Audio Active)';
+            playSpeech();
         }}
+
+        function prevConcept() {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+            }}
+            loadConcept(currentConceptIdx - 1);
+        }}
+
+        function nextConcept() {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+            }}
+            loadConcept(currentConceptIdx + 1);
+        }}
+
+        function onScrub(val) {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+            }}
+            currentWordIndex = Math.floor((val / 100) * words.length);
+            if (currentWordIndex >= words.length) currentWordIndex = words.length - 1;
+            if (currentWordIndex < 0) currentWordIndex = 0;
+
+            renderTranscript();
+            try {{
+                svg.setCurrentTime((currentWordIndex / words.length) * totalDuration);
+            }} catch(e) {{}}
+
+            if (isPlaying) {{
+                playSpeech();
+            }}
+        }}
+
+        // Initialize first concept on load
+        window.addEventListener('load', () => {{
+            loadConcept(0);
+        }});
     </script>
     </body>
     </html>
     """
 
-    components.html(player_html, height=460, scrolling=False)
+    components.html(player_html, height=480, scrolling=False)
 
 else:
     for message in st.session_state.messages:
