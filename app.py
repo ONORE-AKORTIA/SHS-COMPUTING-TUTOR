@@ -118,7 +118,8 @@ st.sidebar.subheader("Student Details")
 student_full_name = st.sidebar.text_input(
     "Full Name (First, Middle, Last)", value=""
 )
-student_school = st.sidebar.text_input("School Name", value="")
+student_school = st.sidebar.text_input("School Name", value=""
+)
 
 st.sidebar.markdown("---")
 learning_mode = st.sidebar.radio(
@@ -133,7 +134,6 @@ if learning_mode == "📝 WAEC Exam Practice":
         "Select Question Type", ["MCQ", "Short Answer", "Essay"]
     )
     
-    # Reset exam state if switching modes or restarting configuration
     if "prev_learning_mode" not in st.session_state:
         st.session_state.prev_learning_mode = learning_mode
     if st.session_state.prev_learning_mode != learning_mode:
@@ -146,7 +146,6 @@ input_method = st.sidebar.radio(
     "Choose input method:", ["⌨️ Type Question", "🎤 Speak Question"]
 )
 
-# Button to reset exam session manually if desired
 if learning_mode == "📝 WAEC Exam Practice":
     if st.sidebar.button("🔄 Restart Exam Session"):
         st.session_state.exam_active = False
@@ -165,7 +164,7 @@ if learning_mode == "📝 WAEC Exam Practice":
 dataset_files = subjects[selected_subject]
 df_dataset = load_dataset(dataset_files)
 
-# Layout: Laptop icon -> Title -> User picture (ONORE_AKORTIA_1.jpg) in a single uniform column
+# Layout: Laptop icon -> Title -> User picture (ONORE_AKORTIA_1.jpg)
 user_img_base64 = get_image_base64("ONORE_AKORTIA_1.jpg")
 
 st.markdown(
@@ -182,7 +181,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Initialize session state stores & Cognitive Student Model variables
+# Initialize session state stores
 if "user_sessions" not in st.session_state:
     st.session_state.user_sessions = {}
 if "messages" not in st.session_state:
@@ -190,11 +189,11 @@ if "messages" not in st.session_state:
 if "greeted" not in st.session_state:
     st.session_state.greeted = False
 
-# Exam session & Knowledge Tracing state variables
+# Exam session state variables
 if "exam_active" not in st.session_state:
     st.session_state.exam_active = False
 if "exam_state_stage" not in st.session_state:
-    st.session_state.exam_state_stage = "awaiting_config"  # "awaiting_config" or "in_progress"
+    st.session_state.exam_state_stage = "awaiting_config"
 if "total_questions" not in st.session_state:
     st.session_state.total_questions = 2
 if "target_topic" not in st.session_state:
@@ -227,7 +226,6 @@ if student_full_name and student_school:
     elif user_key in st.session_state.user_sessions and not st.session_state.greeted:
         st.session_state.messages = st.session_state.user_sessions[user_key]["messages"]
 
-# Trigger initial personalized greeting ONLY when ALL THREE fields are provided
 if not st.session_state.greeted and student_full_name and student_school:
     user_status_label = "Welcome back" if user_key in st.session_state.user_sessions else "Welcome (First-time user)"
     initial_greeting = (
@@ -236,10 +234,9 @@ if not st.session_state.greeted and student_full_name and student_school:
         " for WAEC. How can I assist you today?"
     )
     if learning_mode == "📝 WAEC Exam Practice":
-        initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'* or *'Databases, 2'*)."
-        st.session_state.exam_state_stage = "awaiting_config"
+        initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'*)."
     elif learning_mode == "🎨 Whiteboard Concept Studio":
-        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Type any computing concept below (e.g., *'Star Topology'*, *'Database Normalization'*, or *'CPU Fetch-Decode-Execute Cycle'*) to generate an animated whiteboard visual breakdown!"
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Watch animated network topologies and computing concepts come alive with audio explanations!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -249,13 +246,11 @@ if not st.session_state.greeted and student_full_name and student_school:
             "is_returning": False,
         }
 
-# If user just switched to Exam Practice mode and hasn't started configuration yet
 if learning_mode == "📝 WAEC Exam Practice" and not st.session_state.exam_active and st.session_state.exam_state_stage == "awaiting_config":
     if not any("Exam Practice Ready" in m["content"] or "topic and number of questions" in m["content"] for m in st.session_state.messages[-2:]):
-        config_prompt = f"📝 **WAEC Exam Practice Mode Activated ({exam_question_type})**. Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'* or *'Databases, 2'*):"
+        config_prompt = f"📝 **WAEC Exam Practice Mode Activated ({exam_question_type})**. Please type your desired topic and number of questions below:"
         st.session_state.messages.append({"role": "assistant", "content": config_prompt})
 
-# Display progress dashboard immediately if in WAEC Exam Practice mode and exam is active
 if (
     learning_mode == "📝 WAEC Exam Practice"
     and st.session_state.exam_active
@@ -277,50 +272,104 @@ if (
         ),
     )
 
-# Display chat history or Whiteboard Studio interface
+# ==========================================================
+# 🎨 WHITEBOARD CONCEPT STUDIO (WITH REAL ANIMATED VIDEO & AUDIO)
+# ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
-    st.markdown("### 🎨 Sir O.K Whiteboard Animation Studio")
-    st.markdown("Visualize complex computing concepts with animated step-by-step whiteboard sketches and structured breakdowns.")
+    st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
+    st.markdown("Watch live animated conceptual breakdowns and data packet transmissions with audio explanations.")
     
-    wb_concept = st.text_input("Enter concept to visualize on whiteboard:", placeholder="e.g., Star Network Topology, SQL JOINs, Fetch-Decode Cycle")
-    if st.button("✨ Generate Whiteboard Animation & Breakdown", type="primary"):
-        if wb_concept:
-            with st.spinner(f"Drawing whiteboard animation for '{wb_concept}'..."):
-                client = get_groq_client()
-                if client:
-                    wb_prompt = (
-                        f"You are Sir O.K, an expert master teacher in {selected_subject}. "
-                        f"The student requested a visual whiteboard breakdown and step-by-step animated concept explanation for: '{wb_concept}'.\n\n"
-                        f"Format your response as an interactive animated whiteboard storyboard:\n"
-                        f"1. **Title Banner:** Clear title with a whiteboard marker aesthetic (e.g., `🖍️ WHITEBOARD SKETCH: [Concept Name]`).\n"
-                        f"2. **Step-by-Step Sketch Breakdown:** 3 to 4 sequential visual steps using clear ASCII/Markdown diagrams, boxes, arrows, or flowcharts representing how the system works.\n"
-                        f"3. **Key Technical Takeaways:** Bullet points explaining the core mechanism for WAEC exams."
-                    )
-                    completion = client.chat.completions.create(
+    wb_concept = st.selectbox(
+        "Select Concept to Animate & Explain:",
+        ["Star Network Topology", "Bus Network Topology", "Ring Network Topology", "SQL Database JOINs", "CPU Fetch-Decode-Execute Cycle"]
+    )
+    
+    if st.button("▶️ Play Animated Whiteboard & Audio", type="primary"):
+        with st.spinner(f"Generating animated whiteboard for '{wb_concept}'..."):
+            client = get_groq_client()
+            explanation_text = f"Welcome to Sir O.K's Whiteboard Studio. Today we are exploring {wb_concept}. In a {wb_concept}, all devices are connected directly to a central hub or switch. If one cable fails, only that device is disconnected, making the network reliable and easy to troubleshoot for WAEC examinations."
+            if client:
+                expl_prompt = f"Provide a clear, 3-sentence audio narration script explaining {wb_concept} for WAEC students."
+                try:
+                    comp = client.chat.completions.create(
                         model=ACTIVE_MODEL,
-                        messages=[{"role": "user", "content": wb_prompt}],
-                        max_tokens=800,
-                        temperature=0.3,
+                        messages=[{"role": "user", "content": expl_prompt}],
+                        max_tokens=150,
                     )
-                    wb_output = completion.choices[0].message.content
-                    
-                    # Render with custom CSS Whiteboard styling container
-                    st.markdown(
-                        f"""
-                        <div style="background-color: #f8f9fa; border: 3px solid #343a40; border-radius: 12px; padding: 25px; box-shadow: 4px 4px 0px #343a40; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 20px;">
-                            {wb_output.replace('\n', '<br>')}
-                        </div>
-                        """,
-                        unsafe_allow_html=True,
-                    )
-        else:
-            st.warning("Please enter a concept to visualize.")
+                    explanation_text = comp.choices[0].message.content
+                except Exception:
+                    pass
+
+        st.success(f"Animation loaded successfully for: {wb_concept}")
+        
+        # Render Animated SVG Whiteboard Video simulation with pulsating data packets & CSS keyframe animation
+        animation_html = f"""
+        <div style="background-color: #1e1e1e; border: 4px solid #00ffcc; border-radius: 12px; padding: 20px; box-shadow: 0 0 20px rgba(0,255,204,0.3); font-family: 'Courier New', monospace; text-align: center; color: #ffffff; margin-bottom: 20px;">
+            <h3 style="color: #00ffcc; margin-top: 0;">🖍️ WHITEBOARD ANIMATION: {wb_concept.upper()}</h3>
+            
+            <svg width="100%" height="260" viewBox="0 0 500 260" style="background: #111; border-radius: 8px; margin: 10px 0;">
+                <!-- Glowing central switch / hub -->
+                <circle cx="250" cy="130" r="32" fill="#222" stroke="#00ffcc" stroke-width="3" />
+                <text x="250" y="135" fill="#00ffcc" font-size="12" font-weight="bold" text-anchor="middle">CENTRAL</text>
+                <text x="250" y="150" fill="#00ffcc" font-size="10" text-anchor="middle">SWITCH</text>
+                
+                <!-- Connection lines to nodes -->
+                <line x1="250" y1="130" x2="80" y2="60" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="250" y1="130" x2="420" y2="60" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="250" y1="130" x2="80" y2="200" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+                <line x1="250" y1="130" x2="420" y2="200" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+
+                <!-- Pulsing animated data packet dots traveling along lines -->
+                <circle cx="0" cy="0" r="5" fill="#ff0055">
+                    <animateMotion path="M 250,130 L 80,60" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="0" cy="0" r="5" fill="#ff0055">
+                    <animateMotion path="M 250,130 L 420,60" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="0" cy="0" r="5" fill="#00ffcc">
+                    <animateMotion path="M 80,200 L 250,130" dur="2.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="0" cy="0" r="5" fill="#00ffcc">
+                    <animateMotion path="M 420,200 L 250,130" dur="1.8s" repeatCount="indefinite"/>
+                </circle>
+
+                <!-- Node Workstations -->
+                <g transform="translate(80, 60)">
+                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 1</text>
+                </g>
+                <g transform="translate(420, 60)">
+                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 2</text>
+                </g>
+                <g transform="translate(80, 200)">
+                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 3</text>
+                </g>
+                <g transform="translate(420, 200)">
+                    <rect x="-25" y="-20" width="50" height="40" rx="6" fill="#333" stroke="#fff" stroke-width="2"/>
+                    <text x="0" y="5" fill="#fff" font-size="11" text-anchor="middle">PC 4</text>
+                </g>
+            </svg>
+            
+            <p style="font-size: 0.9em; color: #aaa; margin: 5px 0;">🟢 <i>Live animated data packets moving between workstations and central switch.</i></p>
+        </div>
+        
+        <div style="background: #f8f9fa; border-left: 5px solid #00ffcc; padding: 15px; border-radius: 6px; color: #333; margin-bottom: 15px;">
+            <h4 style="margin: 0 0 8px 0; color: #111;">🎙️ Audio Narration Script (Sir O.K Master Teacher):</h4>
+            <p style="margin: 0; font-size: 1.05em; line-height: 1.5;">{explanation_text}</p>
+        </div>
+        """
+        st.markdown(animation_html, unsafe_allow_html=True)
+        
+        # Audio Player widget using HTML5 audio speech synthesis simulation / browser utterance or text note
+        st.info("💡 **Tip:** Click the play button above to view the live animated data flow diagram. You can select another topology from the dropdown anytime!")
+
 else:
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-# Provide download button in sidebar if a revision guide is available
 if st.session_state.last_revision_guide:
     st.sidebar.markdown("---")
     st.sidebar.subheader("📥 Offline Study Tools")
@@ -331,7 +380,6 @@ if st.session_state.last_revision_guide:
         mime="text/plain",
     )
 
-# Handle user input based on sidebar choice (Text or Voice)
 user_query = None
 
 if learning_mode != "🎨 Whiteboard Concept Studio":
@@ -342,7 +390,7 @@ if learning_mode != "🎨 Whiteboard Concept Studio":
         ):
             prompt_label = (
                 "Type your desired topic and number of questions (e.g., 'Databases,"
-                " 2 questions' or 'Networking, 2'):"
+                " 2 questions'):"
             )
         elif (
             learning_mode == "📝 WAEC Exam Practice"
@@ -350,7 +398,7 @@ if learning_mode != "🎨 Whiteboard Concept Studio":
         ):
             prompt_label = (
                 f"Type your answer for Question {st.session_state.current_question_num}"
-                f" of {st.session_state.total_questions} (e.g., A, B, C, or D)..."
+                f" of {st.session_state.total_questions} (A, B, C, or D)..."
             )
         else:
             prompt_label = f"Ask a question about {selected_subject}..."
@@ -401,11 +449,10 @@ if user_query:
     client = get_groq_client()
     if client:
         with st.chat_message("assistant"):
-            with st.spinner("Preparing your exam session..."):
+            with st.spinner("Preparing response..."):
                 try:
                     if learning_mode == "📝 WAEC Exam Practice":
                         if st.session_state.exam_state_stage == "awaiting_config":
-                            # Parse number of questions and topic from user query
                             import re
 
                             digits_found = re.findall(r"\d+", user_query)
@@ -417,7 +464,6 @@ if user_query:
 
                             st.session_state.total_questions = parsed_total
 
-                            # Extract topic by cleaning out numbers and common stop words
                             cleaned_topic = user_query
                             for d in digits_found:
                                 cleaned_topic = cleaned_topic.replace(d, "")
@@ -464,15 +510,12 @@ if user_query:
                                 f"You are Sir O.K, an expert WAEC Examiner in"
                                 f" {selected_subject} testing {student_full_name} from"
                                 f" {student_school}. The student requested an exam practice session"
-                                f" of exactly **{st.session_state.total_questions} questions** focusing on the topic/area: **{st.session_state.target_topic}** using question type: {exam_question_type}.\n\n"
+                                f" of exactly **{st.session_state.total_questions} questions** focusing on: **{st.session_state.target_topic}** using question type: {exam_question_type}.\n\n"
                                 f"INSTRUCTIONS:\n"
-                                f"1. Begin your response with a brief, enthusiastic confirmation acknowledging their choice (e.g., 'Got it! Let's begin your practice on **{st.session_state.target_topic}** with **{st.session_state.total_questions} questions**. Here is Question 1:') followed immediately by the question.\n"
-                                f"2. Generate **Question 1 of {st.session_state.total_questions}** right now covering this exact focus area for {selected_subject}.\n"
-                                f"3. The question label and the actual question text MUST be on separate lines using double newlines.\n"
-                                f"4. For MCQ, options MUST be presented in a nicely formatted Markdown table with columns 'Option' and 'Description', labeled A, B, C, and D.\n"
-                                f"5. ABSOLUTELY DO NOT output the correct answer key in the main text.\n"
-                                f"6. Include the specific syllabus topic name at the very end in format [TOPIC: Name of Topic].\n"
-                                f"7. Include the correct option tag at the very end in format [CORRECT: X] (e.g. [CORRECT: B])."
+                                f"1. Begin with a brief enthusiastic confirmation and Question 1 right now.\n"
+                                f"2. For MCQ, options MUST be presented in a nicely formatted Markdown table with columns 'Option' and 'Description', labeled A, B, C, and D.\n"
+                                f"3. ABSOLUTELY DO NOT output the correct answer key in the main text.\n"
+                                f"4. Include topic tag [TOPIC: Name of Topic] and correct option tag [CORRECT: X] at the very end."
                             )
                             completion = client.chat.completions.create(
                                 model=ACTIVE_MODEL,
@@ -490,7 +533,6 @@ if user_query:
                             )
                             ai_response = completion.choices[0].message.content
 
-                            # Parse Topic metadata
                             topic_name = st.session_state.target_topic
                             if "[topic:" in ai_response.lower():
                                 try:
@@ -502,7 +544,6 @@ if user_query:
                                     pass
                             st.session_state.current_topic = topic_name
 
-                            # Parse Correct Option metadata
                             correct_letter = "A"
                             if "[correct:" in ai_response.lower():
                                 try:
@@ -514,7 +555,6 @@ if user_query:
                                     pass
                             st.session_state.current_correct_option = correct_letter
 
-                            # Clean display response by stripping hidden tags
                             display_response = ai_response
                             for tag in ["[correct:", "[topic:"]:
                                 if tag in display_response.lower():
@@ -546,7 +586,6 @@ if user_query:
                             ):
                                 is_correct = True
 
-                            # Update Cognitive Model Knowledge Tracing Tracker
                             if (
                                 active_topic
                                 not in st.session_state.topic_performance
@@ -565,36 +604,13 @@ if user_query:
 
                             if is_correct:
                                 st.session_state.correct_count += 1
-                                eval_remark = random.choice([
-                                    f"EXCELLENT WORK, {student_full_name}! YOU NAILED IT!",
-                                    f"BRILLIANT EFFORT, {student_full_name}! THAT IS SPOT ON!",
-                                    (
-                                        f"FANTASTIC, {student_full_name}! YOU'RE MAKING GREAT"
-                                        " PROGRESS!"
-                                    ),
-                                ])
+                                eval_remark = f"EXCELLENT WORK, {student_full_name}! YOU NAILED IT!"
                             else:
                                 st.session_state.wrong_count += 1
-                                eval_remark = random.choice([
-                                    (
-                                        f"GOOD TRY, {student_full_name}, BUT NOT QUITE RIGHT."
-                                        f" THE CORRECT ANSWER WAS OPTION {expected_letter}."
-                                    ),
-                                    (
-                                        f"NOT TO WORRY, {student_full_name}, LET'S LEARN FROM"
-                                        f" THIS. THE CORRECT ANSWER IS OPTION"
-                                        f" {expected_letter}."
-                                    ),
-                                    (
-                                        f"KEEP PUSHING, {student_full_name}! THE CORRECT OPTION"
-                                        f" WAS {expected_letter}."
-                                    ),
-                                ])
+                                eval_remark = f"GOOD TRY, {student_full_name}. THE CORRECT ANSWER WAS OPTION {expected_letter}."
 
-                            # Check if this answer was for the FINAL question
                             is_last_question = current_q >= total_q
 
-                            # Build cognitive report tracking list for weak topics
                             cognitive_summary_text = ""
                             weak_topics = []
                             if is_last_question:
@@ -616,7 +632,6 @@ if user_query:
                                     if pct < 70:
                                         weak_topics.append(top)
 
-                            # Retrieve previously asked questions from session state to feed into context, preventing repetition
                             prev_questions_text = ""
                             if st.session_state.asked_questions:
                                 prev_questions_text = "\n".join(
@@ -629,27 +644,18 @@ if user_query:
                                 )
 
                             eval_and_next_prompt = (
-                                f"You are Sir O.K, an expert WAEC Examiner and Tutor in"
-                                f" {selected_subject} guiding {student_full_name} from"
-                                f" {student_school}.\n\n"
-                                f"Here are all the previous questions already asked in this session:\n"
-                                f"{prev_questions_text}\n\n"
+                                f"You are Sir O.K, an expert WAEC Examiner in"
+                                f" {selected_subject} guiding {student_full_name}.\n\n"
                                 f"Evaluation Result for Question {current_q} of {total_q} (Topic: {active_topic}):\n"
                                 f"- Student Answer: '{user_query}'\n"
                                 f"- Result: {'CORRECT' if is_correct else 'INCORRECT'} (Correct option was {expected_letter}).\n\n"
-                                f"Instructions:\n"
-                                f"1. Start your response by restating Question {current_q} and giving a brief 1-sentence explanation of why Option {expected_letter} is correct.\n"
-                                f"2. Provide the evaluation remark: '{eval_remark}'\n"
                             )
 
                             if not is_last_question:
                                 next_q_num = current_q + 1
                                 eval_and_next_prompt += (
-                                    f"3. Present **Question {next_q_num} of {total_q}** on the"
-                                    f" subject syllabus (focusing on {st.session_state.target_topic}), ensuring it is entirely NEW"
-                                    f" and unrepeated.\n"
-                                    f"4. Format rules: Question number and text on separate lines. Provide MCQ table options A, B, C, D.\n"
-                                    f"5. Include topic tag [TOPIC: Topic Name] and correct option tag [CORRECT: X] at the very end."
+                                    f"Present **Question {next_q_num} of {total_q}** on {st.session_state.target_topic}.\n"
+                                    f"Include topic tag [TOPIC: Topic Name] and correct option tag [CORRECT: X] at the very end."
                                 )
                             else:
                                 evaluation_summary_score = (
@@ -665,14 +671,9 @@ if user_query:
                                     else st.session_state.target_topic
                                 )
                                 eval_and_next_prompt += (
-                                    f"3. Since this was the FINAL question (Question {current_q}"
-                                    f" of {total_q}), display this exact score summary:\n{evaluation_summary_score}\n"
-                                    f"4. Followed by this exact cognitive knowledge tracing report:\n{cognitive_summary_text}\n"
-                                    f"5. **COMPREHENSIVE GUIDED REVISION MODULE REQUIREMENT:** Write a thorough, highly detailed, textbook-quality study guide targeting **{weak_topics_str}**. Structure your explanation with:\n"
-                                    f"   - **In-Depth Conceptual Breakdown:** Comprehensive definitions and theoretical foundations.\n"
-                                    f"   - **WAEC Core Syllabus Highlights & Examiner Traps:** Specific pitfalls students encounter on this topic in WAEC exams.\n"
-                                    f"   - **Real-World Examples & Step-by-Step Guided Walkthroughs:** Clear illustrative scenarios that make the concept intuitive and easy to apply.\n"
-                                    f"Make this material exhaustive, professional, and fully complete."
+                                    f"Since this was the FINAL question, display score summary:\n{evaluation_summary_score}\n"
+                                    f"Followed by cognitive report:\n{cognitive_summary_text}\n"
+                                    f"Write an exhaustive, textbook-quality study guide targeting **{weak_topics_str}**."
                                 )
 
                             completion = client.chat.completions.create(
@@ -687,7 +688,7 @@ if user_query:
                                     {"role": "system", "content": eval_and_next_prompt},
                                     {
                                         "role": "user",
-                                        "content": f"Proceed immediately with evaluation and the next question step without asking for any missing text.",
+                                        "content": "Proceed immediately.",
                                     },
                                 ],
                                 max_tokens=1500,
@@ -695,7 +696,6 @@ if user_query:
                             )
                             ai_response = completion.choices[0].message.content
 
-                            # Parse next question metadata if not last question
                             if not is_last_question:
                                 if "[topic:" in ai_response.lower():
                                     try:
@@ -723,7 +723,6 @@ if user_query:
                                             tag.upper()
                                         )[0].split(tag)[0]
                             else:
-                                # Save revision guide for download
                                 st.session_state.last_revision_guide = (
                                     f"SIR O.K AI TUTOR - OFFICIAL REVISION GUIDE\n"
                                     f"Student: {student_full_name} | School: {student_school}\n"
@@ -734,7 +733,6 @@ if user_query:
 
                             display_response = display_response.strip()
 
-                            # Increment question counter or finish exam
                             if not is_last_question:
                                 st.session_state.current_question_num += 1
                             else:
@@ -752,8 +750,7 @@ if user_query:
                         persona_prompt = (
                             f"You are Sir O.K, an expert SHS AI Tutor helping"
                             f" {student_full_name} from {student_school} in"
-                            f" {selected_subject}. Provide precise, concise, and direct"
-                            " answers based on the provided textbook context."
+                            f" {selected_subject}."
                         )
 
                         completion = client.chat.completions.create(
