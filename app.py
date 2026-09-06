@@ -273,19 +273,45 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (FULLY RESPONSIVE & AUTOPLAY SPEECH FIXED)
+# 🎨 WHITEBOARD CONCEPT STUDIO (WITH DYNAMIC SVGs, AUDIO LINKED TO PLAY/PAUSE, AND NAV)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
     
+    concepts_list = [
+        "Star Network Topology",
+        "Bus Network Topology",
+        "Ring Network Topology",
+        "SQL Database JOINs",
+        "CPU Fetch-Decode-Execute Cycle"
+    ]
+    
+    if "wb_concept_idx" not in st.session_state:
+        st.session_state.wb_concept_idx = 0
+
+    # Navigation controls (Previous / Next)
+    nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
+    with nav_col1:
+        if st.button("⏮️ Previous"):
+            st.session_state.wb_concept_idx = (st.session_state.wb_concept_idx - 1) % len(concepts_list)
+            st.rerun()
+    with nav_col3:
+        if st.button("Next ⏭️"):
+            st.session_state.wb_concept_idx = (st.session_state.wb_concept_idx + 1) % len(concepts_list)
+            st.rerun()
+
     wb_concept = st.selectbox(
         "Select Concept to Animate & Explain:",
-        ["Star Network Topology", "Bus Network Topology", "Ring Network Topology", "SQL Database JOINs", "CPU Fetch-Decode-Execute Cycle"]
+        concepts_list,
+        index=st.session_state.wb_concept_idx,
+        key="wb_selectbox_widget"
     )
-    
+    # Sync selectbox index if changed manually
+    st.session_state.wb_concept_idx = concepts_list.index(wb_concept)
+
     # Generate tailored audio explanation script via Groq
     client = get_groq_client()
-    explanation_text = f"Welcome to Sir O.K's Whiteboard Studio. Today we are exploring {wb_concept}. In this architecture, data is transmitted efficiently across nodes, ensuring reliability and performance for WAEC examinations."
+    explanation_text = f"Welcome to Sir O.K's Whiteboard Studio. Today we are exploring {wb_concept}. In this architecture, data is transmitted continuously across nodes, ensuring high reliability and performance for WAEC examinations."
     if client:
         try:
             comp = client.chat.completions.create(
@@ -297,7 +323,91 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         except Exception:
             pass
 
-    # Fully Responsive HTML/JS Component with standard Web Speech API, proper iframe height, and robust controls
+    # Build Concept-Specific SVG Graphics
+    svg_content = ""
+    if wb_concept == "Star Network Topology":
+        svg_content = """
+            <circle cx="300" cy="130" r="28" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
+            <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
+            <text x="300" y="138" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">SWITCH</text>
+            
+            <line x1="300" y1="130" x2="100" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="300" y1="130" x2="500" y2="55" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+            <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
+
+            <circle r="5" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="3s" repeatCount="indefinite"/></circle>
+            <circle r="5" fill="#00ffcc"><animateMotion path="M 300,130 L 500,55" dur="2.5s" repeatCount="indefinite"/></circle>
+            <circle r="5" fill="#ffbb00"><animateMotion path="M 100,205 L 300,130" dur="3.2s" repeatCount="indefinite"/></circle>
+            <circle r="5" fill="#00ffcc"><animateMotion path="M 500,205 L 300,130" dur="2.8s" repeatCount="indefinite"/></circle>
+
+            <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
+            <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
+            <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
+            <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
+        """
+    elif wb_concept == "Bus Network Topology":
+        svg_content = """
+            <line x1="50" y1="130" x2="550" y2="130" stroke="#00ffcc" stroke-width="6" stroke-linecap="round"/>
+            <text x="300" y="115" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MAIN BACKBONE CABLE</text>
+            
+            <line x1="120" y1="130" x2="120" y2="60" stroke="#aaa" stroke-width="2"/>
+            <line x1="280" y1="130" x2="280" y2="200" stroke="#aaa" stroke-width="2"/>
+            <line x1="420" y1="130" x2="420" y2="60" stroke="#aaa" stroke-width="2"/>
+
+            <circle r="6" fill="#ff0055"><animateMotion path="M 60,130 L 540,130" dur="3s" repeatCount="indefinite"/></circle>
+
+            <g transform="translate(120, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
+            <g transform="translate(280, 215)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
+            <g transform="translate(420, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
+        """
+    elif wb_concept == "Ring Network Topology":
+        svg_content = """
+            <circle cx="300" cy="130" r="75" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6,4"/>
+            <text x="300" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CLOSED LOOP</text>
+            
+            <circle r="6" fill="#ffbb00"><animateMotion path="M 300,55 A 75,75 0 1,1 299.9,55" dur="4s" repeatCount="indefinite"/></circle>
+
+            <g transform="translate(300, 50)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 1</text></g>
+            <g transform="translate(385, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 2</text></g>
+            <g transform="translate(300, 210)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 3</text></g>
+            <g transform="translate(215, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 4</text></g>
+        """
+    elif wb_concept == "SQL Database JOINs":
+        svg_content = """
+            <rect x="120" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+            <text x="180" y="95" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">TABLE A</text>
+            <line x1="120" y1="105" x2="240" y2="105" stroke="#00ffcc" stroke-width="1"/>
+            <text x="180" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Name</text>
+            <text x="180" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | Alice</text>
+
+            <rect x="360" y="70" width="120" height="110" rx="6" fill="#1e1e1e" stroke="#ffbb00" stroke-width="2"/>
+            <text x="420" y="95" fill="#ffbb00" font-size="10" font-weight="bold" text-anchor="middle">TABLE B</text>
+            <line x1="360" y1="105" x2="480" y2="105" stroke="#ffbb00" stroke-width="1"/>
+            <text x="420" y="130" fill="#ddd" font-size="8" text-anchor="middle">ID | Course</text>
+            <text x="420" y="150" fill="#ddd" font-size="8" text-anchor="middle">1  | ICT</text>
+
+            <path d="M 245,125 Q 300,90 355,125" fill="none" stroke="#ff0055" stroke-width="3" stroke-dasharray="4"/>
+            <text x="300" y="85" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">INNER JOIN</text>
+        """
+    else:  # CPU Fetch-Decode-Execute Cycle
+        svg_content = """
+            <rect x="60" y="90" width="100" height="80" rx="6" fill="#222" stroke="#00ffcc" stroke-width="2"/>
+            <text x="110" y="135" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MEMORY</text>
+
+            <rect x="240" y="90" width="120" height="80" rx="6" fill="#222" stroke="#ffbb00" stroke-width="2"/>
+            <text x="300" y="125" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">CONTROL</text>
+            <text x="300" y="140" fill="#ffbb00" font-size="9" font-weight="bold" text-anchor="middle">UNIT (CU)</text>
+
+            <rect x="440" y="90" width="100" height="80" rx="6" fill="#222" stroke="#ff0055" stroke-width="2"/>
+            <text x="490" y="135" fill="#ff0055" font-size="10" font-weight="bold" text-anchor="middle">ALU</text>
+
+            <line x1="165" y1="120" x2="235" y2="120" stroke="#fff" stroke-width="2" marker-end="url(#arrow)"/>
+            <line x1="365" y1="120" x2="435" y2="120" stroke="#fff" stroke-width="2"/>
+            <circle r="5" fill="#00ffcc"><animateMotion path="M 165,120 L 235,120 L 365,120 L 435,120" dur="2s" repeatCount="indefinite"/></circle>
+        """
+
+    # Fully Responsive HTML/JS Component with Play/Pause controlling both SVG and Audio directly
     player_html = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -347,7 +457,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         .screen {{
             position: relative;
             width: 100%;
-            padding-bottom: 45%;
+            padding-bottom: 42%;
             background: #0a0a0a;
             border-radius: 6px;
             overflow: hidden;
@@ -368,6 +478,8 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             background: #252525;
             padding: 6px 10px;
             border-radius: 6px;
+            flex-wrap: wrap;
+            gap: 6px;
         }}
         .btn-group {{
             display: flex;
@@ -377,7 +489,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             background: #333;
             color: #fff;
             border: 1px solid #555;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
@@ -417,45 +529,8 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         </div>
         
         <div class="screen">
-            <svg id="wbSvg" viewBox="0 0 600 280">
-                <circle cx="300" cy="140" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
-                <text x="300" y="136" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CENTRAL</text>
-                <text x="300" y="148" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">SWITCH</text>
-                
-                <line x1="300" y1="140" x2="110" y2="65" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="140" x2="490" y2="65" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="140" x2="110" y2="215" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-                <line x1="300" y1="140" x2="490" y2="215" stroke="#444" stroke-width="2" stroke-dasharray="4"/>
-
-                <circle cx="0" cy="0" r="5" fill="#ff0055">
-                    <animateMotion path="M 300,140 L 110,65" dur="2s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="0" cy="0" r="5" fill="#00ffcc">
-                    <animateMotion path="M 300,140 L 490,65" dur="1.5s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="0" cy="0" r="5" fill="#ffbb00">
-                    <animateMotion path="M 110,215 L 300,140" dur="2.2s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="0" cy="0" r="5" fill="#00ffcc">
-                    <animateMotion path="M 490,215 L 300,140" dur="1.8s" repeatCount="indefinite" />
-                </circle>
-
-                <g transform="translate(110, 65)">
-                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 1</text>
-                </g>
-                <g transform="translate(490, 65)">
-                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 2</text>
-                </g>
-                <g transform="translate(110, 215)">
-                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 3</text>
-                </g>
-                <g transform="translate(490, 215)">
-                    <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/>
-                    <text x="0" y="4" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">PC 4</text>
-                </g>
+            <svg id="wbSvg" viewBox="0 0 600 260">
+                {svg_content}
             </svg>
         </div>
 
@@ -463,9 +538,8 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             <div class="btn-group">
                 <button id="playBtn" onclick="togglePlay()">⏸️ Pause</button>
                 <button onclick="restartPlayer()">🔄 Restart</button>
-                <button onclick="speakNarration()">🔊 Replay Audio</button>
             </div>
-            <div class="status" id="statusText">Playing</div>
+            <div class="status" id="statusText">Playing (Audio Active)</div>
         </div>
 
         <div class="narration">
@@ -477,20 +551,27 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         let isPlaying = true;
         const svg = document.getElementById('wbSvg');
         const narrationText = "{explanation_text}";
+        let utterance = null;
 
-        function speakNarration() {{
+        function startSpeech() {{
             if ('speechSynthesis' in window) {{
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(narrationText);
+                utterance = new SpeechSynthesisUtterance(narrationText);
                 utterance.rate = 0.95;
                 utterance.pitch = 1.0;
                 window.speechSynthesis.speak(utterance);
             }}
         }}
 
-        // Attempt autoplay on load
+        function stopSpeech() {{
+            if ('speechSynthesis' in window) {{
+                window.speechSynthesis.cancel();
+            }}
+        }}
+
+        // Autoplay on load
         window.addEventListener('load', () => {{
-            setTimeout(speakNarration, 300);
+            setTimeout(startSpeech, 400);
         }});
 
         function togglePlay() {{
@@ -498,15 +579,13 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             if (isPlaying) {{
                 svg.unpauseAnimations();
                 document.getElementById('playBtn').innerText = '⏸️ Pause';
-                document.getElementById('statusText').innerText = 'Playing';
-                speakNarration();
+                document.getElementById('statusText').innerText = 'Playing (Audio Active)';
+                startSpeech();
             }} else {{
                 svg.pauseAnimations();
                 document.getElementById('playBtn').innerText = '▶️ Play';
                 document.getElementById('statusText').innerText = 'Paused';
-                if ('speechSynthesis' in window) {{
-                    window.speechSynthesis.cancel();
-                }}
+                stopSpeech();
             }}
         }}
 
@@ -515,15 +594,15 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             isPlaying = true;
             svg.unpauseAnimations();
             document.getElementById('playBtn').innerText = '⏸️ Pause';
-            document.getElementById('statusText').innerText = 'Playing';
-            speakNarration();
+            document.getElementById('statusText').innerText = 'Playing (Audio Active)';
+            startSpeech();
         }}
     </script>
     </body>
     </html>
     """
 
-    components.html(player_html, height=440, scrolling=False)
+    components.html(player_html, height=420, scrolling=False)
 
 else:
     for message in st.session_state.messages:
@@ -922,7 +1001,7 @@ if user_query:
                                         f"Relevant Textbook Content:\n{filtered_context}"
                                     ),
                                 },
-                                {"role": "system", "content": persona_proper} if 'persona_proper' in locals() else {"role": "system", "content": persona_prompt},
+                                {"role": "system", "content": persona_prompt},
                                 {"role": "user", "content": user_query},
                             ],
                             max_tokens=400,
