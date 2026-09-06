@@ -321,12 +321,13 @@ if user_query:
                 try:
                     if learning_mode == "📝 WAEC Exam Practice":
                         if not st.session_state.exam_active:
+                            # Parse total questions safely
                             try:
                                 parsed_total = int(user_query.strip())
                                 if parsed_total > 0:
                                     st.session_state.total_questions = parsed_total
                             except ValueError:
-                                pass
+                                st.session_state.total_questions = 5
 
                             st.session_state.exam_active = True
                             st.session_state.current_question_num = 1
@@ -339,17 +340,14 @@ if user_query:
                             start_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner in"
                                 f" {selected_subject} testing {student_full_name} from"
-                                f" {student_school}. The student requested an exam session"
-                                f" of {st.session_state.total_questions} questions focusing"
-                                f" specifically on topic or request: '{user_query}' and"
-                                f" question type: {exam_question_type}. Please generate"
-                                f" Question 1 strictly relevant to the requested topic.\n\n"
+                                f" {student_school}. The student initiated an exam practice session"
+                                f" of {st.session_state.total_questions} questions using question type: {exam_question_type}.\n\n"
+                                f"Please generate **Question 1** of {st.session_state.total_questions} right now covering core WAEC syllabus topics for {selected_subject}.\n\n"
                                 f"CRITICAL FORMATTING & METADATA RULES:\n"
                                 f"1. The question number (e.g., 'Question 1') and the actual"
                                 f" question text MUST be on separate lines using double"
                                 f" newlines.\n"
-                                f"2. Every question must include a complete, explicit question"
-                                f" statement.\n"
+                                f"2. Every question must include a complete, explicit question statement.\n"
                                 f"3. For MCQ, options MUST be presented in a nicely formatted"
                                 f" Markdown table with columns 'Option' and 'Description', labeled"
                                 f" A, B, C, and D.\n"
@@ -474,14 +472,13 @@ if user_query:
                                     ),
                                 ])
 
-                            # Build cognitive report & targeted revision learning materials if last question
+                            # Build cognitive report tracking list for weak topics
                             cognitive_summary_text = ""
-                            remediation_materials = ""
+                            weak_topics = []
                             if is_last_question:
                                 cognitive_summary_text = (
                                     "\n\n### 🧠 Cognitive Knowledge Tracing Report\n"
                                 )
-                                weak_topics = []
                                 for top, stats in st.session_state.topic_performance.items():
                                     pct = (
                                         (stats["correct"] / stats["total"]) * 100
@@ -496,17 +493,6 @@ if user_query:
                                     cognitive_summary_text += f"- **{top}**: {stats['correct']}/{stats['total']} correct ({pct:.0f}%) — {status_emoji}\n"
                                     if pct < 70:
                                         weak_topics.append(top)
-
-                                if weak_topics:
-                                    remediation_materials = (
-                                        f"\n\n### 📚 Tailored Revision Materials & Guided Walkthrough\n"
-                                        f"Since you need extra practice on **{', '.join(weak_topics)}**, here is your custom guide:\n"
-                                    )
-                                else:
-                                    remediation_materials = (
-                                        f"\n\n### 📚 Tailored Revision Materials & Guided Walkthrough\n"
-                                        f"Fantastic job mastering all topics! Here is a quick advanced tip to keep your edge sharp across {selected_subject}.\n"
-                                    )
 
                             eval_and_next_prompt = (
                                 f"You are Sir O.K, an expert WAEC Examiner and Tutor in"
@@ -528,17 +514,33 @@ if user_query:
                                 next_q_num = current_q + 1
                                 eval_and_next_prompt += (
                                     f"3. Present Question {next_q_num} of {total_q} on the"
-                                    f" topic requested by the user, ensuring it is entirely NEW"
+                                    f" subject syllabus, ensuring it is entirely NEW"
                                     f" and unrepeated.\n"
                                     f"4. Format rules: Question number and text on separate lines. Provide MCQ table options A, B, C, D.\n"
                                     f"5. Include topic tag [TOPIC: Topic Name] and correct option tag [CORRECT: X] at the very end."
                                 )
                             else:
+                                evaluation_summary_score = (
+                                    f"\n\n### 📊 Final Examination Summary\n"
+                                    f"- **Total Questions:** {total_q}\n"
+                                    f"- **Correct Answers:** {st.session_state.correct_count}\n"
+                                    f"- **Wrong Answers:** {st.session_state.wrong_count}\n"
+                                    f"- **Overall Score:** {(st.session_state.correct_count / total_q) * 100:.1f}%\n"
+                                )
+                                weak_topics_str = (
+                                    ", ".join(weak_topics)
+                                    if weak_topics
+                                    else "General Core Concepts"
+                                )
                                 eval_and_next_prompt += (
                                     f"3. Since this was the FINAL question (Question {current_q}"
-                                    f" of {total_q}), display the OVERALL FINAL SCORE and performance summary for {student_full_name}.\n"
-                                    f"4. Immediately append this exact cognitive report header:\n{cognitive_summary_text}\n"
-                                    f"5. Following that, write detailed, practical revision notes, core definitions, and step-by-step guided explanations specifically targeting any weak topics identified above to help the student thoroughly master them for WAEC."
+                                    f" of {total_q}), display this exact score summary:\n{evaluation_summary_score}\n"
+                                    f"4. Followed by this exact cognitive knowledge tracing report:\n{cognitive_summary_text}\n"
+                                    f"5. **COMPREHENSIVE GUIDED REVISION MODULE REQUIREMENT:** Write a thorough, highly detailed, and structured revision study guide targeting **{weak_topics_str}**. Include:\n"
+                                    f"   - **Core Definitions & Principles:** Clear technical breakdowns of the concepts.\n"
+                                    f"   - **WAEC Exam Highlights & Examiner Tips:** Crucial points students often miss in exams.\n"
+                                    f"   - **Step-by-Step Guided Walkthrough / Real-World Example:** Concrete illustrations to clear up any misconceptions.\n"
+                                    f"Make this material comprehensive, rich, and extensive to fully empower the student."
                                 )
 
                             completion = client.chat.completions.create(
@@ -556,7 +558,7 @@ if user_query:
                                         "content": f"Proceed with evaluation and next step.",
                                     },
                                 ],
-                                max_tokens=800,
+                                max_tokens=1000,
                                 temperature=0.4,
                             )
                             ai_response = completion.choices[0].message.content
