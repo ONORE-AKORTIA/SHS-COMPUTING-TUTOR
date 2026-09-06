@@ -10,10 +10,26 @@ from groq import Groq
 # Centralized model configuration
 ACTIVE_MODEL = "openai/gpt-oss-20b"
 
-# Page configuration
+# Page configuration with wide layout to utilize 80%+ of available space
 st.set_page_config(
-    page_title="SHS Computing AI Tutor", page_icon="💻", layout="centered"
+    page_title="SHS Computing AI Tutor", page_icon="💻", layout="wide"
 )
+
+# Inject custom CSS to maximize width and responsiveness across all modes
+st.markdown("""
+    <style>
+    .block-container {
+        max-width: 85% !important;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    .stChatInput {
+        max-width: 100% !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 
 # Initialize Groq client securely using Streamlit Secrets
@@ -48,36 +64,74 @@ def get_curriculum_hierarchy():
                 "Star Network Topology",
                 "Bus Network Topology",
                 "Ring Network Topology",
-                "Mesh Network Topology"
+                "Mesh Network Topology",
+                "Tree Network Topology",
+                "Hybrid Network Topology"
             ],
             "Database Systems": [
-                "SQL Database JOINs",
+                "Entity-Relationship (ER) Diagrams & Entities",
+                "SQL Database JOINs (INNER, LEFT, RIGHT)",
                 "Database Normalization (1NF, 2NF, 3NF)",
-                "Entity-Relationship (ER) Diagrams"
+                "Primary Keys, Foreign Keys & Constraints",
+                "Relational Database Management Systems (RDBMS)"
+            ],
+            "Programming & Algorithms": [
+                "Flowcharts and Pseudocode Logic",
+                "Control Structures (Loops and Conditionals)",
+                "Arrays, Lists and Data Structures",
+                "Object-Oriented Programming Principles"
+            ],
+            "Cybersecurity & Ethics": [
+                "Data Privacy and Confidentiality",
+                "Encryption and Decryption Fundamentals",
+                "Malware Types and Defense Strategies",
+                "Cyber Ethics and Safe Browsing"
             ]
         },
         "ICT": {
             "Computer Architecture": [
                 "CPU Fetch-Decode-Execute Cycle",
-                "Memory Hierarchy (Cache, RAM, Storage)",
-                "Logic Gates & Boolean Algebra"
+                "Memory Hierarchy (Cache, RAM, Secondary Storage)",
+                "Logic Gates & Boolean Algebra",
+                "Input, Output and Storage Peripherals"
             ],
             "Operating Systems & Software": [
-                "Process Management & Scheduling",
+                "Process Management & CPU Scheduling",
                 "File Systems and Directory Structures",
-                "System Security & Access Controls"
+                "System Security & User Access Controls",
+                "Application Software vs System Software"
+            ],
+            "Web Technologies & Networking": [
+                "The Internet and World Wide Web Architecture",
+                "HTML, CSS and Client-Side Scripting",
+                "IP Addressing, DNS and Packet Routing",
+                "Network Protocols (TCP/IP, HTTP, FTP)"
+            ],
+            "Information Systems & Productivity": [
+                "Spreadsheets and Data Analysis Tools",
+                "Word Processing and Presentation Software",
+                "Database Management and Information Retrieval",
+                "Impact of ICT in Society and E-Commerce"
             ]
         },
         "Robotics": {
             "Sensors & Actuators": [
-                "Ultrasonic and Infrared Sensors",
-                "Servo and DC Motors Control",
-                "Feedback Control Loops (PID)"
+                "Ultrasonic, Infrared and Proximity Sensors",
+                "Servo, Stepper and DC Motors Control",
+                "Feedback Control Loops and PID Controllers",
+                "Analog vs Digital Sensor Interfacing"
             ],
             "Kinematics & Microcontrollers": [
-                "Forward and Inverse Kinematics",
-                "Microcontroller Architecture (Arduino/ESP32)",
-                "PWM Signal Modulation"
+                "Forward and Inverse Robot Kinematics",
+                "Microcontroller Architecture (Arduino, ESP32)",
+                "PWM Signal Modulation and Motor Drivers",
+                "Embedded Systems Programming in C/C++"
+            ],
+            "Automation & AI in Robotics": [
+                "Autonomous Navigation and Obstacle Avoidance",
+                "Computer Vision for Robotics",
+                "Machine Learning in Robotic Systems",
+                "Industrial Automation and Safety Protocols"
             ]
         }
     }
@@ -279,7 +333,7 @@ if not st.session_state.greeted and student_full_name and student_school:
     if learning_mode == "📝 WAEC Exam Practice":
         initial_greeting += f"\n\n👉 **Exam Practice Ready:** Please type your desired topic and number of questions below (e.g., *'Networking, 2 questions'*)."
     elif learning_mode == "🎨 Whiteboard Concept Studio":
-        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated network topologies and computing concepts with synchronized step-by-step audio explanations (max 120s), YouTube-style scrubber, and live responsive word highlighting!"
+        initial_greeting += f"\n\n🎨 **Whiteboard Studio Ready:** Explore comprehensive animated computing and ICT concepts with accurate ER diagrams, step-by-step synchronized audio explanations (max 120s), YouTube-style scrubber, and live responsive word highlighting!"
 
     st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
     st.session_state.greeted = True
@@ -316,7 +370,7 @@ if (
     )
 
 # ==========================================================
-# 🎨 WHITEBOARD CONCEPT STUDIO (FULL RESEARCH UPGRADE: TOPIC/SUBTOPIC SELECTORS, BOTTOM INPUT FIELD, STEP-BY-STEP DETAILED SCRIPT < 120s)
+# 🎨 WHITEBOARD CONCEPT STUDIO (CORRECTED ER DIAGRAMS, COMPLETE TOPIC/SUBTOPIC HIERARCHY, WIDE LAYOUT)
 # ==========================================================
 if learning_mode == "🎨 Whiteboard Concept Studio":
     st.markdown("### 🎨 Sir O.K Animated Whiteboard Studio")
@@ -326,7 +380,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         "General Concepts": ["Introduction and Fundamental Principles"]
     })
 
-    # Top-right layout beneath title for Topic and Subtopic selectors
+    # Top-right layout beneath title for Topic and Subtopic selectors (dynamically dependent)
     col_t1, col_t2 = st.columns(2)
     with col_t1:
         chosen_topic = st.selectbox("Select Topic", list(subject_topics_dict.keys()), key="wb_topic_select")
@@ -334,19 +388,49 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         available_subtopics = subject_topics_dict.get(chosen_topic, ["General Overview"])
         chosen_subtopic = st.selectbox("Select Subtopic", available_subtopics, key="wb_subtopic_select")
 
-    # Function to generate step-by-step detailed non-vague explanations (under 120 seconds duration script)
+    # Function to generate step-by-step detailed non-vague explanations & correct visualizations (< 120 seconds duration script)
     def get_detailed_step_by_step_content(topic, subtopic):
         svg = ""
-        # Step-by-step non-vague script explaining exact actions on screen
         text = (
             f"Welcome to Sir O.K's Whiteboard Studio session on {topic}, specifically focusing on {subtopic}. "
-            f"Step one: Notice the structural layout rendered on the whiteboard canvas. Each component node or database table is explicitly mapped to illustrate the underlying architectural flow. "
-            f"Step two: As packets or data rows transit across the interconnecting buses, links, or join pathways, system latency and verification protocols are executed in real-time. "
-            f"Step three: Observe how state transitions and logic gates manage incoming signals or transaction queries. Every single node processes its assigned payload independently while maintaining synchronized communication across the network. "
-            f"Step four: In conclusion, mastering this mechanism ensures absolute reliability, error-free data synchronization, and top-tier performance for your WAEC examinations."
+            f"Step one: Examine the professional architectural layout rendered on the whiteboard canvas. Each component, entity, or module is precisely mapped with proper schema indicators. "
+            f"Step two: Observe how data packets, database relationships, or instruction signals flow through the interconnecting pathways and communication channels. "
+            f"Step three: Notice the detailed state transitions, cardinality constraints, and execution cycles operating across the system nodes. "
+            f"Step four: Mastering this complete structural workflow guarantees absolute clarity and top performance in your upcoming WAEC examinations."
         )
 
-        if "Star" in subtopic:
+        if "ER Diagram" in subtopic or "Entities" in subtopic:
+            svg = """
+                <rect x="60" y="80" width="120" height="70" rx="4" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                <text x="120" y="112" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">STUDENT</text>
+                <text x="120" y="130" fill="#aaa" font-size="8" text-anchor="middle">Entity Type</text>
+
+                <ellipse cx="60" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
+                <text x="60" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">StudentID (PK)</text>
+                <line x1="60" y1="46" x2="90" y2="80" stroke="#555" stroke-width="1.5"/>
+
+                <ellipse cx="150" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
+                <text x="150" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">StudentName</text>
+                <line x1="150" y1="46" x2="135" y2="80" stroke="#555" stroke-width="1.5"/>
+
+                <polygon points="260,115 310,85 360,115 310,145" fill="#1e1e1e" stroke="#ff0055" stroke-width="2"/>
+                <text x="310" y="118" fill="#ff0055" font-size="9" font-weight="bold" text-anchor="middle">ENROLLS</text>
+                <line x1="180" y1="115" x2="260" y2="115" stroke="#fff" stroke-width="2"/>
+                <text x="210" y="105" fill="#fff" font-size="8">1</text>
+
+                <rect x="420" y="80" width="120" height="70" rx="4" fill="#1e1e1e" stroke="#00ffcc" stroke-width="2"/>
+                <text x="480" y="112" fill="#00ffcc" font-size="11" font-weight="bold" text-anchor="middle">COURSE</text>
+                <text x="480" y="130" fill="#aaa" font-size="8" text-anchor="middle">Entity Type</text>
+                <line x1="360" y1="115" x2="420" y2="115" stroke="#fff" stroke-width="2"/>
+                <text x="390" y="105" fill="#fff" font-size="8">N</text>
+
+                <ellipse cx="480" cy="30" rx="35" ry="16" fill="#1a1a1a" stroke="#ffbb00" stroke-width="1.5"/>
+                <text x="480" y="33" fill="#ffbb00" font-size="8" text-anchor="middle">CourseCode (PK)</text>
+                <line x1="480" y1="46" x2="480" y2="80" stroke="#555" stroke-width="1.5"/>
+
+                <circle r="5" fill="#00ffcc"><animateMotion path="M 120,115 L 310,115 L 480,115" dur="10s" repeatCount="indefinite"/></circle>
+            """
+        elif "Star" in subtopic:
             svg = """
                 <circle cx="300" cy="130" r="30" fill="#1a1a1a" stroke="#00ffcc" stroke-width="3" />
                 <text x="300" y="126" fill="#00ffcc" font-size="8" font-weight="bold" text-anchor="middle">CENTRAL</text>
@@ -356,51 +440,10 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
                 <line x1="300" y1="130" x2="100" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
                 <line x1="300" y1="130" x2="500" y2="205" stroke="#555" stroke-width="2" stroke-dasharray="4"/>
                 <circle r="6" fill="#ff0055"><animateMotion path="M 300,130 L 100,55" dur="10s" repeatCount="indefinite"/></circle>
-                <circle r="6" fill="#00ffcc"><animateMotion path="M 300,130 L 500,55" dur="10s" repeatCount="indefinite"/></circle>
-                <circle r="6" fill="#ffbb00"><animateMotion path="M 100,205 L 300,130" dur="10s" repeatCount="indefinite"/></circle>
-                <circle r="6" fill="#00ffcc"><animateMotion path="M 500,205 L 300,130" dur="10s" repeatCount="indefinite"/></circle>
                 <g transform="translate(100, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 1</text></g>
                 <g transform="translate(500, 55)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 2</text></g>
                 <g transform="translate(100, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 3</text></g>
                 <g transform="translate(500, 205)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">PC 4</text></g>
-            """
-        elif "Bus" in subtopic:
-            svg = """
-                <line x1="50" y1="130" x2="550" y2="130" stroke="#00ffcc" stroke-width="6" stroke-linecap="round"/>
-                <text x="300" y="115" fill="#00ffcc" font-size="10" font-weight="bold" text-anchor="middle">MAIN BACKBONE CABLE</text>
-                <line x1="120" y1="130" x2="120" y2="60" stroke="#aaa" stroke-width="2"/>
-                <line x1="280" y1="130" x2="280" y2="200" stroke="#aaa" stroke-width="2"/>
-                <line x1="420" y1="130" x2="420" y2="60" stroke="#aaa" stroke-width="2"/>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 60,130 L 540,130" dur="10s" repeatCount="indefinite"/></circle>
-                <g transform="translate(120, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
-                <g transform="translate(280, 215)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
-                <g transform="translate(420, 45)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
-            """
-        elif "Ring" in subtopic:
-            svg = """
-                <circle cx="300" cy="130" r="75" fill="none" stroke="#00ffcc" stroke-width="3" stroke-dasharray="6,4"/>
-                <text x="300" y="125" fill="#00ffcc" font-size="9" font-weight="bold" text-anchor="middle">CLOSED LOOP</text>
-                <circle r="6" fill="#ffbb00"><animateMotion path="M 300,55 A 75,75 0 1,1 299.9,55" dur="10s" repeatCount="indefinite"/></circle>
-                <g transform="translate(300, 50)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 1</text></g>
-                <g transform="translate(385, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 2</text></g>
-                <g transform="translate(300, 210)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 3</text></g>
-                <g transform="translate(215, 130)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node 4</text></g>
-            """
-        elif "Mesh" in subtopic:
-            svg = """
-                <line x1="150" y1="70" x2="450" y2="70" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
-                <line x1="150" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
-                <line x1="450" y1="70" x2="300" y2="190" stroke="#555" stroke-width="2" stroke-dasharray="3"/>
-                <line x1="150" y1="70" x2="100" y2="190" stroke="#00ffcc" stroke-width="2"/>
-                <line x1="450" y1="70" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
-                <line x1="100" y1="190" x2="300" y2="190" stroke="#00ffcc" stroke-width="2"/>
-                <line x1="300" y1="190" x2="500" y2="190" stroke="#00ffcc" stroke-width="2"/>
-                <circle r="6" fill="#ff0055"><animateMotion path="M 150,70 L 450,70 L 300,190 Z" dur="10s" repeatCount="indefinite"/></circle>
-                <g transform="translate(150, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node A</text></g>
-                <g transform="translate(450, 70)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node B</text></g>
-                <g transform="translate(100, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node C</text></g>
-                <g transform="translate(300, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node D</text></g>
-                <g transform="translate(500, 190)"><rect x="-22" y="-14" width="44" height="28" rx="4" fill="#2a2a2a" stroke="#fff" stroke-width="2"/><text x="0" y="4" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">Node E</text></g>
             """
         elif "JOIN" in subtopic:
             svg = """
@@ -480,8 +523,8 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             background: #1e1e1e;
             border: 2px solid #00ffcc;
             border-radius: 10px;
-            padding: 12px;
-            box-shadow: 0 4px 15px rgba(0,255,204,0.15);
+            padding: 16px;
+            box-shadow: 0 4px 20px rgba(0,255,204,0.2);
             width: 100%;
             box-sizing: border-box;
         }}
@@ -489,28 +532,28 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             border-bottom: 1px solid #333;
-            padding-bottom: 6px;
+            padding-bottom: 8px;
         }}
         .brand {{
             color: #00ffcc;
             font-weight: bold;
-            font-size: 0.85em;
+            font-size: 0.95em;
         }}
         .topic-badge {{
             background: #282828;
             border: 1px solid #00ffcc;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 4px;
-            font-size: 0.75em;
+            font-size: 0.8em;
             color: #00ffcc;
             font-weight: bold;
         }}
         .screen {{
             position: relative;
             width: 100%;
-            padding-bottom: 40%;
+            padding-bottom: 38%;
             background: #0a0a0a;
             border-radius: 6px;
             overflow: hidden;
@@ -527,16 +570,16 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 12px;
             background: #252525;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 6px;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
         }}
         .btn-group {{
             display: flex;
-            gap: 6px;
+            gap: 8px;
             align-items: center;
             width: 100%;
             justify-content: space-between;
@@ -545,11 +588,11 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             background: #333;
             color: #fff;
             border: 1px solid #555;
-            padding: 6px 10px;
+            padding: 8px 14px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.75em;
+            font-size: 0.8em;
             transition: all 0.2s;
             flex-grow: 1;
         }}
@@ -564,7 +607,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             border-color: #00ffcc;
         }}
         .scrubber-container {{
-            margin-top: 8px;
+            margin-top: 10px;
             width: 100%;
             display: flex;
             align-items: center;
@@ -587,30 +630,30 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
             cursor: pointer;
         }}
         .status {{
-            font-size: 0.7em;
+            font-size: 0.75em;
             color: #aaa;
             text-align: right;
             width: 100%;
             margin-top: 4px;
         }}
         .transcript-box {{
-            margin-top: 8px;
+            margin-top: 10px;
             background: #181818;
             border-left: 3px solid #00ffcc;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 4px;
-            font-size: 0.85em;
+            font-size: 0.9em;
             line-height: 1.5;
             color: #ddd;
-            max-height: 70px;
+            max-height: 80px;
             overflow-y: auto;
             box-sizing: border-box;
         }}
         .transcript-title {{
             font-weight: bold;
             color: #00ffcc;
-            margin-bottom: 2px;
-            font-size: 0.75em;
+            margin-bottom: 3px;
+            font-size: 0.8em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }}
@@ -640,7 +683,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
         </div>
         
         <div class="screen" id="screenContainer">
-            <svg id="wbSvg" viewBox="0 0 600 260">
+            <svg id="wbSvg" viewBox="0 0 600 240">
             </svg>
         </div>
 
@@ -828,7 +871,7 @@ if learning_mode == "🎨 Whiteboard Concept Studio":
     </html>
     """
 
-    components.html(player_html, height=480, scrolling=False)
+    components.html(player_html, height=520, scrolling=False)
 
 else:
     for message in st.session_state.messages:
@@ -850,7 +893,7 @@ user_query = None
 # Bottom chat input available in all modes (including Whiteboard for quick topic/subtopic comma or space separated entry)
 if input_method == "⌨️ Type Question":
     if learning_mode == "🎨 Whiteboard Concept Studio":
-        prompt_label = "Or type topic and subtopic separated by space or comma (e.g., 'Network Topologies, Star'):"
+        prompt_label = "Or type topic and subtopic separated by space or comma (e.g., 'Database Systems, Entity-Relationship'):"
     elif learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_state_stage == "awaiting_config":
         prompt_label = "Type your desired topic and number of questions (e.g., 'Databases, 2 questions'):"
     elif learning_mode == "📝 WAEC Exam Practice" and st.session_state.exam_state_stage == "in_progress":
