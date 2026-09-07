@@ -11,7 +11,6 @@ st.set_page_config(
 
 @st.cache_data
 def load_curriculum_index():
-    """Loads the master curriculum index from the root directory."""
     index_path = "curriculum_index.json"
     if os.path.exists(index_path):
         with open(index_path, "r", encoding="utf-8") as f:
@@ -20,7 +19,6 @@ def load_curriculum_index():
 
 @st.cache_data
 def load_subject_data(file_name):
-    """Loads an individual subject JSON file directly from the root directory."""
     if os.path.exists(file_name):
         with open(file_name, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -30,14 +28,12 @@ def main():
     st.title("🎓 SHS AI Tutor")
     st.markdown("Your interactive intelligent tutoring system powered by curriculum data.")
 
-    # Load the index from the root directory
     index = load_curriculum_index()
 
     if not index:
         st.error("⚠️ `curriculum_index.json` was not found in the root directory.")
         return
 
-    # Sidebar Navigation
     st.sidebar.title("Curriculum Navigation")
     
     years = list(index.keys())
@@ -54,10 +50,15 @@ def main():
             st.header(f"{selected_year} — {selected_subject}")
             
             if subject_content:
-                # Render clean readable text instead of raw JSON dumps
-                for section_name, text_content in subject_content.items():
-                    with st.expander(f"Section: {section_name}", expanded=True):
-                        st.markdown(text_content)
+                # Iterate through modular dictionary items and render cleanly as markdown text
+                if isinstance(subject_content, dict):
+                    for section_name, text_content in subject_content.items():
+                        with st.expander(f"Section: {section_name}", expanded=True):
+                            st.markdown(text_content)
+                elif isinstance(subject_content, str):
+                    st.markdown(subject_content)
+                else:
+                    st.write(subject_content)
             else:
                 st.warning(f"Could not load contents from file: `{json_filename}`")
 
